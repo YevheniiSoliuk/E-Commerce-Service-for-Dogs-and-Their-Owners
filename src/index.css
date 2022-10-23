@@ -5,3 +5,22 @@
 body {
   background-color: rgb(11, 146, 101, 0.5);
 }
+
+.thumb::-webkit-slider-thumb {
+  background-color: #FDFFA9;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px #4B4D0B;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  margin-top: 4px;
+  pointer-events: all;
+  position: relative;
+}
+
+.thumb,
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}

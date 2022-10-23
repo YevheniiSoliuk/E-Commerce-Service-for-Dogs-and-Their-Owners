@@ -28,6 +28,10 @@ module.exports = {
       backgroundImage:
       {
         'row-icon': "#4B4D0B url('../../../assets/icons/arrow.svg') no-repeat left",
+      },
+      rotate: {
+        '45': '45deg',
+        '225': '225deg',
       }
     },
   },
