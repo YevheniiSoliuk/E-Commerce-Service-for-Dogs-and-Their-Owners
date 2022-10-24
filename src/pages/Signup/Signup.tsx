@@ -29,10 +29,10 @@ const Signup = () => {
           </div>
           <div>
             <h3 className="w-[300px] text-[32px] mb-[34px] mt-[39px] text-center leading-[40px] tracking-normal">Adres Dostawy</h3>
-            <Select id="wojew" name="wojews" values={["Dolnośląskie", "Mazowieckie", "Pomorskie"]} placeholder="Województwo"/>
-            <Select id="powiat" name="powiats" values={["Wrocław", "Lublin", "Warszawa"]} placeholder="Powiat"/>
-            <Select id="gmina" name="gminas" values={["Wrocław", "Lublin", "Warszawa"]} placeholder="Gmina"/>
-            <Select id="place" name="places" values={["Wrocław", "Lublin", "Warszawa"]} placeholder="Miejscowość"/>
+            <Select id="wojew" name="wojews" values={["Dolnośląskie", "Mazowieckie", "Pomorskie"]} placeholder="Województwo" styles="w-[340px] h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0" icon={false}/>
+            <Select id="powiat" name="powiats" values={["Wrocław", "Lublin", "Warszawa"]} placeholder="Powiat" styles="w-[340px] h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0" icon={false}/>
+            <Select id="gmina" name="gminas" values={["Wrocław", "Lublin", "Warszawa"]} placeholder="Gmina" styles="w-[340px] h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0" icon={false}/>
+            <Select id="place" name="places" values={["Wrocław", "Lublin", "Warszawa"]} placeholder="Miejscowość" styles="w-[340px] h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0" icon={false}/>
             <Input id="street" type="text" name="street" placeholder="Ulica"/>
             <Input id="post" type="text" name="postal-code" placeholder="Kod posztowy"/>
           </div>

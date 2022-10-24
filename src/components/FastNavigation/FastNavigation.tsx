@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export type LinksProps = {
-  name?: string,
-  link?: string
+  name: string,
+  link: string
 }
 
 
