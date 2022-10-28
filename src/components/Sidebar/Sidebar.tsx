@@ -17,7 +17,7 @@ const Sidebar = () => {
       </div>
       <div className="w-full flex flex-wrap flex-col">
         <h2 className="text-[16px] text-left mb-[15px]">Ocena</h2>
-        <StarRating type="active" active={0}/>
+        <StarRating type="active" active={0} size="h-[40px] w-[40px]" alignment="text-center" rates=""/>
         <div className="w-[250px] h-[2px] bg-green/50 my-[15px]"></div>
       </div>
     </div>

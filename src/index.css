@@ -24,3 +24,14 @@ body {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 }
+
+.trapezoid {
+  position: absolute;
+  border-bottom: 35px solid transparent;
+  border-Top: 35px solid transparent;
+  border-left: 35px solid #CD1515;
+  height: 100px;
+  left: 5px;
+  top: -28px;
+  transform: rotate(225deg);
+}

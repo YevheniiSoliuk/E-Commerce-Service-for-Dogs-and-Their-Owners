@@ -46,7 +46,7 @@ const Signup = () => {
             <Input id="check2" type="checkbox" name="enews" placeholder="Akceptuję warunki regulaminu i polityki prywatności. Zgadzam się na otrzymywanie informacji dotyczących zamówień w myśl ustawy z dnia 18 lipca 2002r. o świadczeniu usług drogą elektroniczną."/>  <br/>
             <div className="flex justify-end mt-[30px] mb-[50px]">
             <Link to="/profile">
-              <Button text="Zarejestruj konto" value="signup" width="w-[220px]" onClick={()=>{}}/>
+              <Button text="Zarejestruj konto" value="signup" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[220px]" onClick={()=>{}}/>
             </Link>
             </div>
           </div>

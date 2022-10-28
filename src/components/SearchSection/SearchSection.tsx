@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import Select from "../commons/Select/Select";
-import sortByName from "../../assets/icons/sort-by-name.svg";
-import listView from "../../assets/icons/list-view.svg";
-import moduleView from "../../assets/icons/view-module.svg";
+import sortByNameIcon from "../../assets/icons/sort-by-name.svg";
+import listViewIcon from "../../assets/icons/list-view.svg";
+import moduleViewIcon from "../../assets/icons/view-module.svg";
 
 
 const SearchSection = () => {
 
+  const [view, setView] = useState("list");
   const [value, setValue] = useState("")
 
   return (
@@ -21,9 +22,9 @@ const SearchSection = () => {
       </div>
       <Select id="localization" name="lokalizacja" values={["Wybierz lokalizację", "Warszawa", "Wrocław", "Kraków"]} placeholder="" styles="flex w-[300px] h-[50px] bg-yellow border-2 border-green rounded-[20px] pl-[50px] placeholder-green/50 outline-none" icon={true}/>
       <div>
-        <img src={sortByName} alt="sortByName" className="inline-block mr-[15px] cursor-pointer"/>
-        <img src={listView} alt="sortByName" className="inline-block mr-[15px] cursor-pointer"/>
-        <img src={moduleView} alt="sortByName" className="inline-block mr-[15px] cursor-pointer"/>
+        <img src={sortByNameIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer"/>
+        <img src={listViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>setView("list")}/>
+        <img src={moduleViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>setView("module")}/>
       </div>
     </div>
   ) 

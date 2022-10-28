@@ -12,6 +12,7 @@ module.exports = {
       lemon: ["Lemon", "sans-serif"],
     },
     colors: {
+      'white': '#ffffff',
       'grey': '#e5e7eb',
       'green': '#4B4D0B',
       'dark_green': '#00C897',
@@ -23,6 +24,7 @@ module.exports = {
       },
       'blue': '#93c5fd',
       'red': '#ef4444',
+      'dark_red': '#CD1515',
     },
     extend: {
       backgroundImage:

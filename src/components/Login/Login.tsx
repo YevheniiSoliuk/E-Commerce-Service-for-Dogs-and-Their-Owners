@@ -15,7 +15,7 @@ const LoginPopup = () => {
 
   return (
     <>
-      <Button text="Zaloguj się" value="login" width="w-[160px]" onClick={() => setIsLoginOpen(o => !o)}/>
+      <Button text="Zaloguj się" value="login" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[160px]" onClick={() => setIsLoginOpen(o => !o)}/>
       <LoginModal isOpen={isLoginOpen} close={closeLoginModal} goToOtherModal={goToForgotPassModal}/>
       <ForgotPassModal isOpen={isForgotPassOpen} close={closeForgotPassModal} goToOtherModal={goToLoginModal} />
     </>

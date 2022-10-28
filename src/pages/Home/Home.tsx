@@ -29,7 +29,7 @@ const Home = () => {
       <img src={homeImage} alt="image2" className="h-[450px] bg-slate-400" />
       <div className="absolute left-[600px] top-[450px]">
         <Link to="/product">
-          <Button text="Znajdź swój produkt" value="cta-button" width="w-[270px]" onClick={()=>{}}/>
+          <Button text="Znajdź swój produkt" value="cta-button" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[270px]" onClick={()=>{}}/>
         </Link>
       </div>
       <div className="mx-[50px] mb-[70px] mt-[35px]">
