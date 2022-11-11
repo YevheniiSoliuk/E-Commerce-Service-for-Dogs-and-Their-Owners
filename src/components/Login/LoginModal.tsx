@@ -13,8 +13,8 @@ const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
           &times;
         </span>
         <h2 className="text-green text-[40px] mt-[20px] mb-[30px]">Login</h2>
-        <Input id="login" type="text" name="login" placeholder="Login"/>
-        <Input id="pass" type="password" name="pass" placeholder="Hasło"/>
+        <Input id="login" type="text" name="login" placeholder="Login" width="w-[340px]"/>
+        <Input id="pass" type="password" name="pass" placeholder="Hasło" width="w-[340px]"/>
         <span className="block my-[17px] text-[14px] underline hover:text-yellow cursor-pointer" onClick={goToOtherModal}>Nie pamiętam loginu lub hasła</span>
         <Button text="Załoguj się" value="login" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[222px]" onClick={close}/>
         <Link to="/signup">

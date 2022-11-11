@@ -29,7 +29,7 @@ const List = ({type, title, items}: ListProps) => {
       <>
         <ul>
           {type === "brands" ? 
-          items.map(brand => <li className="text-[12px] list-none hover:text-yellow active:text-yellow hover:cursor-pointer" key={brand}><Input id={brand} type="checkbox" name="brand" placeholder={brand}/></li>) :
+          items.map(brand => <li className="text-[12px] list-none hover:text-yellow active:text-yellow hover:cursor-pointer" key={brand}><Input id={brand} type="checkbox" name="brand" placeholder={brand} width=""/></li>) :
           items.map(category => <li className="text-[12px] list-disc list-inside ml-[10px] hover:text-yellow hover:cursor-pointer" key={category}>{category}</li>)  
           }
         </ul>

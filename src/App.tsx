@@ -11,7 +11,8 @@ import Favorite from './pages/Favorite/Favorite';
 import Signup from './pages/Signup/Signup';
 import Footer from './components/Footer/Footer';
 import Sales from './pages/Sales/Sales';
-import Profile from './pages/Profile/Profie';
+import Profile from './pages/Profile/Profile';
+import Settings from './pages/Profile/UserAccountSettings/Settings';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/favorite" element={ <Favorite /> } />
         <Route path="/sales" element={ <Sales /> } />
         <Route path="/profile" element={ <Profile /> } />
+        <Route path="/profile/settings" element={ <Settings /> } />
       </Routes>
       <Footer />
     </>

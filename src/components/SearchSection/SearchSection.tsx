@@ -3,9 +3,14 @@ import Select from "../commons/Select/Select";
 import sortByNameIcon from "../../assets/icons/sort-by-name.svg";
 import listViewIcon from "../../assets/icons/list-view.svg";
 import moduleViewIcon from "../../assets/icons/view-module.svg";
+import { Search } from "react-router-dom";
 
+type SearchSectionProps = {
+  forPage: string,
+  placeholder: string
+}
 
-const SearchSection = () => {
+const SearchSection = ({forPage, placeholder}: SearchSectionProps) => {
 
   const [view, setView] = useState("list");
   const [value, setValue] = useState("")
@@ -18,14 +23,20 @@ const SearchSection = () => {
         </svg>
         <input type="text"
         className="flex w-[450px] h-[50px] bg-yellow border-2 border-green rounded-[20px] px-[70px] placeholder-green/50 outline-none" 
-        value={value} onChange={(e)=>setValue(e.target.value)} placeholder="Szukaj produkt...."/>
+        value={value} onChange={(e)=>setValue(e.target.value)} placeholder={placeholder}/>
       </div>
-      <Select id="localization" name="lokalizacja" values={["Wybierz lokalizację", "Warszawa", "Wrocław", "Kraków"]} placeholder="" styles="flex w-[300px] h-[50px] bg-yellow border-2 border-green rounded-[20px] pl-[50px] placeholder-green/50 outline-none" icon={true}/>
-      <div>
-        <img src={sortByNameIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer"/>
-        <img src={listViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>setView("list")}/>
-        <img src={moduleViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>setView("module")}/>
-      </div>
+      {/* <Select id="localization" name="lokalizacja" values={["Wybierz lokalizację", "Warszawa", "Wrocław", "Kraków"]} placeholder="" styles="flex w-[300px] h-[50px] bg-yellow border-2 border-green rounded-[20px] pl-[50px] placeholder-green/50 outline-none" icon={true}/> */}
+      {forPage === "products" ?
+        <div>
+          <img src={sortByNameIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer"/>
+          <img src={listViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>setView("list")}/>
+          <img src={moduleViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>setView("module")}/>
+        </div> :
+        <div>
+          <img src={sortByNameIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer"/>
+        </div>
+      }
+      
     </div>
   ) 
 }

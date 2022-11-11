@@ -10,8 +10,8 @@ const LoginPopup = () => {
   const [isForgotPassOpen, setIsForgotPassOpen] = useState(false);
   const closeForgotPassModal = () => setIsForgotPassOpen(false);
   
-  const goToForgotPassModal = () => { closeLoginModal(); setIsForgotPassOpen(o => !o) }
-  const goToLoginModal = () => { closeForgotPassModal(); setIsLoginOpen(o => !o) }
+  const goToForgotPassModal = () => { closeLoginModal(); setIsForgotPassOpen(open => !open) }
+  const goToLoginModal = () => { closeForgotPassModal(); setIsLoginOpen(open => !open) }
 
   return (
     <>

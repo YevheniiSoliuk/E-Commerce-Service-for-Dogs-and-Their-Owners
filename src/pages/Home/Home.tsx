@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../../components/commons/Button/Button";
 
 import homeImage from "../../assets/images/home-image.jpg";
-import CustomSlide from "../../components/CustomSlide/CustomSlide";
+import CustomSlide from "../../components/CustomSlider/CustomSlider";
 import BrandsSection from "../../components/BrandsSection";
 
 type Categories = {
