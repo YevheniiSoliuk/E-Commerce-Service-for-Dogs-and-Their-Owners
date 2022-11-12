@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '../../components/commons/Button/Button';
+import EditPetInfo from './EditPetInfo/EditPetInfo';
 import PetWalkHistory from './PetWalkHistory/PetWalkHistory';
 
 export type PetInfoProps = {
@@ -22,9 +22,8 @@ const PetInfo = ({src, index, name, birthdate, breed, sex}: PetInfoProps) => {
           <p className="flex justify-between"><span>Rasa:</span><span>{breed}</span></p>
           <p className="flex justify-between"><span>Płeć:</span><span>{sex}</span></p>
         </div>
-        
         <PetWalkHistory />
-        <Button text="Edytuj dane" value="edit" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-[6px] py-[2px] w-[150px] text-[16px]" onClick={()=>{}}/>
+        <EditPetInfo />
       </div>
   );
 };

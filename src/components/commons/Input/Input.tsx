@@ -39,7 +39,17 @@ const Input = ({id, type, name, value, placeholder, width, action, onChange}: In
           </label>
         </div>
       }
-      {type !== "checkbox" && type !== "radio" &&
+      {type === "file" && 
+        <>
+          <label htmlFor={id} className="absolute top-[60px] left-[520px]" onClick={action}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-[50px] h-[50px] fill-green hover:fill-yellow hover:stroke-green hover:cursor-pointer">
+              <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clipRule="evenodd" />
+            </svg>
+          </label>
+          <input id={id} type={type} name={name} className="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-1"/>
+        </>
+      }
+      {type !== "checkbox" && type !== "radio" && type !== "file" &&
         <div className="flex flex-wrap justify-start flex-col text-left">
           <label htmlFor={id} className="text-sm underline decoration-1 decoration-green mb-[5px] ml-[20px]">{placeholder}</label>
           <input id={id} type={type} name={name} value={value} onChange={onChange} placeholder={placeholder} className={width + " h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0 placeholder:text-green/50"}/>

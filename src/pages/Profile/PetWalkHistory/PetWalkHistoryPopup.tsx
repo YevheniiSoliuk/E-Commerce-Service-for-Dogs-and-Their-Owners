@@ -4,45 +4,46 @@ import WalkHistoryTable from '../../../components/commons/Table/WalkHistoryTable
 import { ModalProps } from '../../../components/Login/ModalProps';
 import SearchSection from '../../../components/SearchSection/SearchSection';
 import { WalkHistoryI } from '../../../interfaces/WalkHistory';
+import walkHistoryScreen from "../../../assets/images/save-walk.jpg";
 
 const walkHistoryData: WalkHistoryI[] = [
   {
-    walkRoadScreen: "",
+    walkRoadScreen: walkHistoryScreen,
     date: "05.05.2022",
     time: "00:45:23",
     distance: "1.540 km",
     coins: 15
   },
   {
-    walkRoadScreen: "",
+    walkRoadScreen: walkHistoryScreen,
     date: "05.05.2022",
     time: "00:45:23",
     distance: "1.540 km",
     coins: 15
   },
   {
-    walkRoadScreen: "",
+    walkRoadScreen: walkHistoryScreen,
     date: "05.05.2022",
     time: "00:45:23",
     distance: "1.540 km",
     coins: 15
   },
   {
-    walkRoadScreen: "",
+    walkRoadScreen: walkHistoryScreen,
     date: "05.05.2022",
     time: "00:45:23",
     distance: "1.540 km",
     coins: 15
   },
   {
-    walkRoadScreen: "",
+    walkRoadScreen: walkHistoryScreen,
     date: "05.05.2022",
     time: "00:45:23",
     distance: "1.540 km",
     coins: 15
   },
   {
-    walkRoadScreen: "",
+    walkRoadScreen: walkHistoryScreen,
     date: "05.05.2022",
     time: "00:45:23",
     distance: "1.540 km",

@@ -5,7 +5,7 @@ import coin from "../../../assets/images/coin.svg"
 const WalkHistoryTable: React.FC<{walkHistoryItems : WalkHistoryI[]}> = ({walkHistoryItems}) => {
   return (
     <div className="w-[100%] h-[450px] bg-yellow/80 border-2 border-green rounded-[10px] mt-[20px] mb-[30px]px-[20px] py-[20px] overflow-y-auto">
-      <table className="w-[100%] flex flex-col items-center border-collapse">
+      {/* <table className="w-[100%] flex flex-col items-center border-collapse">
         <thead>
           <tr className="flex justify-start">
             <th className="w-[40px] text-[16px] text-center">Nr</th>
@@ -22,8 +22,8 @@ const WalkHistoryTable: React.FC<{walkHistoryItems : WalkHistoryI[]}> = ({walkHi
               <td className="mx-[20px]">
                 0
               </td>
-              <td className="w-[100px] mx-[20px]">
-                {item.walkRoadScreen}
+              <td className="w-[70px] mx-[20px]">
+                <img src={item.walkRoadScreen} alt={"walk" + index} />
               </td>
               <td className="ml-[30px]">
                 {item.date}
@@ -32,6 +32,45 @@ const WalkHistoryTable: React.FC<{walkHistoryItems : WalkHistoryI[]}> = ({walkHi
                 {item.time}
               </td>
               <td className="mx-[30px]">
+                {item.distance}
+              </td>
+              <td>
+                <div className="flex items-center justify-center">
+                  <img src={coin} alt="coin" className="w-[30%] inline-block mr-[10px]"/>
+                  {item.coins}
+                </div>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table> */}
+      <table className="w-[100%] layout-auto">
+        <thead>
+          <tr>
+            <th>Nr</th>
+            <th>Mapa</th>
+            <th>Data</th>
+            <th>Czas</th>
+            <th>Dystans</th>
+            <th>Monety</th>
+          </tr>
+        </thead>
+        <tbody>
+          {walkHistoryItems.map((item: WalkHistoryI, index: number) => 
+            <tr className="h-[110px] text-center border-b-[1px] border-t-[1px] border-green">
+              <td>
+                {index+1}
+              </td>
+              <td className="w-[70px]">
+                <img src={item.walkRoadScreen} alt={"walk" + index} />
+              </td>
+              <td>
+                {item.date}
+              </td>
+              <td>
+                {item.time}
+              </td>
+              <td>
                 {item.distance}
               </td>
               <td>
