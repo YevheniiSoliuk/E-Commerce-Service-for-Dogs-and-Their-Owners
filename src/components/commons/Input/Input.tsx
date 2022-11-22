@@ -1,3 +1,4 @@
+import { setUseProxies } from "immer";
 import React, { ChangeEventHandler } from "react";
 import avatar from "../../../assets/images/avatar.png";
 
@@ -6,13 +7,15 @@ type InputProps = {
   type: string,
   name: string,
   value?: string,
+  checked?: boolean,
+  state?: boolean,
   placeholder: string | undefined,
-  width: string,
+  width?: string,
   action?: ()=>void,
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-const Input = ({id, type, name, value, placeholder, width, action, onChange}: InputProps) => {
+const Input = ({id, type, name, value, checked, placeholder, width, state, action, onChange}: InputProps) => {
 
   return (
     <>
@@ -32,9 +35,26 @@ const Input = ({id, type, name, value, placeholder, width, action, onChange}: In
       }
       {type === "radio" &&
         <div className="flex relative items-center mx-5 mb-[5px]">
-          <input id={id} type={type} name={name} className="absolute left-[-20px] h-0 w-0 peer" checked/>
+          <input id={id} type={type} name={name} className="absolute left-[-20px] h-5 w-5 peer" onChange={onChange}/>
           <span className="absolute top-0 left-0 h-[20px] w-[20px] bg-yellow rounded-full border-2 border-green ml-[-20px] peer-checked:before:content-[''] peer-checked:before:w-[10px] peer-checked:before:h-[10px] peer-checked:before:bg-green peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.3rem] peer-checked:before:-translate-y-[0.3rem] peer-checked:before:rounded-full"></span>
-          <label htmlFor={id} className="ml-[5px] text-[14px] text-green" onClick={action}>
+          <label htmlFor={id} className="ml-[5px] text-[14px] text-green">
+            {placeholder}
+          </label>
+        </div>
+      }
+      {type === "toggle" &&
+        <div className="flex relative items-center mx-5 mb-[30px]">
+          {state === true ? 
+          <>
+            <input id={id} type="checkbox" name={name} className="absolute left-[-20px] h-0 w-0 peer" checked/>
+            <span className="inline-block relative h-[30px] w-[50px] bg-yellow/80 rounded-full border-2 border-green ml-[-20px] before:content[''] before:absolute before:bg-orange before:top-[-2px] before:left-[-2px] before:w-[30px] before:h-[30px] before:border-2 before:border-green before:rounded-full before:transition-all before:ease-linear before:duration-200 peer-checked:before:translate-x-[17px] peer-checked:bg-orange"></span>
+          </> :
+          <>
+            <input id={id} type="checkbox" name={name} className="absolute left-[-20px] h-0 w-0 peer"/>
+            <span className="inline-block relative h-[30px] w-[50px] bg-yellow/80 rounded-full border-2 border-green ml-[-20px] before:content[''] before:absolute before:bg-orange before:top-[-2px] before:left-[-2px] before:w-[30px] before:h-[30px] before:border-2 before:border-green before:rounded-full before:transition-all before:ease-linear before:duration-200"></span>
+          </>
+          }
+          <label htmlFor={id} className="w-full ml-[30px] text-[12px] text-green tracking-normal" onClick={action}>
             {placeholder}
           </label>
         </div>
@@ -49,7 +69,7 @@ const Input = ({id, type, name, value, placeholder, width, action, onChange}: In
           <input id={id} type={type} name={name} className="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-1"/>
         </>
       }
-      {type !== "checkbox" && type !== "radio" && type !== "file" &&
+      {type !== "checkbox" && type !== "radio" && type !== "file" && type !== "toggle" &&
         <div className="flex flex-wrap justify-start flex-col text-left">
           <label htmlFor={id} className="text-sm underline decoration-1 decoration-green mb-[5px] ml-[20px]">{placeholder}</label>
           <input id={id} type={type} name={name} value={value} onChange={onChange} placeholder={placeholder} className={width + " h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0 placeholder:text-green/50"}/>

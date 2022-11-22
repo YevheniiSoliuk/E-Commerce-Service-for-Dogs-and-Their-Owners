@@ -15,7 +15,7 @@ import dogAvatar2 from "../../assets/images/dog-avatar-2.png";
 import dogAvatar3 from "../../assets/images/dog-avatar-3.png";
 
 
-const dogs: PetInfoProps[] = [
+export const dogs: PetInfoProps[] = [
   {src: dogAvatar1, index: "1", name: "Miśka", birthdate: "01.12.19r.", breed: "Chow-Chow", sex:"suka"}, 
   {src: dogAvatar2, index: "2", name: "Bobo", birthdate: "23.07.17r.", breed: "Bokser", sex:"pies"}, 
   {src: dogAvatar3, index: "3", name: "Rembo", birthdate: "10.11.21r.", breed: "Shiba", sex:"pies"}, 

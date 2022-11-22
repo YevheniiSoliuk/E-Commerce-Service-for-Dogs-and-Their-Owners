@@ -16,6 +16,18 @@ const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
   const [description, setDescription] = useState("");
   const [avatar, setAvatar] = useState(dogAvatar1);
 
+  const onEventChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+        return;
+    }
+
+    const file = input.files[0];
+    console.log(file.type);
+    setAvatar(file.name);
+  }
+
   const contentStyle = { top: "40px" };
 
   const clearState = () => {
@@ -26,7 +38,6 @@ const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
     setWeight("");
     setDescription("");
   }
-
 
   const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.SyntheticEvent): void => {
     e.preventDefault();
@@ -51,7 +62,7 @@ const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
           &times;
         </span>
         <img src={avatar} alt="pet-avatar" className="w-[200px] rounded-full absolute top-[-100px] left-[400px]"/>
-        <Input id="pet-avatar" type="file" name="pet-avatar" placeholder="" width="" action={()=>{}}/>
+        <Input id="pet-avatar" type="file" name="pet-avatar" placeholder="" width="" value={avatar} onChange={(e)=>{onEventChange(e)}}/>
         <form method="PUT" onSubmit={onHandleSubmit}>
           <div className="flex justify-between items-center w-[]">
             <div>

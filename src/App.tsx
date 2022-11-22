@@ -12,7 +12,8 @@ import Signup from './pages/Signup/Signup';
 import Footer from './components/Footer/Footer';
 import Sales from './pages/Sales/Sales';
 import Profile from './pages/Profile/Profile';
-import Settings from './pages/Profile/UserAccountSettings/Settings';
+import UserSettings from './pages/Profile/UserSettings/UserSettings';
+import Cart from './pages/Cart/Cart';
 
 function App() {
   return (
@@ -22,13 +23,16 @@ function App() {
         <Route path="/" element={ <Home /> } />
         <Route path="/signup" element={ <Signup /> } />
         <Route path="/products" element={ <Products /> } />
+        <Route path="/product/:id" element={ <div>Product</div> } />
+        <Route path="/cart" element={ <Cart /> } />
+        <Route path="/order" element={ <div>Order</div> } />
         <Route path="/shops" element={ <Shops /> } />
         <Route path="/brands" element={ <Brands /> } />
         <Route path="/contact" element={ <Contact /> } />
         <Route path="/favorite" element={ <Favorite /> } />
         <Route path="/sales" element={ <Sales /> } />
         <Route path="/profile" element={ <Profile /> } />
-        <Route path="/profile/settings" element={ <Settings /> } />
+        <Route path="/profile/settings" element={ <UserSettings /> } />
       </Routes>
       <Footer />
     </>

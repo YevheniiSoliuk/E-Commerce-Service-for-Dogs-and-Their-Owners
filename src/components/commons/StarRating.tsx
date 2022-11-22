@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 type StarRatingProps = {
   type: string,
-  active: 0 | 1 | 2 | 3 | 4 | 5,
+  active: number,
   size: string,
   alignment: string,
   rates: string

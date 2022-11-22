@@ -67,6 +67,7 @@ const Pagination = (props: PaginationProps) => {
         // Render our Page Pills
         return (
           <li
+            key={pageNumber}
             className={pageNumber === currentPage ? "text-[20px] hover: text-yellow cursor-pointer" : "text-[20px] cursor-pointer"
             }
             onClick={() => onPageChange(pageNumber)}

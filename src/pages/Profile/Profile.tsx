@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import avatar from "../../assets/images/avatar.png";
 import Button from "../../components/commons/Button/Button";
 
 import coin from "../../assets/images/coin.svg";
-import ProgressBar from "../../components/commons/CircularProgressBar/ProgressBar";
-import PetInfoSection from "./PetInfoSection";
+import ProgressBar from "../../components/commons/ProgressBars/ProgressBar";
+import PetInfoSection, { dogs } from "./PetInfoSection";
+import { PetInfoProps } from "./PetInfo";
 
 const Profile = () => {
   const navigate = useNavigate();
+  
+  const [moreWalkInfoClicked, setMoreWalkInfoClicked] = useState(false);
 
   const goToProfileSettings = () => {
     navigate("/profile/settings");
@@ -19,7 +22,25 @@ const Profile = () => {
       <div className="flex justify-between items-start w-full bg-dark_green border-green border-2 rounded-[20px] py-[30px] px-[80px]">
         <div className="w-[370px] flex flex-col items-center">
           <h2 className="text-[32px] text-center mb-[50px]">Pokonano dzisiaj</h2>
-          <ProgressBar/>
+          {moreWalkInfoClicked ? 
+          <>
+            <div className="w-[100%] h-[200px] mb-[30px] overflow-y-auto">
+              {dogs.map((dog: PetInfoProps) => 
+                <div className="w-[100%] flex justify-between items-center mt-[5px]">
+                  <p>{dog.name}:</p>
+                  <ProgressBar type="linear" completed={75}/>
+                  <p>1.4/5 km</p>
+                </div>
+              )}
+            </div> 
+            <Button text={"Pokaż ogólnie"} value={"less-info"} styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-[6px] py-[2px] w-[200px] text-[16px]" onClick={()=>{setMoreWalkInfoClicked(false)}}/> 
+          </> : 
+          <>
+            <ProgressBar type="circular" completed={75}/>
+            <Button text={"Pokaż dla każdego"} value={"more-info"} styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-[6px] py-[2px] w-[200px] text-[16px] mt-[30px]" onClick={()=>{setMoreWalkInfoClicked(true)}}/>
+          </>
+          }
+          
         </div>
         <div className="flex flex-col justify-start items-center w-[350px] h-full">
           <img src={avatar} alt="user-logo" className="w-[200px] rounded-full"/>

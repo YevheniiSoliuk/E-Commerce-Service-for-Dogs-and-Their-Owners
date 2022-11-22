@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type List = {
   id: React.Key,
@@ -19,10 +19,10 @@ const Navbar = () => {
   return (
       <ul className="flex justify-between items-center">
         {listArray.map((listArray) => 
-          <NavLink to={listArray.path} key={listArray.id}>
-            <li className="w-full h-[30px] mr-[20px] text-green text-xl hover:text-yellow 
-            hover:after:content[''] hover:after:block hover:after:relative hover:after:w-[100px] hover:after:my-[6px] hover:after:h-[3px] hover:after:bg-yellow hover:after:ml-[20px] hover:cursor-pointer">{listArray.name}</li>
-          </NavLink>
+          <Link to={listArray.path} key={listArray.id}>
+            <li className="h-[30px] mr-[20px] text-green text-xl hover:text-yellow 
+            hover:after:content[''] hover:after:block hover:after:relative hover:after:w-[75px] hover:after:my-[6px] hover:after:h-[3px] hover:after:bg-yellow hover:after:ml-auto hover:after:mr-auto hover:cursor-pointer">{listArray.name}</li>
+          </Link>
         )}
       </ul>
   )

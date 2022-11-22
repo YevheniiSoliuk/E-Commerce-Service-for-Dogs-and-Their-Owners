@@ -34,6 +34,15 @@ module.exports = {
       rotate: {
         '45': '45deg',
         '225': '225deg',
+      },
+      keyframes: {
+        full: {
+          '0%': { width: '0%' },
+          '100%': { width: '75%' },
+        }
+      },
+      animation: {
+        full: 'full 1s linear',
       }
     },
   },

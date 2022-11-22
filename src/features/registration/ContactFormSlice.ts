@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface ContactFormState {
-  isCorporation: boolean,
   checkedEmailNewsletter: boolean,
   checkedSMSNewsletter: boolean,
+  checkedEmailTransmition: boolean,
   checkedTerms: boolean,
 }
 
 const initialState: ContactFormState = {
-  isCorporation: false,
   checkedEmailNewsletter: false,
   checkedSMSNewsletter: false,
+  checkedEmailTransmition: false,
   checkedTerms: false,
 }
 
@@ -18,16 +18,6 @@ const ContactFormSlice = createSlice({
   name: "contactForm",
   initialState,
   reducers: {
-    toggleContactForm: (state) => {
-      if(!state.isCorporation)
-      {
-        state.isCorporation = true;
-      }
-      else
-      {
-        state.isCorporation = false;
-      }
-    },
     checkEmailNewsletter: (state) => {
       if(!state.checkedEmailNewsletter)
       {
@@ -48,6 +38,16 @@ const ContactFormSlice = createSlice({
         state.checkedSMSNewsletter = false;
       }
     },
+    checkEmailTransmition: (state) => {
+      if(!state.checkedEmailTransmition)
+      {
+        state.checkedEmailTransmition = true;
+      }
+      else
+      {
+        state.checkedEmailTransmition = false;
+      }
+    },
     checkTerms: (state) => {
       if(!state.checkedTerms)
       {
@@ -61,10 +61,10 @@ const ContactFormSlice = createSlice({
   }
 })
 
-export const {
-  toggleContactForm, 
+export const { 
   checkEmailNewsletter, 
-  checkSMSNewsletter, 
+  checkSMSNewsletter,
+  checkEmailTransmition, 
   checkTerms
 } = ContactFormSlice.actions;
 
