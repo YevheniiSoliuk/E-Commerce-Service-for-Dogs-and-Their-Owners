@@ -7,7 +7,7 @@ import Button from '../commons/Button/Button';
 
 const CartPopupItem = ({product, amount}: IOrderPosition) => {
 
-  const {id, photos, title, price, basePrice} = {...product};
+  const {id, photos, title, price, base_price} = {...product};
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const CartPopupItem = ({product, amount}: IOrderPosition) => {
       <div className="">
         <h3 className="mb-[10px] text-[14px]">{title}</h3>
         <p className="text-dark_red text-[16px] mb-[5px]">{price} zł</p>
-        <p className="mb-[20px] text-[14px]">({basePrice} zł/kg)</p>
+        <p className="mb-[20px] text-[14px]">({base_price} zł/kg)</p>
       </div>
       <div className="flex items-center">
         <Button text={'-'} value={'decrement'} styles={'h-[40px] bg-orange border-2 border-green hover:border-yellow rounded-full text-green text-base font-lemon w-[40px]'} onClick={()=>{dispatch(decrementProductAmount(id))}}/>

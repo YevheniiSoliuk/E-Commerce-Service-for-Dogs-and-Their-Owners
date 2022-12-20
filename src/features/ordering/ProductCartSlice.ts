@@ -49,6 +49,18 @@ const ProductCartSlice = createSlice({
       state.positions = state.positions.filter(position => position.product.id !== payload);
       state.positionsAmount -= 1;
     },
+    incrementProductAmountByValue: (state, {payload}:PayloadAction<number[]>) => {
+      const id = payload[0];
+      const value = payload[1];
+
+      state.positions.forEach(position => {
+        if(position.product.id === id)
+        { 
+          position.amount = value;
+          state.total += position.product.price * value;
+        }
+      });
+    },
     incrementProductAmount: (state, {payload}:PayloadAction<string|number>) => {
       state.positions.forEach(position => {
         if(position.product.id === payload)
@@ -87,6 +99,7 @@ const ProductCartSlice = createSlice({
 export const {
   addPosition,
   removePosition,
+  incrementProductAmountByValue,
   incrementProductAmount,
   decrementProductAmount,
   clearCart

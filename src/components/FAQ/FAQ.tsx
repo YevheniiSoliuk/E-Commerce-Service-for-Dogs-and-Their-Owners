@@ -6,7 +6,7 @@ const FAQ: React.FC<{list: AccordeonProps[]}> = ({list}) => {
     <div className="text-center mt-[90px]">
       <h1 className="text-[48px]">Często zadawane pytania</h1>
       <div className="w-[700px] h-[3px] bg-yellow my-[36px] ml-auto mr-auto"></div>
-      {list.map((question: AccordeonProps) => <Accordeon title={question.title} content={question.content}/>)}
+      {list.map((question: AccordeonProps, index: number) => <Accordeon key={index} title={question.title} content={question.content}/>)}
     </div>
   );
 };

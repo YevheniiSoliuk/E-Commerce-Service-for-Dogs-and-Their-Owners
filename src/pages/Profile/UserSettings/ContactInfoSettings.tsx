@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '../../../components/commons/Button/Button';
 import Input from '../../../components/commons/Input/Input';
 import Select from '../../../components/commons/Select/Select';
+import { RootState } from '../../../store/store';
 
 const ContactInfoSettings = () => {
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [street, setStreet] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  const { user } = useSelector((state: RootState) => state.auth);
 
-  const [province, setProvince] = useState("Wojewodztwo");
-  const [place, setPlace] = useState("Miejscowosc");
+  const [name, setName] = useState<string>(user ? user.name : "");
+  const [lastname, setLastname] = useState<string>(user ? user.lastname : "");
+  const [email, setEmail] = useState<string>(user ? user.email : "");
+  const [phone, setPhone] = useState<string>(user ? user.phone : "'");
+  const [street, setStreet] = useState<string>("");
+  const [postalCode, setPostalCode] = useState<string>(""); 
+
+  const [province, setProvince] = useState<string>("Wojewodztwo");
+  const [place, setPlace] = useState<string>("Miejscowosc");
 
   const resetInfo = (): void => {
     setName("");

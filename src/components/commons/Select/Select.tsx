@@ -2,7 +2,7 @@ import React from "react";
 
 type SelectProps = {
   id: string,
-  name: string,
+  name?: string,
   value?: string,
   onChange?: React.ChangeEventHandler<HTMLSelectElement>,
   values: string[],

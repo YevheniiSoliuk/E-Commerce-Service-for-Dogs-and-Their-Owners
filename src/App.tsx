@@ -14,26 +14,38 @@ import Sales from './pages/Sales/Sales';
 import Profile from './pages/Profile/Profile';
 import UserSettings from './pages/Profile/UserSettings/UserSettings';
 import Cart from './pages/Cart/Cart';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Product from './pages/Products/Product';
 
 function App() {
+  const {user} = useSelector((state: RootState) => state.auth);
+
   return (
     <>
       <Header/>
-      <Routes>
-        <Route path="/" element={ <Home /> } />
-        <Route path="/signup" element={ <Signup /> } />
-        <Route path="/products" element={ <Products /> } />
-        <Route path="/product/:id" element={ <div>Product</div> } />
-        <Route path="/cart" element={ <Cart /> } />
-        <Route path="/order" element={ <div>Order</div> } />
-        <Route path="/shops" element={ <Shops /> } />
-        <Route path="/brands" element={ <Brands /> } />
-        <Route path="/contact" element={ <Contact /> } />
-        <Route path="/favorite" element={ <Favorite /> } />
-        <Route path="/sales" element={ <Sales /> } />
-        <Route path="/profile" element={ <Profile /> } />
-        <Route path="/profile/settings" element={ <UserSettings /> } />
-      </Routes>
+      
+        { user?.email === "admin@admin.com" ?
+          <Routes>
+            <Route path="/dashboard" element={ <Dashboard /> } /> 
+          </Routes> : 
+          <Routes>
+            <Route path="/" element={ <Home /> } />
+            <Route path="/signup" element={ <Signup /> } />
+            <Route path="/products" element={ <Products /> } />
+            <Route path="/product/:id" element={ <Product /> } />
+            <Route path="/cart" element={ <Cart /> } />
+            <Route path="/order" element={ <div>Order</div> } />
+            <Route path="/shops" element={ <Shops /> } />
+            <Route path="/brands" element={ <Brands /> } />
+            <Route path="/contact" element={ <Contact /> } />
+            <Route path="/favorite" element={ <Favorite /> } />
+            <Route path="/sales" element={ <Sales /> } />
+            <Route path="/profile" element={ <Profile /> } />
+            <Route path="/profile/settings" element={ <UserSettings /> } />
+          </Routes>
+        }
       <Footer />
     </>
   );

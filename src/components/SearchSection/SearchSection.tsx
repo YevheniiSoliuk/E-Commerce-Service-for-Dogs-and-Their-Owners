@@ -39,9 +39,9 @@ const SearchSection = ({items, setSearchResults, forPage, values, placeholder, s
     //   resultsArray = items.filter((item: WalkHistoryI) =>item.date.includes(e.target.value) || item.distance.includes(e.target.value));
     // }
 
-    resultsArray = items.filter((item: IProduct) => item.title.includes(e.target.value) ||
-        item.brand.includes(e.target.value) || item.shortDescription?.includes(e.target.value) ||
-        item.longDescription?.includes(e.target.value));
+    resultsArray = items.filter((item: IProduct) => item.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.short_description?.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.long_description?.toLowerCase().includes(e.target.value.toLowerCase()));
 
     setSearchResults(resultsArray);
   }

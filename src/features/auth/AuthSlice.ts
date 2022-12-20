@@ -1,14 +1,17 @@
 import { RootState } from './../../store/store';
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { IUser } from '../../interfaces/User';
 
 type Credentials = {
-  user: string[] | null,
+  user: IUser | null,
   token: string | null,
+  isAuth?: boolean
 }
 
 const initialState: Credentials = {
-  user: null, 
+  user: null,
   token: null,
+  isAuth: false
 }
 
 const authSlice = createSlice({
@@ -17,13 +20,15 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, {payload}: PayloadAction<Credentials>) => {
       const {user, token} = payload;
-
+      
       state.user = user;
       state.token = token;
+      state.isAuth = true;
     },
     logOut: (state) => {
       state.user = null;
       state.token = null;
+      state.isAuth = false;
     }
   },
 })
@@ -35,5 +40,5 @@ export const {
 
 export default authSlice.reducer;
 
-// export const selectCurrentUser = (state: RootState) => state.auth.user;
-// export const selectCurrentToken = (state: RootState) => state.auth.token;
+export const selectCurrentUser = (state: RootState) => state.auth.user;
+export const selectCurrentToken = (state: RootState) => state.auth.token;

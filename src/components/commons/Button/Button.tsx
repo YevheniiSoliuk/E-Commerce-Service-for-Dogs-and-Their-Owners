@@ -6,11 +6,17 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset" | undefined,
   styles: string,
   onClick?: React.MouseEventHandler<HTMLButtonElement>
+  disabled?: boolean,
 }
 
-const Button = ({text, type, value, styles, onClick}: ButtonProps) => {
+const Button = ({text, type, value, styles, onClick, disabled}: ButtonProps) => {
   return (
-    <button type={type} className={styles} value={value} onClick={onClick}>{text}</button>
+    <>
+      {disabled ? 
+        <button type={type} className={styles} value={value} onClick={onClick} disabled>{text}</button> :
+        <button type={type} className={styles} value={value} onClick={onClick}>{text}</button>
+      }
+    </>
   )
 }
 

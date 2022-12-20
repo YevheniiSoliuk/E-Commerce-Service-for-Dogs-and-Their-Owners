@@ -43,8 +43,8 @@ const OrderDetails: React.FC<{order: IOrder, index: number}> = ({order, index}) 
         </td>
         <td>
           <p className="text-[12px]">{product.product.title}</p>
-          <p className="text-[10px]">{product.product.brand}</p>
-          <p className="text-[10px]">{product.product.category}</p>
+          <p className="text-[10px]">{product.product.brand_id}</p>
+          <p className="text-[10px]">{product.product.subcategory_id}</p>
         </td>
         <td className="text-center">
           <p className="text-[14px]">Liczba sztuk</p>
@@ -53,7 +53,7 @@ const OrderDetails: React.FC<{order: IOrder, index: number}> = ({order, index}) 
         <td className="text-center">
           <p className="text-[14px]">Cena</p>
           <p className="text-[14px] text-dark_red">{product.product.price} zł</p>
-          <p className="text-[10px]">({product.product.basePrice} zł/kg)</p>
+          <p className="text-[10px]">({product.product.base_price} zł/kg)</p>
         </td>
         <td className="text-center">
           <span className="text-[12px] hover:text-orange hover:cursor-pointer" onClick={()=>{clickHandler(product, product.product.id)}}>Szczegóły</span>

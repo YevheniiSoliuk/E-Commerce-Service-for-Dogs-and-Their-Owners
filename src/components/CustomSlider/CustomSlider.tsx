@@ -9,9 +9,6 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper";
 
-import StarRating from "../commons/StarRating";
-import avatar from "../../assets/images/avatar.png";
-
 import Slide from "./Slide";
 
 const CustomSlider = () => {

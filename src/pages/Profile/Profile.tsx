@@ -7,9 +7,12 @@ import coin from "../../assets/images/coin.svg";
 import ProgressBar from "../../components/commons/ProgressBars/ProgressBar";
 import PetInfoSection, { dogs } from "./PetInfoSection";
 import { PetInfoProps } from "./PetInfo";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state: RootState) => state.auth);
   
   const [moreWalkInfoClicked, setMoreWalkInfoClicked] = useState(false);
 
@@ -44,7 +47,7 @@ const Profile = () => {
         </div>
         <div className="flex flex-col justify-start items-center w-[350px] h-full">
           <img src={avatar} alt="user-logo" className="w-[200px] rounded-full"/>
-          <h2 className="text-[32px] my-[40px] text-center">Marek Kamiński</h2>
+          <h2 className="text-[32px] my-[40px] text-center">{user?.name} {user?.lastname}</h2>
           <div className="w-full flex justify-between">
             <Button text="Edytuj" value="edit" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-[6px] py-[2px] w-[150px] text-[16px]" onClick={goToProfileSettings}/>
             <Button text="Wyloguj się" value="edit" styles="h-[50px] bg-dark_red border-2 border-green hover:border-white rounded-3xl text-white text-base font-lemon px-[6px] py-[2px] w-[150px] text-[16px]" onClick={()=>{}}/>
