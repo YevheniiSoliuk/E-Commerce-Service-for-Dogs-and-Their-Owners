@@ -5,6 +5,7 @@ import OrderHistorySlice from "../features/ordering/OrderHistorySlice";
 import ProductCartSlice from "../features/ordering/ProductCartSlice";
 import ProductSlice from "../features/ordering/ProductSlice";
 import ContactFormSlice from "../features/registration/ContactFormSlice";
+import FiltersSlice from "../features/FiltersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     product: ProductSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: AuthSlice,
+    filters: FiltersSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware),

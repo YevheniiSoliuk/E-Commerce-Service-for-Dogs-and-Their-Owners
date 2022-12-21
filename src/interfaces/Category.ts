@@ -1,7 +1,6 @@
 export interface ICategory {
   name: string,
-  id: number,
-  subcategories: Array<ISubcategory>
+  id: number
 }
 
 export interface ISubcategory extends ICategory {

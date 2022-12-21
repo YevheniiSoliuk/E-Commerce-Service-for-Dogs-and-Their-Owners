@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import Input from "./Input/Input";
 import { IBrand } from "../../interfaces/Brand";
 import { ICategory, ISubcategory } from "../../interfaces/Category";
+import { addBrand, setCategory } from "../../features/FiltersSlice";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
 
 type ListProps = {
   title: string,
@@ -13,6 +16,8 @@ const List = ({title, items, subitems}: ListProps) => {
 
   const [rotate, setRotate] = useState("before:rotate-45");
   const [showList, setShowList] = useState(false);
+
+  const dispatch: AppDispatch = useDispatch();
 
   const toggleList = () => {
     rotate === "before:rotate-45" ? 
@@ -35,12 +40,12 @@ const List = ({title, items, subitems}: ListProps) => {
       <>
         <ul>
           {isBrand(items?.[0]) ?
-          items?.map(brand => <li className="text-[12px] list-none hover:text-yellow active:text-yellow hover:cursor-pointer" key={brand.id}><Input id={brand.id.toString()} type="checkbox" name="brand" placeholder={brand.name} width=""/></li>) :
+          items?.map(brand => <li className="text-[12px] list-none hover:text-yellow active:text-yellow hover:cursor-pointer" key={brand.id} onClick={()=>dispatch(addBrand([brand as IBrand]))}><Input id={brand.id.toString()} type="checkbox" name="brand" placeholder={brand.name} width=""/></li>) :
           items?.map(category => <li className="text-[12px] list-disc list-inside ml-[10px] mb-[10px]" key={category.name}>{category.name}
             <ul>
             {subitems?.map((subcategory: ISubcategory, index: number) => 
               subcategory.category_id === category.id ?
-              <li className="text-[12px] list-disc list-inside ml-[10px] hover:text-yellow hover:cursor-pointer" key={index}>{subcategory.name}</li> : null
+              <li className="text-[12px] list-disc list-inside ml-[10px] hover:text-yellow hover:cursor-pointer" key={index} onClick={()=>dispatch(setCategory(subcategory))}>{subcategory.name}</li> : null
             )}
             </ul>
           </li>)

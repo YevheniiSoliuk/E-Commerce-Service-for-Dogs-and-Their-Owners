@@ -14,7 +14,7 @@ body {
   cursor: pointer;
   height: 18px;
   width: 18px;
-  margin-top: 4px;
+  
   pointer-events: all;
   position: relative;
 }
