@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Product from './pages/Products/Product';
+import Order from './pages/Order/Order';
 
 function App() {
   const {user} = useSelector((state: RootState) => state.auth);
@@ -36,7 +37,7 @@ function App() {
             <Route path="/products" element={ <Products /> } />
             <Route path="/product/:id" element={ <Product /> } />
             <Route path="/cart" element={ <Cart /> } />
-            <Route path="/order" element={ <div>Order</div> } />
+            <Route path="/order" element={ <Order /> } />
             <Route path="/shops" element={ <Shops /> } />
             <Route path="/brands" element={ <Brands /> } />
             <Route path="/contact" element={ <Contact /> } />

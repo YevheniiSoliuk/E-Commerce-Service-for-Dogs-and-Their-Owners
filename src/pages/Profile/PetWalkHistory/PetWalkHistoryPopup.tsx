@@ -23,7 +23,7 @@ const PetWalkHistoryPopup = ({isOpen, close}: ModalProps) => {
           &times;
         </span>
         <h2 className="text-[32px] text-left mb-[20px]">HISTORIA SPACERÓW</h2>
-        <SearchSection items={[]} setSearchResults={()=>{}} forPage="walk-history" values={["Po dacie","Po dystansie","Po trwaniu"]} placeholder="Wyszukaj spacer..."/>
+        {/* <SearchSection items={[]} setSearchResults={()=>{}} forPage="walk-history" values={["Po dacie","Po dystansie","Po trwaniu"]} placeholder="Wyszukaj spacer..."/> */}
         <WalkHistoryTable walkHistoryItems={walkHistoryData}/>
       </div>
     </Popup>

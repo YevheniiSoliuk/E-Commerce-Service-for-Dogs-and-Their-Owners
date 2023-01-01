@@ -1,21 +1,37 @@
-import React, { ChangeEventHandler } from "react";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 import avatar from "../../../assets/images/avatar.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 type InputProps = {
   id?: string,
   type: string,
   name?: string,
   value?: string,
-  checked?: boolean,
-  state?: boolean,
+  state?: boolean | string,
   required?: boolean,
   placeholder: string | undefined,
   width?: string,
+  imgSrc?: string,
   action?: ()=>void,
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-const Input = ({id, type, name, value, checked, required, placeholder, width, state, action, onChange}: InputProps) => {
+const Input = ({id, type, name, value, required, placeholder, width, state, imgSrc, action, onChange}: InputProps) => {
+  const [isCheck, setIsCheck] = useState(false);
+  const { brands } = useSelector((state: RootState) => state.filters);
+
+  useEffect(()=>{
+    if(brands.length === 0)
+      setIsCheck(false);
+  }, [brands])
+
+  const toggleCheck = () => {
+    if(action !== undefined)
+      action();
+
+    setIsCheck(!isCheck);
+  }
 
   return (
     <>
@@ -23,11 +39,11 @@ const Input = ({id, type, name, value, checked, required, placeholder, width, st
         <div className="flex relative items-center ml-[25px]">
           {required ? 
             <input id={id} type={type} name={name} className="absolute left-[-20px] h-0 w-0 peer" required/> :
-            <input id={id} type={type} name={name} className="absolute left-[-20px] h-0 w-0 peer"/>
+            <input id={id} type={type} name={name} className="absolute left-[-20px] h-0 w-0 peer" checked={isCheck}/>
           }
           <span className="absolute top-1 left-0 h-[20px] w-[20px] bg-yellow rounded-[5px] border-2 border-green ml-[-20px] peer-checked:before:content[''] peer-checked:before:w-[12px] peer-checked:before:h-[10px] peer-checked:before:border-b-[3px] peer-checked:before:border-r-[3px] peer-checked:before:border-green peer-checked:before:rotate-45 peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.4rem] peer-checked:before:-translate-y-[0.4rem] peer-checked:before:rounded-[3px] peer-invalid:border-dark_red"></span>
           {name === "brand" ?
-          <label htmlFor={id} className="flex items-center w-[330px] ml-[15px] text-[12px] text-green tracking-normal mb-[10px]">
+          <label htmlFor={id} className="flex items-center w-[330px] ml-[15px] text-[12px] text-green tracking-normal mb-[10px]" onClick={toggleCheck}>
             <img src={avatar} alt={placeholder} className="inline-block w-[30px] h-[30px] border-full mr-[10px]"/>
             {placeholder}
           </label> : 
@@ -37,12 +53,38 @@ const Input = ({id, type, name, value, checked, required, placeholder, width, st
         </div>
       }
       {type === "radio" &&
-        <div className="flex relative items-center mx-5 mb-[5px]">
-          {required ? <input id={id} type={type} name={name} className="absolute left-[-20px] h-5 w-5 peer" onChange={onChange} required/> : <input id={id} type={type} name={name} className="absolute left-[-20px] h-5 w-5 peer" onChange={onChange}/>}
-          <span className="absolute top-0 left-0 h-[20px] w-[20px] bg-yellow rounded-full border-2 border-green ml-[-20px] peer-checked:before:content-[''] peer-checked:before:w-[10px] peer-checked:before:h-[10px] peer-checked:before:bg-green peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.3rem] peer-checked:before:-translate-y-[0.3rem] peer-checked:before:rounded-full"></span>
+        <div className="flex relative items-center mx-[30px] my-[10px] mb-[5px]">
+          {required ? 
+            <input 
+              id={id} 
+              type={type} 
+              name={name} 
+              value={value}
+              checked={state === value}
+              className="absolute left-[-20px] h-5 w-5 peer" 
+              onChange={onChange} 
+              required/> : 
+            <input 
+              id={id} 
+              type={type} 
+              name={name} 
+              value={value}
+              checked={state === value}
+              className="absolute left-[-20px] h-5 w-5 peer" 
+              onChange={onChange}
+            />
+          }
+          <span 
+            className="absolute top-[30px] left-0 h-[20px] w-[20px] bg-yellow rounded-full border-2 border-green ml-[-20px] peer-checked:before:content-[''] peer-checked:before:w-[10px] peer-checked:before:h-[10px] peer-checked:before:bg-green peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.3rem] peer-checked:before:-translate-y-[0.3rem] peer-checked:before:rounded-full">
+          </span>
+          {name === "payments" ?
+          <label htmlFor={id} className="ml-[20px] text-[14px] text-green">
+            <img src={imgSrc} alt={placeholder} className="inline-block w-[140px] h-[80px] border-full mr-[30px]" onClick={action}/>
+            {placeholder}
+          </label> : 
           <label htmlFor={id} className="ml-[5px] text-[14px] text-green">
             {placeholder}
-          </label>
+          </label>}
         </div>
       }
       {type === "toggle" &&

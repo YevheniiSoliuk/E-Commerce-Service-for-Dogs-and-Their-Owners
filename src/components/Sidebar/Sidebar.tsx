@@ -7,30 +7,30 @@ import { useCategoriesQuery, useSubcategoriesQuery } from "../../features/ApiFil
 import { ICategory, ISubcategory } from "../../interfaces/Category";
 import { useProductsQuery } from "../../features/ApiProductsSlice";
 import { IProduct } from "../../interfaces/Order";
+import Button from "../commons/Button/Button";
 
-const Sidebar = () => {
+type SideBarProps = {
+  products: IProduct[] | undefined,
+  applyFilters: () => void,
+  removeFilters: () => void,
+}
+
+const Sidebar = ({products, applyFilters, removeFilters}: SideBarProps) => {
 
   const {data: brandsData, isLoading: brandsIsLoading} = useBrandsQuery();
   const {data: categoriesData, isLoading: categoriesIsLoading} = useCategoriesQuery();
-  const {data: subcategoriesData, isLoading: subcategoriesIsLoading} = useSubcategoriesQuery();
-  const {data} = useProductsQuery();
-  const products = data?.["All products"];
+  const {data: subcategoriesData, isLoading: subcategoriesIsLoading} = useSubcategoriesQuery();  
 
-  let productsByPriceAsc: IProduct[] = [];
-  let productsByPriceDesc: IProduct[] = [];
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
 
-  if(products)
-  {
-    productsByPriceAsc = [...products];
-    productsByPriceDesc = [...products];
-
-    productsByPriceAsc.sort((a: IProduct, b: IProduct) => a.price - b.price);
-    productsByPriceDesc.sort((a: IProduct, b: IProduct) => b.price - a.price);
-  }
-
-  const minPrice = Number(productsByPriceAsc[0].price.toFixed(0));
-  const maxPrice = Number(productsByPriceDesc[0].price.toFixed(0));
-
+  useEffect(()=>{
+    if(products)
+    {
+      setMinPrice(Number([...products].sort((a: IProduct, b: IProduct) => a.price - b.price)[0].price.toFixed(0)));
+      setMaxPrice(Number([...products].sort((a: IProduct, b: IProduct) => b.price - a.price)[0].price.toFixed(0)));
+    }
+  }, [products])
 
   return (
     <div className="flex flex-col w-[330px] h-[100%] bg-dark_green border-2 border-green rounded-[20px] p-[30px]">
@@ -48,7 +48,10 @@ const Sidebar = () => {
         <StarRating type="active" active={0} size="h-[40px] w-[40px]" alignment="text-center" rates=""/>
         <div className="w-[250px] h-[2px] bg-green/50 my-[15px]"></div>
       </div>
-
+      <div className="w-ful flex justify-between items-center mt-[20px]">
+        <Button text="Zastosuj" value="apply" styles="w-[100px] h-[45px] bg-orange border-2 border-green rounded-[15px] shadow-md px-[5px] py-[5px] text-[16px] text-center hover:border-0 active:border-2" onClick={applyFilters}/>
+        <Button text="Wyczyśc" value="clear" styles="w-[100px] h-[45px] bg-orange border-2 border-green rounded-[15px] shadow-md px-[5px] py-[5px] text-[16px] text-center hover:border-0 active:border-2" onClick={removeFilters}/>
+      </div>
     </div>
   )
 }

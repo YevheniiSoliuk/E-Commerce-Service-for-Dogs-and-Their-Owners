@@ -1,8 +1,9 @@
 import { IBrand } from '../interfaces/Brand';
+import Brands from '../pages/Brands/Brands';
 import { ISubcategory } from './../interfaces/Category';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type FiltersState = {
+export type FiltersState = {
   subcategory: ISubcategory | null,
   brands: IBrand[],
   priceMin: number,
@@ -25,8 +26,17 @@ const FiltersSlice = createSlice({
     setCategory: (state, {payload}: PayloadAction<ISubcategory>) => {
       state.subcategory = payload;
     },
-    addBrand: (state, {payload}: PayloadAction<IBrand[]>) => {
-      state.brands = {...state.brands, ...payload};
+    addBrand: (state, {payload}: PayloadAction<IBrand>) => {
+      const index = state.brands.findIndex(brand => brand.id === payload.id);
+      
+      if(index !== -1)
+      {
+        state.brands = state.brands.filter(brand => brand.id !== payload.id);
+      }
+      else 
+      {
+        state.brands.push(payload);
+      }
     },
     setPrice: (state, {payload}: PayloadAction<{minPrice: number, maxPrice: number}>) => {
       state.priceMin = payload.minPrice;
@@ -34,6 +44,13 @@ const FiltersSlice = createSlice({
     },
     setRate: (state, {payload}: PayloadAction<number>) => {
       state.rate = payload;
+    },
+    clearFilters: (state) => {
+      state.subcategory = null;
+      state.brands = [];
+      state.priceMax = 0;
+      state.priceMin = 0;
+      state.rate = 0;
     }
   }
 })
@@ -42,7 +59,8 @@ export const {
   setCategory,
   addBrand,
   setPrice,
-  setRate
+  setRate,
+  clearFilters,
 } = FiltersSlice.actions;
 
 export default FiltersSlice.reducer;

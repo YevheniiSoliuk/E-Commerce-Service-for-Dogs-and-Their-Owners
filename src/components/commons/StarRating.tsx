@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
+import React, {useEffect, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
 import { setRate } from "../../features/FiltersSlice";
 
 type StarRatingProps = {
@@ -17,6 +17,15 @@ const StarRating = ({type, active, size, alignment, rates}: StarRatingProps) => 
   const [hover, setHover] = useState(0);
 
   const dispatch: AppDispatch = useDispatch();
+  const {rate} = useSelector((state: RootState) => state.filters);
+
+  useEffect(()=>{
+    if(rate === 0)
+    {
+      setRating(0);
+      setHover(0);
+    }
+  }, [rate])
 
   const setRatingFilter = (index: number) => {
     setRating(index);

@@ -1,23 +1,21 @@
-import React, {SetStateAction, useState} from "react";
+import React, {SetStateAction} from "react";
 import Select from "../commons/Select/Select";
 import sortByNameIcon from "../../assets/icons/sort-by-name.svg";
 import listViewIcon from "../../assets/icons/list-view.svg";
 import moduleViewIcon from "../../assets/icons/view-module.svg";
 import { IProduct } from "../../interfaces/Order";
 import { WalkHistoryI } from "../../interfaces/WalkHistory";
+//React.Dispatch<SetStateAction<string>>
 
 type SearchSectionProps = {
-  items: IProduct[],
-  setSearchResults: React.Dispatch<SetStateAction<IProduct[]>>,
+  setSearchValue: React.Dispatch<SetStateAction<string>>,
   forPage: string,
   placeholder: string,
   values: string[],
   setView?: React.Dispatch<SetStateAction<string>>
 }
 
-const SearchSection = ({items, setSearchResults, forPage, values, placeholder, setView}: SearchSectionProps) => {
-
-  let resultsArray: IProduct[] = [];
+const SearchSection = ({setSearchValue, forPage, values, placeholder, setView}: SearchSectionProps) => {
 
   const isProduct = (items: IProduct[] | WalkHistoryI[]): items is IProduct[] => { 
     return 'title' in items;
@@ -28,7 +26,9 @@ const SearchSection = ({items, setSearchResults, forPage, values, placeholder, s
     // let resultsWalkHistoryItemArray: WalkHistoryI[];
     //let resultsArray: IProduct[] | WalkHistoryI[] = [];
 
-    if(!e.target.value) return setSearchResults(items);
+    if(e.target.value) {
+      setSearchValue(e.target.value);
+    }
     // if(isProduct(items))
     // {
     //   resultsArray = items.filter((item: IProduct) => item.title.includes(e.target.value) ||
@@ -38,22 +38,16 @@ const SearchSection = ({items, setSearchResults, forPage, values, placeholder, s
     // else{
     //   resultsArray = items.filter((item: WalkHistoryI) =>item.date.includes(e.target.value) || item.distance.includes(e.target.value));
     // }
-
-    resultsArray = items.filter((item: IProduct) => item.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.short_description?.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.long_description?.toLowerCase().includes(e.target.value.toLowerCase()));
-
-    setSearchResults(resultsArray);
   }
 
   const handleSubmit = (e: React.SyntheticEvent) => e.preventDefault();
 
-  const sortByTitle = () => {
-    console.log(items.sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title)));
-    !resultsArray ? 
-    setSearchResults(items.sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title))) :
-    setSearchResults(resultsArray?.sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title)));
-  }
+  // const sortByTitle = () => {
+  //   console.log(items.sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title)));
+  //   !resultsArray ? 
+  //   setSearchResults(items.sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title))) :
+  //   setSearchResults(resultsArray?.sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title)));
+  // }
 
   return (
     <div className="flex items-center justify-between w-[100%] h-[70px] bg-dark_green border-2 border-green rounded-[25px] px-[10px] py-[10px]">
@@ -69,7 +63,7 @@ const SearchSection = ({items, setSearchResults, forPage, values, placeholder, s
       </form>
       {forPage === "products" ?
         <div>
-          <img src={sortByNameIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>{sortByTitle()}}/>
+          <img src={sortByNameIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer" onClick={()=>{}}/>
           <img src={listViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer hover:border-2 hover:border-orange hover:rounded-[10px]" onClick={()=>setView?.("list")}/>
           <img src={moduleViewIcon} alt="sortByName" className="inline-block mr-[15px] cursor-pointer hover:border-2 hover:border-orange hover:rounded-[10px]" onClick={()=>setView?.("cards")}/>
         </div> : 

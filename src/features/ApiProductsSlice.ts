@@ -1,10 +1,12 @@
 import {apiSlice} from "../api/apiSlice";
 import { IProduct } from "../interfaces/Order";
 
+
+
 const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     products: builder.query<{[key: string]: IProduct[]}, void>({
-      query: () => "/products"
+      query: () => "/products",
     }),
     product: builder.query<{[key: string]: IProduct}, number | void>({
       query: (id: number) => `/product/${id}`

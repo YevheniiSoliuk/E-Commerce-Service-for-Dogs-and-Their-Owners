@@ -12,18 +12,16 @@ type MultiRangeSliderProps = {
 const MultiRangeSlider = ({ min, max }: MultiRangeSliderProps) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
-  // const minValRef = useRef(min);
-  // const maxValRef = useRef(max);
 
   const dispatch: AppDispatch = useDispatch();
 
-  useEffect(() => {
-    if(maxVal - minVal <= 100)
-    {
-        setMinVal(minVal-1);
-        setMaxVal(maxVal+1);
-    }
-  }, [minVal, maxVal, dispatch]);
+  // useEffect(() => {
+  //   if(maxVal - minVal <= 100)
+  //   {
+  //       setMinVal(minVal-1);
+  //       setMaxVal(maxVal+1);
+  //   }
+  // }, [minVal, maxVal]);
 
   // const range: LegacyRef<HTMLDivElement> = useRef(null);
 
@@ -98,26 +96,32 @@ const MultiRangeSlider = ({ min, max }: MultiRangeSliderProps) => {
 
   return (
     <div className="flex flex-col gap-[20px] items-center justify-center w-[100%]">
-      <input 
-        type="range"
-        min={min}
-        max={max}
-        value={minVal}
-        onChange={(e) => {
-          setMinVal(Number(e.target.value));
-        }}
-        className="h-[7px] w-[250px] bg-yellow border-[1px] border-green rounded-[10px] outline-none z-4 thumb"
-      />
-      <input 
-        type="range"
-        min={min}
-        max={max}
-        value={maxVal}
-        onChange={(e) => {
-          setMaxVal(Number(e.target.value));
-        }}
-        className="h-[7px] w-[250px] bg-yellow border-[1px] border-green rounded-[10px] outline-none z-4 thumb"
-      />
+      <div className="w-full flex justify-between items-center">
+        <p className="text-[14px]">Min:</p> 
+        <input 
+          type="range"
+          min={min}
+          max={max}
+          value={minVal}
+          onChange={(e) => {
+            setMinVal(Number(e.target.value));
+          }}
+          className="inline-block h-[7px] w-[200px] bg-yellow border-[1px] border-green rounded-[10px] ml-[10px] outline-none z-4 thumb"
+        />
+      </div>
+      <div className="w-full flex justify-between items-center">
+        <p className="text-[14px]">Max:</p> 
+        <input 
+          type="range"
+          min={min}
+          max={max}
+          value={maxVal}
+          onChange={(e) => {
+            setMaxVal(Number(e.target.value));
+          }}
+          className="inline-block h-[7px] w-[200px] bg-yellow border-[1px] border-green rounded-[10px] ml-[10px] outline-none z-4 thumb"
+        />
+      </div>
       <div className="w-full">
         <p className="text-green text-[12px]">Cena: <span className="text-[14px] text-dark_red">{minVal}zł</span> - <span className="text-[14px] text-dark_red">{maxVal}zł</span></p>
         <div className="flex justify-end mt-[10px]">
