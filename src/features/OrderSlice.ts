@@ -3,13 +3,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type State = {
   paymentMethod: string,
   isAnotherAddress: boolean,
-  isActiveCard: boolean
+  activeCard: string,
+  deliveryMethod: string
 }
 
 const initialState: State = {
   paymentMethod: "",
   isAnotherAddress: false,
-  isActiveCard: false,
+  activeCard: "",
+  deliveryMethod: "",
 }
 
 const OrderSlice = createSlice({
@@ -29,15 +31,11 @@ const OrderSlice = createSlice({
         state.isAnotherAddress = false;
       }
     },
-    toggleIsActiveCard: (state) => {
-      if(state.isActiveCard)
-      {
-        state.isActiveCard = false;
-      }
-      else 
-      {
-        state.isActiveCard = true;
-      }
+    setActiveCard: (state, {payload}: PayloadAction<string>) => {
+      state.activeCard = payload;
+    },
+    setOrderDeliveryMethod: (state, {payload}: PayloadAction<string>) => {
+      state.deliveryMethod = payload;
     }
   }
 })
@@ -45,7 +43,8 @@ const OrderSlice = createSlice({
 export const {
   setOrderPaymentMethod,
   toggleIsAnotherAddress,
-  toggleIsActiveCard
+  setActiveCard,
+  setOrderDeliveryMethod
 } = OrderSlice.actions;
 
 export default OrderSlice.reducer;

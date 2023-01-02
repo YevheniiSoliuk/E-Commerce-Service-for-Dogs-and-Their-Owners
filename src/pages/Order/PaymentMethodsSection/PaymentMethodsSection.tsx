@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Input from '../../../components/commons/Input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store/store';
-import { setOrderPaymentMethod } from '../../../features/OrderSlice';
+import { setActiveCard, setOrderPaymentMethod } from '../../../features/OrderSlice';
 import { IPaymentMethod } from '../../../interfaces/PaymentMethod';
 import PaymentCardsModal from './PaymentCardsPopup';
 
@@ -45,6 +45,7 @@ const PaymentMethodsSection = () => {
 
     setPaymentMethod(value);
     dispatch(setOrderPaymentMethod(value));
+    dispatch(setActiveCard(""));
   }
   
   return (

@@ -13,11 +13,12 @@ type InputProps = {
   placeholder: string | undefined,
   width?: string,
   imgSrc?: string,
+  price?: number,
   action?: ()=>void,
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-const Input = ({id, type, name, value, required, placeholder, width, state, imgSrc, action, onChange}: InputProps) => {
+const Input = ({id, type, name, value, required, placeholder, width, state, imgSrc, price, action, onChange}: InputProps) => {
   const [isCheck, setIsCheck] = useState(false);
   const { brands } = useSelector((state: RootState) => state.filters);
 
@@ -74,17 +75,34 @@ const Input = ({id, type, name, value, required, placeholder, width, state, imgS
               onChange={onChange}
             />
           }
-          <span 
-            className="absolute top-[30px] left-0 h-[20px] w-[20px] bg-yellow rounded-full border-2 border-green ml-[-20px] peer-checked:before:content-[''] peer-checked:before:w-[10px] peer-checked:before:h-[10px] peer-checked:before:bg-green peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.3rem] peer-checked:before:-translate-y-[0.3rem] peer-checked:before:rounded-full">
-          </span>
           {name === "payments" ?
-          <label htmlFor={id} className="ml-[20px] text-[14px] text-green">
-            <img src={imgSrc} alt={placeholder} className="inline-block w-[140px] h-[80px] border-full mr-[30px]" onClick={action}/>
-            {placeholder}
-          </label> : 
-          <label htmlFor={id} className="ml-[5px] text-[14px] text-green">
-            {placeholder}
-          </label>}
+          <>
+            <span 
+              className="absolute top-[30px] left-0 h-[20px] w-[20px] bg-yellow rounded-full border-2 border-green ml-[-20px] peer-checked:before:content-[''] peer-checked:before:w-[10px] peer-checked:before:h-[10px] peer-checked:before:bg-green peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.3rem] peer-checked:before:-translate-y-[0.3rem] peer-checked:before:rounded-full">
+            </span>
+            <label htmlFor={id} className="ml-[20px] text-[14px] text-green">
+              <img src={imgSrc} alt={placeholder} className="inline-block w-[140px] h-[80px] mr-[30px] hover:cursor-pointer" onClick={action}/>
+              {placeholder}
+            </label>
+          </> : name === "deliveries" ?
+          <>
+            <span 
+              className="absolute top-[15px] left-0 h-[20px] w-[20px] bg-yellow rounded-full border-2 border-green ml-[-20px] peer-checked:before:content-[''] peer-checked:before:w-[10px] peer-checked:before:h-[10px] peer-checked:before:bg-green peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.3rem] peer-checked:before:-translate-y-[0.3rem] peer-checked:before:rounded-full">
+            </span>
+            <label htmlFor={id} className="flex items-center justify-between w-[100%] h-[50px] ml-[20px] text-[12px] text-green">
+              <img src={imgSrc} alt={placeholder} className="inline-block w-[45px] mr-[30px] hover:cursor-pointer" onClick={action}/>
+              <p className="w-[70%] text-left">{placeholder}</p>
+              {price === 0 ? <p className="ml-[20px]">Gratis</p> : <p className="ml-[20px]">{price} zł</p>}
+            </label> 
+          </> :
+          <>
+            <span 
+              className="absolute top-[30px] left-0 h-[20px] w-[20px] bg-yellow rounded-full border-2 border-green ml-[-20px] peer-checked:before:content-[''] peer-checked:before:w-[10px] peer-checked:before:h-[10px] peer-checked:before:bg-green peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.3rem] peer-checked:before:-translate-y-[0.3rem] peer-checked:before:rounded-full">
+            </span>
+            <label htmlFor={id} className="ml-[5px] text-[14px] text-green">
+              {placeholder}
+            </label>
+          </>}
         </div>
       }
       {type === "toggle" &&
