@@ -7,19 +7,25 @@ import Button from '../commons/Button/Button';
 
 const CartPopupItem = ({product, amount}: IOrderPosition) => {
 
-  const {id, photos, title, price, base_price} = {...product};
+  const {id, photos, title, price, base_price, discount_price, discount_amount} = {...product};
 
   const dispatch: AppDispatch = useDispatch();
-
+  
   return (
-    <div className="flex justify-between items-end relative mb-[30px]">
+    <div className="flex justify-start items-end relative mb-[30px]">
       <span className="absolute text-[30px] left-[420px] top-0 hover:text-yellow cursor-pointer" onClick={()=>{dispatch(removePosition(id))}}>
           &times;
       </span>
-      <img src={photos?.[0]} alt={""} className="w-[30%]"/>
-      <div className="">
+      {photos ? 
+        <img src={photos?.[0]} alt={""} className="w-[30%]"/> :
+        <img src={"../images/product-image.jpg"} alt="product" className="w-[30%]"/>
+      }
+      <div className="w-[40%] ml-[20px]">
         <h3 className="mb-[10px] text-[14px]">{title}</h3>
-        <p className="text-dark_red text-[16px] mb-[5px]">{price} zł</p>
+        {discount_price !== undefined && discount_price !== null && discount_amount ? 
+          <p className="text-dark_red text-[16px] mb-[5px]">{price - discount_price} zł</p> :
+          <p className="text-dark_red text-[16px] mb-[5px]">{price} zł</p>
+        } 
         <p className="mb-[20px] text-[14px]">({base_price} zł/kg)</p>
       </div>
       <div className="flex items-center">

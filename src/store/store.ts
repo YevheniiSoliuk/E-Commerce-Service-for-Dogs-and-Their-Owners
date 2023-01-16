@@ -7,6 +7,7 @@ import ProductSlice from "../features/ordering/ProductSlice";
 import ContactFormSlice from "../features/registration/ContactFormSlice";
 import FiltersSlice from "../features/FiltersSlice";
 import OrderSlice from "../features/OrderSlice";
+import UsersSlice from "../features/UsersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     auth: AuthSlice,
     filters: FiltersSlice,
     order: OrderSlice,
+    users: UsersSlice
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware),

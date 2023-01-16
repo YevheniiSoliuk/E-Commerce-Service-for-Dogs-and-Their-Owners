@@ -43,7 +43,7 @@ const Products = () => {
   const [view, setView] = useState<string>("cards");
 
   const { data: productsData, isLoading: productsIsLoading } = useProductsQuery();
-  const { data: brandsData, isLoading: brandsIsLoading } = useBrandsQuery();
+  const { data: brandsData } = useBrandsQuery();
   const brands: IBrand[] | undefined = brandsData?.["All brands"];
 
   const { subcategory, brands: selectedBrands, priceMin, priceMax, rate } = useSelector((state: RootState) => state.filters);

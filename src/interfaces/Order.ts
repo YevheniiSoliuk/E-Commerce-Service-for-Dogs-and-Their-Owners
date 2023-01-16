@@ -31,6 +31,5 @@ export interface IProduct {
   discount_price?: number | null,
   averages?: IAdvantage[] | null,
   ingredients?: string | null,
-  dosage?: string | null,
-  favourite?: boolean | null,
+  dosage?: string | null
 }

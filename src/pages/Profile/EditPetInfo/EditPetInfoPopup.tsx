@@ -5,16 +5,32 @@ import dogAvatar1 from "../../../assets/images/dog-avatar-1.png";
 import Input from '../../../components/commons/Input/Input';
 import Select from '../../../components/commons/Select/Select';
 import Button from '../../../components/commons/Button/Button';
+import { IAnimal, IAnimalImage, IAnimalUpdate } from '../../../interfaces/Animal';
+import { useSetImageMutation, useUpdateAnimalMutation } from '../../../features/ApiAnimalsSlice';
 
-const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
+type PropsType = {
+  modal: ModalProps,
+  animal: IAnimal,
+  animalBreed: string
+}
 
-  const [petName, setPetName] = useState("");
-  const [breed, setBreed] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [sex, setSex] = useState("Pies");
-  const [weight, setWeight] = useState("");
-  const [description, setDescription] = useState("");
-  const [avatar, setAvatar] = useState(dogAvatar1);
+const EditPetInfoPopup = ({modal, animal, animalBreed}: PropsType) => {
+
+  const {isOpen, close} = modal
+
+  const [petName, setPetName] = useState<string>(animal.name);
+  const [breed, setBreed] = useState<string>(animalBreed);
+  const [birthday, setBirthday] = useState<string>(animal.birth_date);
+  const [sex, setSex] = useState<string>(animal.sex);
+  const [weight, setWeight] = useState<number>(animal.weight);
+  const [description, setDescription] = useState<string>(animal.bio);
+  const [avatar, setAvatar] = useState<string>(animal.photo_url);
+  const [newImage, setNewImage] = useState<File>();
+
+  const [setImage] = useSetImageMutation();
+  const [updateAnimal] = useUpdateAnimalMutation();
+
+  const image = new FormData();
 
   const onEventChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const input = event.target as HTMLInputElement;
@@ -24,8 +40,16 @@ const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
     }
 
     const file = input.files[0];
-    console.log(file.type);
-    setAvatar(file.name);
+    setNewImage(file);
+
+    if(newImage)
+    {
+      image.append(
+        animal.id.toString(),
+        newImage,
+        newImage?.name
+      )
+    } 
   }
 
   const contentStyle = { top: "40px" };
@@ -35,24 +59,29 @@ const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
     setBreed("");
     setBirthday("");
     setSex("");
-    setWeight("");
+    setWeight(0);
     setDescription("");
   }
 
   const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.SyntheticEvent): void => {
     e.preventDefault();
 
-    const payload: string[] = [
-      petName, 
-      breed, 
-      birthday, 
-      sex, 
-      weight, 
-      description,
-      avatar,
-    ]
+    const payload: IAnimalUpdate = {
+      id: animal.id,
+      name: petName,
+      weight: weight,
+      height: 50,
+      bio: description
+    }
+
+    const data: IAnimalImage = {
+      id: animal.id,
+      image: image
+    } 
+    setImage(data); 
 
     console.log(payload);
+    updateAnimal(payload);
   }
 
   return (
@@ -64,7 +93,7 @@ const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
         <img src={avatar} alt="pet-avatar" className="w-[200px] rounded-full absolute top-[-100px] left-[400px]"/>
         <Input id="pet-avatar" type="file" name="pet-avatar" placeholder="" width="" value={avatar} onChange={(e)=>{onEventChange(e)}}/>
         <form method="PUT" onSubmit={onHandleSubmit}>
-          <div className="flex justify-between items-center w-[]">
+          <div className="flex justify-between items-center">
             <div>
               <Input id="pet-name" type="text" name="pet-name" value={petName} onChange={(e)=>{setPetName(e.target.value)}} placeholder="Nazwa" width="w-[340px]"/>
               <Input id="birthday" type="date" name="birthday" value={birthday} onChange={(e)=>{setBirthday(e.target.value)}} placeholder="Rok urodzenia" width="w-[340px]"/>
@@ -75,10 +104,10 @@ const EditPetInfoPopup = ({isOpen, close}: ModalProps) => {
             <div>
               <Input id="breed" type="text" name="breed" value={breed} onChange={(e)=>{setBreed(e.target.value)}} placeholder="Rasa" width="w-[340px]"/>
               <Select id="sex" name="sex" values={["Pies", "Suka"]} placeholder="Płeć" styles="w-[340px] h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0" forPage="" value={sex} onChange={(e)=>{setSex(e.target.value)}}/>
-              <Input id="weight" type="text" name="weight" value={weight} onChange={(e)=>{setWeight(e.target.value)}} placeholder="Waga" width="w-[340px]"/>
+              <Input id="weight" type="number" name="weight" value={weight.toString()} onChange={(e)=>{setWeight(Number(e.target.value))}} placeholder="Waga" width="w-[340px]"/>
               <div className="flex justify-between">
                 <Button text="Anuluj" type="reset" value="cancel" styles="h-[50px] bg-yellow border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[150px]" onClick={clearState}/>
-                <Button text="Zapisz" type="submit" value="save" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[150px]"/>
+                <Button text="Zapisz" type="submit" value="save" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[150px]" onClick={close}/>
               </div>
             </div>
           </div>

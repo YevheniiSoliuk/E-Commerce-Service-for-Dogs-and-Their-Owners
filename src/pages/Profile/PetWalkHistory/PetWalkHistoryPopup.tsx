@@ -2,19 +2,25 @@ import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
 import WalkHistoryTable from '../../../components/commons/Table/WalkHistoryTable';
 import { ModalProps } from '../../../components/Login/ModalProps';
-import SearchSection from '../../../components/SearchSection/SearchSection';
-import { walkHistoryData } from '../../../data/walkHistoryItems';
-import { WalkHistoryI } from '../../../interfaces/WalkHistory';
+import { useWalksQuery } from '../../../features/ApiWlaksSlice';
+import { IWalk } from '../../../interfaces/Walk';
 
-const PetWalkHistoryPopup = ({isOpen, close}: ModalProps) => {
+type PropsType = {
+  modal: ModalProps,
+  animalId: number
+}
 
-  // const [walkHistoryItems, setWalkHistoryItems] = useState<WalkHistoryI[]>([]);
-  // const [searchResults, setSearchResults] = useState<WalkHistoryI[]>([]);
+const PetWalkHistoryPopup = ({modal, animalId}: PropsType) => {
+  const {isOpen, close} = modal;
+  const [walks, setWalks] = useState<IWalk[]>([]);
+  const {data, isLoading} = useWalksQuery();
 
-  // useEffect(()=>{
-  //   setWalkHistoryItems(walkHistoryData);
-  //   setSearchResults(walkHistoryData);
-  // }, [])
+  useEffect(()=>{
+    if(data)
+    {
+      setWalks(data.Walks);
+    }
+  }, [data])
   
   return (
     <Popup open={isOpen} closeOnDocumentClick onClose={close}>
@@ -23,8 +29,10 @@ const PetWalkHistoryPopup = ({isOpen, close}: ModalProps) => {
           &times;
         </span>
         <h2 className="text-[32px] text-left mb-[20px]">HISTORIA SPACERÓW</h2>
-        {/* <SearchSection items={[]} setSearchResults={()=>{}} forPage="walk-history" values={["Po dacie","Po dystansie","Po trwaniu"]} placeholder="Wyszukaj spacer..."/> */}
-        <WalkHistoryTable walkHistoryItems={walkHistoryData}/>
+        {isLoading ? 
+          <h2>Loading...</h2> :
+          <WalkHistoryTable walks={walks} animalId={animalId}/>
+        }
       </div>
     </Popup>
   );

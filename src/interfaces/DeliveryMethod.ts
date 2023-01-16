@@ -1,10 +1,7 @@
 interface IPostalPunktAddress {
   city: string,
   street: string,
-  build_number: string
-}
-
-interface IPostalPunktCoordinates {
+  build_number: string,
   langitude: string,
   longtitude: string
 }
@@ -28,7 +25,6 @@ interface IPostalPunktWorkTime {
 interface IPostalPunct {
   name: string,
   address: IPostalPunktAddress,
-  coordinates: IPostalPunktCoordinates,
   work_time: IPostalPunktWorkTime,
 }
 

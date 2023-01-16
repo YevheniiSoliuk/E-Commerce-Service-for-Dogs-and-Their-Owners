@@ -28,7 +28,7 @@ const Home = () => {
   ]
 
   return (
-    <div className="my-[40px]">
+    <div className="mb-[40px]">
       {/* <img src={homeImage} alt="image2" className="h-[450px] bg-slate-400" />
       <div className="absolute left-[600px] top-[450px]">
         <Link to="/products">

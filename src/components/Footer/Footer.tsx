@@ -8,7 +8,7 @@ import GeoIcon from "../../assets/icons/place-marker.svg"
 
 const Footer = () => {
   return (
-    <footer className="flex justify-between w-full h-[400px] bg-yellow/90 px-[100px] py-[50px]">
+    <footer className="flex justify-between w-full h-[400px] bg-dark_green px-[100px] py-[50px] border-t-[2px] border-b-green">
       <FastLinks title="Zakupy" fast_links={[{name: "Promocje", link: "/sales"}, {name: "Dostawa", link: "/delivery"}, {name: "Zamówienia", link: "/orders"}, {name: "Koszyk", link: "/cart"}]}/>
       <FastLinks title="Nasze wsparcie" fast_links={[{name: "Moje Konto", link: "/profile"}, {name: "Pomoc i FAQ", link: "/faq"}, {name: "Ulubione towary", link: "/favorite"}, {name: "Newsletter", link: "/newsletter"}, {name: "O nas", link: "/about-us"}]}/>
       <div className="text-left">

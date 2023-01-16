@@ -6,12 +6,14 @@ type Credentials = {
   user: IUser | null,
   token: string | null,
   isAuth?: boolean
+  passRecoveryToken?: string
 }
 
 const initialState: Credentials = {
   user: null,
   token: null,
-  isAuth: false
+  isAuth: false,
+  passRecoveryToken: ""
 }
 
 const authSlice = createSlice({
@@ -29,6 +31,15 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuth = false;
+    },
+    setPassRecoveryToken : (state, {payload}: PayloadAction<string>) => {
+      state.passRecoveryToken = payload;
+    },
+    setNewFavoriteProducts: (state, {payload}: PayloadAction<number[]>) => {
+      if(state.user?.favourites)
+      {
+        state.user.favourites = payload;
+      }
     }
   },
 })
@@ -36,6 +47,8 @@ const authSlice = createSlice({
 export const {
   setCredentials,
   logOut,
+  setPassRecoveryToken,
+  setNewFavoriteProducts
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -39,15 +39,13 @@ const Product = () => {
   const brands = brandsData?.["All brands"];
   console.log(brands);
   
-  const {title, brand_id, short_description, long_description, photos, price, discount_price, base_price, rate} = {...product};
+  const {title, brand_id, short_description, long_description, photos, price, discount_price, discount_amount, base_price, rate} = {...product};
   //brands?["All brands"].find(brand => brand.id === brandId);
 
-  const addToCart = (id: number) => {
-    console.log(product);
+  const addToCart = () => {
+    console.log(typeof(product?.photos));
     if(product)
-      dispatch(addPosition(product));
-    
-    dispatch(incrementProductAmountByValue([id, amount]));
+      dispatch(incrementProductAmountByValue({product: product, value: amount}));
   }
 
   if(productsIsLoading)
@@ -142,14 +140,14 @@ const Product = () => {
                 </div>
              </div>
              <div className="w-full flex justify-center gap-[40px] items-center mt-[40px] text-[20px]">
-                {discount_price ? 
+                {discount_price && discount_amount !== 0 ? 
                   <div className="text-center">
                     <p className="mb-[10px]">Stara cena</p>
-                    <p className="text-[24px] mb-[7px] text-dark_red/50 line-through">{discount_price} zł</p>
+                    <p className="text-[24px] mb-[7px] text-dark_red/50 line-through">{price} zł</p>
                   </div> : null }
                 <div className="text-center">
                   <p className="mb-[10px]">Cena</p>
-                  <p className="text-[32px] mb-[7px] text-dark_red">{price} zł</p>
+                  <p className="text-[32px] mb-[7px] text-dark_red">{discount_price} zł</p>
                 </div>
                 <div className="text-center">
                   <p className="mb-[10px]">Cena zasadnicza</p>
@@ -165,7 +163,7 @@ const Product = () => {
                 <span className="text-[32px] mx-[10px]">{amount}</span>
                 <Button text={'+'} value={'increment'} styles={'h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-full text-green text-base font-lemon w-[50px]'} onClick={()=>{setAmount((prevState) => prevState+=1)}}/>
               </div>
-              <Button text="Dodaj do koszyka" value="add" styles="w-[250px] h-[55px] bg-orange border-2 border-green rounded-[15px] shadow-md px-[5px] py-[10px] text-center text-[20px] hover:border-0 active:border-2" onClick={()=>{addToCart(Number(id))}}/>
+              <Button text="Dodaj do koszyka" value="add" styles="w-[250px] h-[55px] bg-orange border-2 border-green rounded-[15px] shadow-md px-[5px] py-[10px] text-center text-[20px] hover:border-0 active:border-2" onClick={()=>{addToCart()}}/>
             </div>
           </div>
         </div>

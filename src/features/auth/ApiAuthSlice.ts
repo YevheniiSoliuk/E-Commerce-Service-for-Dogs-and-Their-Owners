@@ -15,6 +15,20 @@ const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...credentials }
       })
+    }),
+    getPassRecoveryToken: builder.mutation({
+      query: email => ({
+        url: "/user/recovery_password",
+        method: "POST",
+        body: { ...email }
+      })
+    }),
+    setNewPassword: builder.mutation({
+      query: recoveryData => ({
+        url: "/user/password_recovery_page",
+        method: "POST",
+        body: { ...recoveryData }
+      })
     })
   })
 })
@@ -22,4 +36,6 @@ const authApiSlice = apiSlice.injectEndpoints({
 export const {
   useLoginMutation,
   useRegisterMutation,
+  useGetPassRecoveryTokenMutation,
+  useSetNewPasswordMutation
 } = authApiSlice;

@@ -87,33 +87,19 @@ const Signup = () => {
         name: userData["User Info"].name,
         lastname: userData["User Info"].surname,
         email: userData["User Info"].email,
-        phone: userData["User Info"].phone_number,
-        province: userData["User Info"].state,
-        place: userData["User Info"].city,
-        postalCode: userData["User Info"].post_code,
-        street: userData["User Info"].street,
-        homeNumber: userData["User Info"].home_number, 
+        phone: userData["User Info"].phone_number, 
         login: userData["User Info"].login,
         password: userData["User Info"].password,
-        passwordRepeat: userData.password_repeat,
-        photo: userData["User Info"].photo,
+        photo: userData["User Info"].photo_url,
         address_id: userData["User Info"].address_id,
         coins: userData["User Info"].coins,
-        is_admin: userData["User Info"].is_admin
+        is_admin: userData["User Info"].is_admin,
+        favourites: userData["User Info"].favourites
       }
       
       dispatch(setCredentials({user, token}));
       clearFields();
-
-      if(user.is_admin)
-      {
-        navigate("/dashboard");      
-      }
-      else
-      {
-        navigate("/profile");
-      }
-
+      navigate("/profile");
     } catch(err) {   
       if(isFetchBaseQueryError(err))
       {

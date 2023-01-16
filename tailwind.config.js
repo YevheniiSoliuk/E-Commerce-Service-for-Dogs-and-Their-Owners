@@ -9,7 +9,7 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      lemon: ["Lemon", "sans-serif"],
+      lato: ["Lato", "sans-serif"],
     },
     colors: {
       'white': '#ffffff',

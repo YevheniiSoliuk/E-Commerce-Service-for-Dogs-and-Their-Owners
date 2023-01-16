@@ -9,7 +9,7 @@ import Select from '../../components/commons/Select/Select';
 const DeliveryInfo = () => {
 
   const user: IUser | null  = useSelector((state: RootState) => state.auth.user);
-  const { id, name, lastname, email, phone, province, place, postalCode, street, homeNumber, address_id } = {...user};
+  const { id, name, lastname, email, phone, address_id } = {...user};
 
   const isAnotherAddress = useSelector((state: RootState) => state.order.isAnotherAddress);
   const dispatch: AppDispatch = useDispatch();
@@ -50,15 +50,15 @@ const DeliveryInfo = () => {
           </div>
           <div className="flex items-center justify-between text-[20px] mb-[15px]">
             <p>Ulica i numer:</p>
-            <p>{street} {homeNumber}</p>
+            <p>{"street"} {"homeNumber"}</p>
           </div>
           <div className="flex items-center justify-between text-[20px] mb-[15px]">
             <p>Kod pocztowy:</p>
-            <p>{postalCode}</p>
+            <p>{"postalCode"}</p>
           </div>
           <div className="flex items-center justify-between text-[20px] mb-[15px]">
             <p>Miasto:</p>
-            <p>{place}</p>
+            <p>{"place"}</p>
           </div>
           <div className="flex items-center justify-between text-[20px] mb-[15px]">
             <p>Telefon:</p>
@@ -113,12 +113,12 @@ const DeliveryInfo = () => {
               placeholder="Miejscowość" 
               styles="w-[240px] h-[50px] bg-yellow text-green border-2 border-green rounded-[20px] shadow-md mb-[30px] px-[20px] py-[10px] outline-0" 
               forPage="" 
-              value={place} 
+              value={"place"} 
               onChange={(e)=>{setAnotherPlace(e.target.value)}}/>
             <Input 
               id="post" 
               type="text" 
-              value={postalCode} 
+              value={"postalCode"} 
               onChange={(e)=>{setAnotherPostalCode(e.target.value)}} 
               placeholder="Kod posztowy" 
               width="w-[240px]"
@@ -128,7 +128,7 @@ const DeliveryInfo = () => {
             <Input 
               id="street" 
               type="text" 
-              value={street} 
+              value={"street"} 
               onChange={(e)=>{setAnotherStreet(e.target.value)}} 
               placeholder="Ulica" 
               width="w-[240px]"
@@ -136,7 +136,7 @@ const DeliveryInfo = () => {
             <Input 
               id="home-number" 
               type="text" 
-              value={homeNumber} 
+              value={"homeNumber"} 
               onChange={(e)=>{setAnotherHomeNumber(e.target.value)}} 
               placeholder="Nr domu" 
               width="w-[240px]"

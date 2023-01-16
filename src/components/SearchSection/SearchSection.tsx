@@ -4,7 +4,6 @@ import sortByNameIcon from "../../assets/icons/sort-by-name.svg";
 import listViewIcon from "../../assets/icons/list-view.svg";
 import moduleViewIcon from "../../assets/icons/view-module.svg";
 import { IProduct } from "../../interfaces/Order";
-import { WalkHistoryI } from "../../interfaces/WalkHistory";
 //React.Dispatch<SetStateAction<string>>
 
 type SearchSectionProps = {
@@ -17,7 +16,7 @@ type SearchSectionProps = {
 
 const SearchSection = ({setSearchValue, forPage, values, placeholder, setView}: SearchSectionProps) => {
 
-  const isProduct = (items: IProduct[] | WalkHistoryI[]): items is IProduct[] => { 
+  const isProduct = (items: IProduct[]): items is IProduct[] => { 
     return 'title' in items;
   }
 

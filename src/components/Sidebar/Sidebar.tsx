@@ -17,9 +17,9 @@ type SideBarProps = {
 
 const Sidebar = ({products, applyFilters, removeFilters}: SideBarProps) => {
 
-  const {data: brandsData, isLoading: brandsIsLoading} = useBrandsQuery();
-  const {data: categoriesData, isLoading: categoriesIsLoading} = useCategoriesQuery();
-  const {data: subcategoriesData, isLoading: subcategoriesIsLoading} = useSubcategoriesQuery();  
+  const {data: brandsData} = useBrandsQuery();
+  const {data: categoriesData} = useCategoriesQuery();
+  const {data: subcategoriesData} = useSubcategoriesQuery();  
 
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
@@ -49,8 +49,8 @@ const Sidebar = ({products, applyFilters, removeFilters}: SideBarProps) => {
         <div className="w-[250px] h-[2px] bg-green/50 my-[15px]"></div>
       </div>
       <div className="w-ful flex justify-between items-center mt-[20px]">
-        <Button text="Zastosuj" value="apply" styles="w-[100px] h-[45px] bg-orange border-2 border-green rounded-[15px] shadow-md px-[5px] py-[5px] text-[16px] text-center hover:border-0 active:border-2" onClick={applyFilters}/>
         <Button text="Wyczyśc" value="clear" styles="w-[100px] h-[45px] bg-orange border-2 border-green rounded-[15px] shadow-md px-[5px] py-[5px] text-[16px] text-center hover:border-0 active:border-2" onClick={removeFilters}/>
+        <Button text="Zastosuj" value="apply" styles="w-[100px] h-[45px] bg-orange border-2 border-green rounded-[15px] shadow-md px-[5px] py-[5px] text-[16px] text-center hover:border-0 active:border-2" onClick={applyFilters}/>
       </div>
     </div>
   )

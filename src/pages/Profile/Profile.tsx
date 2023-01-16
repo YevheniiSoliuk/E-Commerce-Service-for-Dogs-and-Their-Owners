@@ -5,10 +5,22 @@ import Button from "../../components/commons/Button/Button";
 
 import coin from "../../assets/images/coin.svg";
 import ProgressBar from "../../components/commons/ProgressBars/ProgressBar";
-import PetInfoSection, { dogs } from "./PetInfoSection";
-import { PetInfoProps } from "./PetInfo";
+import PetInfoSection from "./PetInfoSection";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
+
+import dogAvatar1 from "../../assets/images/dog-avatar-1.png";
+import dogAvatar2 from "../../assets/images/dog-avatar-2.png";
+import dogAvatar3 from "../../assets/images/dog-avatar-3.png";
+
+const dogs = [
+  {src: dogAvatar1, index: "1", name: "Miśka", birthdate: "01.12.19r.", breed: "Chow-Chow", sex:"suka"}, 
+  {src: dogAvatar2, index: "2", name: "Bobo", birthdate: "23.07.17r.", breed: "Bokser", sex:"pies"}, 
+  {src: dogAvatar3, index: "3", name: "Rembo", birthdate: "10.11.21r.", breed: "Shiba", sex:"pies"}, 
+  {src: dogAvatar2, index: "4", name: "Bobo", birthdate: "23.07.17r.", breed: "Bokser", sex:"pies"},
+  {src: dogAvatar3, index: "5", name: "Rembo", birthdate: "10.11.21r.", breed: "Shiba", sex:"pies"},
+  {src: dogAvatar1, index: "6", name: "Miśka", birthdate: "01.12.19r.", breed: "Chow-Chow", sex:"suka"},
+]
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -28,7 +40,7 @@ const Profile = () => {
           {moreWalkInfoClicked ? 
           <>
             <div className="w-[100%] h-[200px] mb-[30px] overflow-y-auto">
-              {dogs.map((dog: PetInfoProps) => 
+              {dogs.map((dog) => 
                 <div className="w-[100%] flex justify-between items-center mt-[5px]">
                   <p>{dog.name}:</p>
                   <ProgressBar type="linear" completed={75}/>
@@ -57,7 +69,7 @@ const Profile = () => {
           <h2 className="text-[32px] text-center mb-[25px]">Zebrano monet</h2>
           <div className="flex items-center">
             <img src={coin} alt="coin" className="inline-block mr-[20px]"/>
-            <span className="text-[32px] text-left text-orange">103</span>
+            <span className="text-[32px] text-left text-orange">{user?.coins}</span>
           </div>
           <div className="text-[12px] text-left mt-[25px] tracking-[.1em]">
             <p className="mb-[10px]">Każde 100 monet dają 1% zniżki na dowolny produkt w naszym sklepie.</p>

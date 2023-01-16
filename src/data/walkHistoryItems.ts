@@ -1,7 +1,7 @@
-import { WalkHistoryI } from "../interfaces/WalkHistory";
 import walkHistoryScreen from "../assets/images/save-walk.jpg";
+import { IWalk } from "../interfaces/Walk";
 
-export const walkHistoryData: WalkHistoryI[] = [
+export const walkHistoryData = [
   {
     walkRoadScreen: walkHistoryScreen,
     date: "05.05.2022",

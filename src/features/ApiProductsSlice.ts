@@ -1,8 +1,6 @@
 import {apiSlice} from "../api/apiSlice";
 import { IProduct } from "../interfaces/Order";
 
-
-
 const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     products: builder.query<{[key: string]: IProduct[]}, void>({
@@ -11,18 +9,24 @@ const productsApiSlice = apiSlice.injectEndpoints({
     product: builder.query<{[key: string]: IProduct}, number | void>({
       query: (id: number) => `/product/${id}`
     }),
-    toggleLikeProduct: builder.mutation<IProduct, Partial<IProduct> & Pick<IProduct, 'id'>>({
-      query: ({ id, ...patch }) => ({
-        url: `/product/update/${id}`,
-        method: 'PATCH',
-        body: patch
+    addProductToFavorites: builder.mutation<{[key: string]: {[key: string] : number[]}}, number>({
+      query: (id) => ({
+        url: `/product/${id}/add-to-favourites`,
+        method: 'PATCH'
       })
-    })
+    }),
+    deleteProductFromFavorites: builder.mutation<{[key: string]: {[key: string] : number[]}}, number>({
+      query: (id) => ({
+        url: `/product/${id}/delete-from-favourites`,
+        method: 'PATCH'
+      })
+    }),
   })
 })
 
 export const {
   useProductsQuery,
   useProductQuery,
-  useToggleLikeProductMutation
+  useAddProductToFavoritesMutation,
+  useDeleteProductFromFavoritesMutation,
 } = productsApiSlice;

@@ -4,12 +4,13 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:8090",
   credentials: "include",
+  mode: "cors",
   prepareHeaders: (headers, {getState}) => {
     const token = (getState() as RootState).auth.token;
-    
+    console.log(token);
     if(token)
     {
-      headers.set("Autorization", `Bearer ${token}`);
+      headers.set("Authorization", `Bearer ${token}`);
     }
 
     return headers;

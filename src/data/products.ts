@@ -13,8 +13,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: null,
-    discount_amount: null,
-    favourite: null
+    discount_amount: null
   },
   {
     id: 2,
@@ -28,8 +27,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: 23.53,
-    discount_amount: 20,
-    favourite: null
+    discount_amount: 20
   },
   {
     id: 3,
@@ -43,8 +41,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: null,
-    discount_amount: null,
-    favourite: null
+    discount_amount: null
   },
   {
     id: 4,
@@ -58,8 +55,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: 12.20,
-    discount_amount: 10,
-    favourite: null
+    discount_amount: 10
   },
   {
     id: 5,
@@ -73,8 +69,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: null,
-    discount_amount: null,
-    favourite: null
+    discount_amount: null
   },
   {
     id: 6,
@@ -88,8 +83,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: 50.35,
-    discount_amount: 50,
-    favourite: null
+    discount_amount: 50
   },
   {
     id: 7,
@@ -103,8 +97,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: null,
-    discount_amount: null,
-    favourite: null
+    discount_amount: null
   },
   {
     id: 8,
@@ -118,8 +111,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: null,
-    discount_amount: null,
-    favourite: null
+    discount_amount: null
   },
   {
     id: 9,
@@ -133,8 +125,7 @@ export const data: IProduct[] = [
     long_description: null,
     short_description: "Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia. Karma sucha dla psów dorosłych rasy German Shepherd powyżej 15 miesiąca życia.",
     discount_price: null,
-    discount_amount: null,
-    favourite: null
+    discount_amount: null
   },
   {
     id: 10,
@@ -148,8 +139,7 @@ export const data: IProduct[] = [
     photos: ['./images/product-image.jpg',],
     price: Number("217.75"),
     base_price: Number("19.80"),
-    rate: Number(4),
-    favourite: null
+    rate: Number(4)
   }
 ]
 

@@ -34,12 +34,15 @@ const Cart = () => {
       }
       <div className="flex justify-between items-center mx-[30px]">
         <div className="text-[36px]">
-          <p className="mb-[30px]">Suma: <span className="text-dark_red">{total} zł</span></p>
-          <p>Rabat: <span className="text-dark_red">{totalDiscount} zł</span></p>
+          <p className="mb-[30px]">Suma: <span className="text-dark_red">{total.toFixed(2)} zł</span></p>
+          <p>Rabat: <span className="text-dark_red">{totalDiscount.toFixed(2)} zł</span></p>
         </div>
         <div className="flex justify-between items-center">
           <Button text="Kontynuj zakupy" value="continue" styles="h-[50px] bg-yellow border-2 border-green hover:border-orange rounded-3xl text-green text-base font-lemon px-[6px] py-[2px] w-[200px] text-[16px] mr-[20px]" onClick={()=>{navigate('/products')}}/>
-          <Button text="Zamów" value="order" styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[150px]" onClick={()=>{navigate('/order')}}/>
+          {positionsAmount === 0 ? 
+            <Button text="Zamów" value="order" styles="h-[50px] bg-orange/80 border-2 border-green rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[150px]" disabled={true}/> :
+            <Button text="Zamów" value="order" styles="h-[50px] bg-orange border-2 border-green rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[150px] hover:border-yellow hover:cursor-pointer" onClick={()=>{navigate('/order')}}/>
+          } 
         </div>
       </div>
     </div>
