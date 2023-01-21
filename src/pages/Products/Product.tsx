@@ -61,8 +61,8 @@ const Product = () => {
     <div className="px-[50px] py-[50px]">
       <FastNavigation links={breadcrumbs}/>
       <div className="w-full bg-dark_green border-2 border-green rounded-[25px] px-[35px] py-[35px]">
-        <div className="flex gap-[80px] items-center bg-yellow border-2 border-green rounded-[25px] px-[60px] py-[40px]">
-          <div className="flex flex-col justify-center items-center">
+        <div className="flex gap-[80px] items-center bg-yellow border-2 border-green rounded-[25px] px-[60px]">
+          <div className="flex flex-col justify-center items-center pt-[40px]">
             {photos ? <>
               <img src={"." + photos?.[0]} alt="photos" className="w-[600px]"/>
               <div className="h-[200px] w-[500px] flex flex-wrap justify-center items-center text-center bg-yellow">
@@ -115,16 +115,16 @@ const Product = () => {
             }
             
           </div>
-          <div className="h-[100%] flex flex-col items-start justify-start">
-             <h2 className={"text-[32px] mb-[20px]"}>{title}</h2> 
-             <p className={"text-[20px] mb-[20px]"}>
+          <div className="w-full h-[100%] flex flex-col items-start justify-start">
+             <h2 className={"text-[48px] mb-[20px]"}>{title}</h2> 
+             <p className={"text-[32px] mb-[20px]"}>
               {
                 brands?.find((brand: IBrand) => brand.id === brand_id)?.name
               }
              </p>
              {rate ?
              <StarRating type="static" active={rate} size={"w-[20px]"} alignment="" rates={"23"}/> : null}
-             <p className="text-[12px] mt-[40px] text-left">{short_description}</p>
+             <p className="text-[20px] mt-[40px] text-left">{long_description}</p>
              <div className="w-full flex justify-center items-center gap-[80px] mt-[40px] py-[25px] px-[20px] border-t-2 border-b-2 border-green">
                 <div className="flex flex-col items-center">
                   <img src={"../images/sugar-free.png"} alt="sugar-free" className="w-[50px] mb-[10px]"/>

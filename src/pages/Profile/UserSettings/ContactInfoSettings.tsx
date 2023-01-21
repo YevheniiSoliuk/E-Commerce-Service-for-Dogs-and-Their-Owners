@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../../components/commons/Button/Button';
 import Input from '../../../components/commons/Input/Input';
 import Select from '../../../components/commons/Select/Select';
 import { RootState } from '../../../store/store';
+import { useGetUserAddressQuery, useUpdateUserMutation } from '../../../features/ApiUserSlice';
+import { IUserUpdate } from '../../../interfaces/User';
 
 const ContactInfoSettings = () => {
   const { user } = useSelector((state: RootState) => state.auth);
+  const {data: address} = useGetUserAddressQuery(user?.address_id);
+  const [updateUser] = useUpdateUserMutation();
 
-  const [name, setName] = useState<string>(user ? user.name : "");
-  const [lastname, setLastname] = useState<string>(user ? user.lastname : "");
-  const [email, setEmail] = useState<string>(user ? user.email : "");
-  const [phone, setPhone] = useState<string>(user ? user.phone : "'");
+  const [name, setName] = useState<string>("");
+  const [lastname, setLastname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   const [street, setStreet] = useState<string>("");
   const [postalCode, setPostalCode] = useState<string>(""); 
-
   const [province, setProvince] = useState<string>("Wojewodztwo");
   const [place, setPlace] = useState<string>("Miejscowosc");
+  const [homeNumber, setHomeNumber] = useState<string>("");
+
+  useEffect(()=>{
+    
+    if(user && address)
+    {
+      setName(user.name);
+      setLastname(user.lastname);
+      setEmail(user.email);
+      setPhone(user.phone);
+      setStreet(address.street);
+      setPostalCode(address.post_code);
+      setProvince(address.state);
+      setPlace(address.city);
+      setHomeNumber(address.home_number);
+    }
+    
+  }, [address, user])
 
   const resetInfo = (): void => {
     setName("");
@@ -29,21 +50,25 @@ const ContactInfoSettings = () => {
     setPlace("Miejscowosc");
   }
 
-  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.SyntheticEvent): void => {
+  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const payload: string[] = [
-      name, 
-      lastname, 
-      email, 
-      phone,
-      province,
-      place,
-      street, 
-      postalCode,
-    ]
-
+    const payload: IUserUpdate = {    
+      name: name,
+      surname: lastname,
+      phone_number: phone,
+      state: province,
+      city: place,
+      home_number: homeNumber,
+      post_code: postalCode,
+      street: street
+    }
     console.log(payload);
+
+    await updateUser(payload)
+    .unwrap()
+    .then((payload) => console.log("fullfilled", payload))
+    .catch((error) => console.error("rejected", error));
   }
 
   return (
@@ -55,6 +80,7 @@ const ContactInfoSettings = () => {
           <Input id="nazwisko" type="text" name="lastname" value={lastname} onChange={(e)=>{setLastname(e.target.value)}} placeholder="Nazwisko" width="w-[340px]"/>
           <Input id="email" type="mail" name="mail" value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder="E-mail" width="w-[340px]"/>
           <Input id="phone" type="phone" name="phone" value={phone} onChange={(e)=>{setPhone(e.target.value)}} placeholder="Numer komurkowy" width="w-[340px]"/>
+          <Input id="home" type="text" name="home-number" value={homeNumber} onChange={(e)=>{setHomeNumber(e.target.value)}} placeholder="Nr domu" width="w-[340px]"/>
         </div>
         <div>
           <h2 className="text-[32px] text-center mb-[50px]">Dane dostawy</h2>

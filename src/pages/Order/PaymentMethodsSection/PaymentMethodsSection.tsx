@@ -2,50 +2,44 @@ import React, { useEffect, useState } from 'react';
 import Input from '../../../components/commons/Input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store/store';
-import { setActiveCard, setOrderPaymentMethod } from '../../../features/OrderSlice';
+import { setOrderPaymentMethod } from '../../../features/OrderSlice';
 import { IPaymentMethod } from '../../../interfaces/PaymentMethod';
-import PaymentCardsModal from './PaymentCardsPopup';
+import { usePaymentsQuery } from '../../../features/ApiPaymentMethods';
 
-const cards: IPaymentMethod[] = [
-  {logo: "./images/pekao.png", name: "Pekao"},
-  {logo: "./images/pko.png", name: "PKO Bank"},
-  {logo: "./images/velobank.png", name: "VELO Bank"},
-  {logo: "./images/mbank.gif", name: "mBank"},
-  {logo: "./images/ing.png", name: "ING Bank"},
-]
+// const cards: IPaymentMethod[] = [
+//   {logo: "./images/pekao.png", name: "Pekao"},
+//   {logo: "./images/pko.png", name: "PKO Bank"},
+//   {logo: "./images/velobank.png", name: "VELO Bank"},
+//   {logo: "./images/mbank.gif", name: "mBank"},
+//   {logo: "./images/ing.png", name: "ING Bank"},
+// ]
 
 
-const payments: IPaymentMethod[] = [
-  {logo: "./images/blik.png", name: "BLIK"},
-  {logo: "./images/przelew.jpg", name: "Przelew zwykły"},
-  {logo: "./images/selftake.jpg", name: "Odbiór osobisty"},
-  {logo: "./images/credit-card.png", name: "Karta płatnicza", cards: cards}
-]
+// const payments: IPaymentMethod[] = [
+//   {logo: "./images/blik.png", name: "BLIK"},
+//   {logo: "./images/przelew.jpg", name: "Przelew zwykły"},
+//   {logo: "./images/selftake.jpg", name: "Odbiór osobisty"},
+//   {logo: "./images/credit-card.png", name: "Karta płatnicza", cards: cards}
+// ]
 
 const PaymentMethodsSection = () => {
-  const [isCardsOpen, setIsCardsOpen] = useState(false);
-  const closeCardsModal = () => setIsCardsOpen(false);
-
-  const method = useSelector((state: RootState) => state.order.paymentMethod);
+  const method: string | undefined = useSelector((state: RootState) => state.order.paymentMethod?.name);
   const dispatch: AppDispatch = useDispatch();
-  const [paymentMethod, setPaymentMethod] = useState<string>(method);
+  const [paymentMethod, setPaymentMethod] = useState<string>(method ? method : "");
 
-  // const { data, isLoading } = usePaymentsQuery();
-  // const [paymentMethods, setPaymentMethods] = useState<IPaymentMethod[]>([]);
-  // useEffect(()=>{
-  //   if(data)
-  //     setPaymentMethods(data[""]);
-  // }, [data])
+  const { data, isLoading } = usePaymentsQuery();
+  const [paymentMethods, setPaymentMethods] = useState<IPaymentMethod[]>([]);
 
-  const setPaymentMethodOnLogoCLick = (value: string) => {
-    if(value === "Karta płatnicza")
+  useEffect(()=>{
+    if(data)
     {
-      setIsCardsOpen(o => !o);
+      setPaymentMethods(data["Payment Methods"]);
     }
+  }, [data])
 
-    setPaymentMethod(value);
+  const setPaymentMethodOnLogoCLick = (value: IPaymentMethod) => {
+    setPaymentMethod(value.name);
     dispatch(setOrderPaymentMethod(value));
-    dispatch(setActiveCard(""));
   }
   
   return (
@@ -53,7 +47,7 @@ const PaymentMethodsSection = () => {
       <h3 className="text-center text-[32px]">Platności</h3>
       <div className="w-[90%] h-[2px] bg-green ml-auto mr-auto my-[20px]"></div>
       <div className="ml-[30px]">
-        {payments.map((payment: IPaymentMethod) =>
+        {paymentMethods.map((payment: IPaymentMethod) =>
           <>
             <Input 
               key={payment.name}
@@ -62,20 +56,10 @@ const PaymentMethodsSection = () => {
               value={payment.name}
               state={paymentMethod} 
               onChange={(e)=>{setPaymentMethod(e.target.value)}} 
-              action={()=>{setPaymentMethodOnLogoCLick(payment.name)}} 
+              action={()=>{setPaymentMethodOnLogoCLick(payment)}} 
               placeholder={payment.name} 
-              imgSrc={payment.logo}
+              imgSrc={payment.photo_url}
             />
-            {payment.cards ?
-              <PaymentCardsModal
-                modalProps={({
-                  isOpen: isCardsOpen,
-                  close: closeCardsModal
-                })}
-                cards={payment.cards}
-              /> :
-              null
-            }
           </>
         )}
       </div>

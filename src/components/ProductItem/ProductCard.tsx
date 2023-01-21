@@ -72,7 +72,7 @@ const ProductCard = ({product, brands, action}: ProductCardProps) => {
       }
       {discount_amount !== null && discount_amount !== 0 ? <>
         <span className="trapezoid relative"></span>
-        <span className="absolute text-white text-[18px] -rotate-45 left-[2%] top-[3%]">{discount_amount}%</span>
+        <span className="absolute text-white text-[20px] font-bold -rotate-45 left-[2%] top-[3%]">{discount_amount}%</span>
       </>
       : null
       }

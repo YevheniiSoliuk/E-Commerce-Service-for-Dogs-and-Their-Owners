@@ -64,7 +64,7 @@ export const positions: OrderPositions[] = [
   }
 ]
 
-export const orders: IOrder[] = [
+export const orders = [
   {
     number: "17283473848",
     date: "05.05.2022", 

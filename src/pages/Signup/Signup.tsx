@@ -44,7 +44,7 @@ const Signup = () => {
     setErrMsg("");
 
     !terms ? setErrMsg("Check terms!") : setErrMsg("");
-  }, [login, password, terms])
+  }, [name, lastname, age, sex, email, phone, street, homeNumber, postalCode, login, password, repeatPassword, terms])
 
   const clearFields = () => {
     setLogin("");

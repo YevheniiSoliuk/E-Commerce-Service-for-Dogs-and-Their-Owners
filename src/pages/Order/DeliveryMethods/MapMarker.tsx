@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGetPostalPunctQuery } from '../../../features/ApiDeliveryMethods';
+import { IPostalPunct, IPostalPunktAddress } from '../../../interfaces/DeliveryMethod';
 
-const MapMarker: React.FC<{lat: number, lng: number}> = (lat, lng) => {
+type MarkerType = {
+  lat: number,
+  lng: number,
+  id: number
+}
+
+const MapMarker = ({lat, lng, id}: MarkerType) => {
   const [isInfoOpen, setIsInfoOpen] = useState<boolean>(false);
 
   const toggleInfoWindow = () => {

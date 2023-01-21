@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { IOrder, IOrderPosition } from "../../../interfaces/Order";
 
-const OrderDetails: React.FC<{order: IOrder, index: number}> = ({order, index}) => {
+const OrderDetails: React.FC<{order: any, index: number}> = ({order, index}) => {
   const [orderClicked, setOrderClicked] = useState(false);
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const OrderDetails: React.FC<{order: IOrder, index: number}> = ({order, index}) 
         {order.summaryPrice} zł
       </td>
     </tr>
-    {orderClicked ? order.products.map(product => 
+    {orderClicked ? order.products.map((product:any) => 
       <tr className="h-[110px] bg-yellow/70 border-y-[3px] border-green">
         <td className="pl-[20px]">
           <img src={product.product.photos[0]} alt="product" className="w-[100px]"/>

@@ -2,6 +2,7 @@ import React from 'react';
 import DeliveryInfo from './DeliveryInfo';
 import PaymentMethodsSection from './PaymentMethodsSection/PaymentMethodsSection';
 import DeliveryMethodsSection from './DeliveryMethods/DeliveryMethodsSection';
+import SummarySection from './SummarySection';
 
 const Order = () => {
   return (
@@ -12,8 +13,9 @@ const Order = () => {
           <DeliveryInfo />
           <PaymentMethodsSection />
         </div>
-        <div className="flex items-center justify-between mt-[40px]">
+        <div className="flex items-start justify-between mt-[40px]">
           <DeliveryMethodsSection />
+          <SummarySection />
         </div>
       </div>
     </div>

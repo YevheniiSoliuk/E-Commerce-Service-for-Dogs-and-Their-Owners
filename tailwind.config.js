@@ -1,3 +1,5 @@
+const { transform } = require('typescript')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -40,10 +42,15 @@ module.exports = {
         full: {
           '0%': { width: '0%' },
           '100%': { width: '75%' },
+        },
+        scrollx: {
+          '0%': { transform: "translateX(0)"},
+          '100%': { transform: "translateX(calc(-100% - 30px))"}
         }
       },
       animation: {
         full: 'full 1s linear',
+        scrollx: 'scrollx 10s linear infinite'
       }
     },
   },

@@ -4,7 +4,7 @@ import { IPaymentMethod } from "../interfaces/PaymentMethod";
 const paymentMethodsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     payments: builder.query<{[key: string]: IPaymentMethod[]}, void>({
-      query: () => "/payments"
+      query: () => "/payment_methods"
     }),
   })
 })

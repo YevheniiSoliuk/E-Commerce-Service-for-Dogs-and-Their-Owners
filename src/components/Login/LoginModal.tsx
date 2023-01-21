@@ -80,7 +80,7 @@ const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
         </span>
 
         <h2 className="text-green text-[40px] font-semibold mt-[20px] mb-[30px]">Login</h2>
-        <p>{errMsg}</p>
+        <p className="text-[20px] text-dark_red my-[10px]">{errMsg}</p>
         <form onSubmit={handleSubmit}>
           <Input 
             type="email" 

@@ -34,7 +34,7 @@ const SetNewPassModal = ({isOpen, close}: ModalProps) => {
     try{
       if(newPass !== repeatPass)
       {
-        setErrorMsg("Passwords are different")
+        setErrorMsg("Passwords don't match each other")
       } else {
         await setNewPassword(payload);
         setIsSuccess(true);

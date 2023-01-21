@@ -29,20 +29,27 @@ const PetInfoSection = () => {
   }, [animalsData, userId, breedsData])
 
   return (
-      <Swiper
-        modules={[Pagination]}
-        spaceBetween={100}
-        slidesPerView={3}
-      >
-        {animals.map((animal)=>
-          <SwiperSlide>
-            <PetInfo 
-              animal={animal}
-              breed={breeds.find(breed => breed.id === animal.id)?.name} 
-            />
-          </SwiperSlide>
-        )}
-      </Swiper>
+    <>
+      {animals.length === 0 ?
+        <div className="w-[100%] flex items-center justify-center bg-dark_green border-[2px] border-green rounded-[20px] py-[30px]">
+          <h2 className="text-[32px] font-semibold text-center">Jeszcze nie dodałeś pupila!</h2>
+        </div> :
+        <Swiper
+          modules={[Pagination]}
+          spaceBetween={100}
+          slidesPerView={3}
+        >
+          {animals.map((animal)=>
+            <SwiperSlide>
+              <PetInfo 
+                animal={animal}
+                breed={breeds.find(breed => breed.id === animal.id)?.name} 
+              />
+            </SwiperSlide>
+          )}
+        </Swiper>
+      }
+    </>
   );
 };
 

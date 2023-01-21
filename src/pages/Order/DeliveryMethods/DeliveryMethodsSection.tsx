@@ -2,65 +2,67 @@ import React, { useEffect, useState } from 'react';
 import Input from '../../../components/commons/Input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store/store';
-import { setActiveCard, setOrderDeliveryMethod } from '../../../features/OrderSlice';
+import { setOrderDeliveryMethod } from '../../../features/OrderSlice';
 import { IDeliveryMethod } from '../../../interfaces/DeliveryMethod';
 import PostalPunktsModal from './PostalPunktsMap';
+import { useDeliveriesQuery } from '../../../features/ApiDeliveryMethods';
 
-const deliveryMethods: IDeliveryMethod[] = [
-  {
-    logo: "./images/dhl.jpg",
-    name: "DHL Paczka - kurier",
-    delivery_payment: 3,
-    delivery_time: "1-2 dni",
-    postal_punkts: []
-  },
-  {
-    logo: "./images/dpd.png", 
-    name: "DPD Paczka - kurier",
-    delivery_payment: 0,
-    delivery_time: "1-2 dni",
-    postal_punkts: []
-  },
-  {
-    logo: "./images/inpost-kurier.png", 
-    name: "InPost Kurier Paczka",
-    delivery_payment: 3,
-    delivery_time: "2-3 dni",
-    postal_punkts: []
-  },
-  {
-    logo: "./images/inpost-paczkomaty.jpg", 
-    name: "InPost Paczkomaty 24/7",
-    delivery_payment: 2,
-    delivery_time: "1 dzień",
-    postal_punkts: []
-  },
-  {
-    logo: "./images/orlen-paczka.png", 
-    name: "Orlen Paczka – kioski Ruchu, salony współpartnerskie",
-    delivery_payment: 0,
-    delivery_time: "1-2 dni",
-    postal_punkts: []
-  },
-]
+// const deliveryMethods: IDeliveryMethod[] = [
+//   {
+//     logo: "./images/dhl.jpg",
+//     name: "DHL Paczka - kurier",
+//     delivery_payment: 3,
+//     delivery_time: "1-2 dni",
+//     postal_punkts: []
+//   },
+//   {
+//     logo: "./images/dpd.png", 
+//     name: "DPD Paczka - kurier",
+//     delivery_payment: 0,
+//     delivery_time: "1-2 dni",
+//     postal_punkts: []
+//   },
+//   {
+//     logo: "./images/inpost-kurier.png", 
+//     name: "InPost Kurier Paczka",
+//     delivery_payment: 3,
+//     delivery_time: "2-3 dni",
+//     postal_punkts: []
+//   },
+//   {
+//     logo: "./images/inpost-paczkomaty.jpg", 
+//     name: "InPost Paczkomaty 24/7",
+//     delivery_payment: 2,
+//     delivery_time: "1 dzień",
+//     postal_punkts: []
+//   },
+//   {
+//     logo: "./images/orlen-paczka.png", 
+//     name: "Orlen Paczka – kioski Ruchu, salony współpartnerskie",
+//     delivery_payment: 0,
+//     delivery_time: "1-2 dni",
+//     postal_punkts: []
+//   },
+// ]
 
-const PaymentMethodsSection = () => {
+const DeliveryMethodsSection = () => {
   const [isPostalPunktsOpen, setIsPostalPunktsOpen] = useState(false);
   const closePostalPunktsModal = () => setIsPostalPunktsOpen(false);
 
-  const method = useSelector((state: RootState) => state.order.deliveryMethod);
+  const method = useSelector((state: RootState) => state.order.deliveryMethod?.name);
   const dispatch: AppDispatch = useDispatch();
-  const [deliveryMethod, setDeliveryMethod] = useState<string>(method);
+  const [deliveryMethod, setDeliveryMethod] = useState<string>(method ? method : "");
 
-  // const { data, isLoading } = useDeliveriesQuery();
-  // const [deliveryMethods, setDeliveryMethods] = useState<IDeliveryMethod[]>([]);
-  // useEffect(()=>{
-  //   if(data)
-  //     setDeliveryMethods(data[""]);
-  // }, [data])
+  const { data, isLoading } = useDeliveriesQuery();
+  const [deliveryMethods, setDeliveryMethods] = useState<IDeliveryMethod[]>([]);
+  
+  useEffect(()=>{
+    if(data)
+      setDeliveryMethods(data["Delivery methods"]);
+  }, [data])
 
-  const setPaymentMethodOnLogoCLick = (value: string) => {
-    setDeliveryMethod(value);
+  const setDeliveryMethodOnLogoCLick = (value: IDeliveryMethod) => {
+    setDeliveryMethod(value.name);
     dispatch(setOrderDeliveryMethod(value));
     setIsPostalPunktsOpen(o => !o);
   }
@@ -72,25 +74,25 @@ const PaymentMethodsSection = () => {
       <div className="ml-[30px]">
         {deliveryMethods.map((delivery: IDeliveryMethod) =>
           <>
-            <Input 
+            <Input
               key={delivery.name}
               type="radio" 
               name="deliveries" 
               value={delivery.name}
               state={deliveryMethod} 
               onChange={(e)=>{setDeliveryMethod(e.target.value)}} 
-              action={()=>{setPaymentMethodOnLogoCLick(delivery.name)}} 
+              action={()=>{setDeliveryMethodOnLogoCLick(delivery)}} 
               placeholder={delivery.name} 
               imgSrc={delivery.logo}
               price={delivery.delivery_payment}
             />
-            <PostalPunktsModal
+            {/* <PostalPunktsModal
               modalProps={({
                 isOpen: isPostalPunktsOpen,
                 close: closePostalPunktsModal
               })}
-              postalPuncts={delivery.postal_punkts}
-            />
+              postalPunctIds={delivery.postal_points}
+            /> */}
           </>
         )}
       </div>
@@ -98,4 +100,4 @@ const PaymentMethodsSection = () => {
   );
 };
 
-export default PaymentMethodsSection;
+export default DeliveryMethodsSection;

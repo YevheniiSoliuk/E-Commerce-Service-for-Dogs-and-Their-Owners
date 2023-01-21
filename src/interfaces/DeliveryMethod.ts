@@ -1,31 +1,23 @@
 interface IPostalPunktAddress {
+  id: number,
   city: string,
   street: string,
   build_number: string,
-  langitude: string,
+  latitude: string,
   longtitude: string
 }
 
-interface IWorkTime {
-  open?: string,
-  close?: string,
-  alltime?: boolean
-}
-
 interface IPostalPunktWorkTime {
-  monday: IWorkTime,
-  tuesday: IWorkTime,
-  wednesday: IWorkTime,
-  thursday: IWorkTime,
-  friday: IWorkTime,
-  saturday: IWorkTime,
-  sunday: IWorkTime
+  id: number,
+  post_office_id: number,
+  name: string,
+  work_time: string
 }
 
 interface IPostalPunct {
+  id: number,
   name: string,
-  address: IPostalPunktAddress,
-  work_time: IPostalPunktWorkTime,
+  post_office_address_id: number,
 }
 
 interface IDeliveryMethod {
@@ -33,11 +25,13 @@ interface IDeliveryMethod {
   logo: string,
   delivery_payment: number,
   delivery_time: string,
-  postal_punkts: IPostalPunct[]
+  postal_points: number[]
 }
 
 
 export type {
   IPostalPunct,
-  IDeliveryMethod
+  IDeliveryMethod,
+  IPostalPunktAddress,
+  IPostalPunktWorkTime
 }

@@ -51,7 +51,6 @@ const List = ({title, items, subitems}: ListProps) => {
           </li>)
           }
         </ul>
-        {/* <p className="text-[12px] text-left underline decoration-1 hover:text-yellow hover:cursor-pointer">Pokaż więcej</p> */}
       </>}
       <div className="w-[250px] h-[2px] bg-green/50 my-[15px]"></div>
     </>

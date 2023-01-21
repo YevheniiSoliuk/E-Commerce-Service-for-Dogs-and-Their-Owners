@@ -9,11 +9,14 @@ export interface IAdvantage {
 }
 
 export interface IOrder {
-  number: string,
-  date: string, 
-  status: string,
-  summaryPrice: string,
-  products: IOrderPosition[],
+  city: string,
+  street: string,
+  home_number: string,
+  post_code: string,
+  status_id: number,
+  payment_method_id: number,
+  products_id: number[],
+  amounts_of_products: number[]
 }
 
 export interface IProduct {

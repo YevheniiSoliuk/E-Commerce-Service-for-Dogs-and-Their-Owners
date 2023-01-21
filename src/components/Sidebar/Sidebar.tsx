@@ -16,7 +16,6 @@ type SideBarProps = {
 }
 
 const Sidebar = ({products, applyFilters, removeFilters}: SideBarProps) => {
-
   const {data: brandsData} = useBrandsQuery();
   const {data: categoriesData} = useCategoriesQuery();
   const {data: subcategoriesData} = useSubcategoriesQuery();  
@@ -37,7 +36,6 @@ const Sidebar = ({products, applyFilters, removeFilters}: SideBarProps) => {
       <h2 className="text-[24px] text-left mb-[25px]">FILTRY</h2>
       <List title="Kategoria" items={categoriesData?.Categories} subitems={subcategoriesData?.["Added subcategory"]}/>
       <List title="Marki" items={brandsData?.["All brands"]}/>
-      {/* <List type="category" title="Fazy życia" items={["Karma (1293)", "Miejsca do spania (32)", "Aksesoria spacerowa (49)", "Pielęgnacja i higiena (12)"]}/> */}
       <div>
         <h2 className="text-[16px] text-left mb-[15px]">Filtruj wg ceny</h2>
         <MultiRangeSlider min={minPrice} max={maxPrice}/>
