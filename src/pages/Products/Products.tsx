@@ -1,16 +1,8 @@
-import React, {useCallback, useMemo, useState} from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AccordeonProps } from "../../components/commons/Accordeon/Accordeon";
-import FAQ from "../../components/FAQ/FAQ";
-import FastNavigation, { LinksProps } from "../../components/FastNavigation/FastNavigation";
-import Newsletter from "../../components/Newsletter/Newsletter";
-import Pagination from "../../components/Pagination/Pagination";
-import ProductCard from "../../components/ProductItem/ProductCard";
-import ProductListViewItem from "../../components/ProductItem/ProductListViewItem";
-import SearchSection from "../../components/SearchSection/SearchSection";
-import Sidebar from "../../components/Sidebar/Sidebar";
-//import { data } from "../../data/products";
+import { FastNavigation, LinksProps } from "../../components/FastNavigation/FastNavigation";
 import { useProductsQuery } from "../../features/ApiProductsSlice";
 import { addPosition } from "../../features/ordering/ProductCartSlice";
 import { IProduct } from "../../interfaces/Order";
@@ -18,6 +10,14 @@ import { AppDispatch, RootState } from "../../store/store";
 import { useBrandsQuery } from "../../features/ApiBrandsSlice";
 import { IBrand } from "../../interfaces/Brand";
 import { clearFilters } from "../../features/FiltersSlice";
+
+import { FAQ } from "../../components/FAQ/FAQ";
+import { Newsletter } from "../../components/Newsletter/Newsletter";
+import { Pagination } from "../../components/Pagination/Pagination";
+import { ProductCard } from "../../components/ProductItem/ProductCard";
+import { ProductListViewItem } from "../../components/ProductItem/ProductListViewItem";
+import { SearchSection } from "../../components/SearchSection/SearchSection";
+import { Sidebar } from "../../components/Sidebar/Sidebar";
 
 let questions: AccordeonProps[] = [
   {title: "Jak długi termin dostawy?", content: "Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki. Mogą również występować u nich nietolerancje pokarmowe lub alergie. Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine, Felix, PetBalance, MOMENTS, Animonda i wiele innych, znajdziesz w naszym sklepie z produktami dla kotów w najlepszej cenie. Odkryjesz również szeroką gamę odpowiednich akcesoriów dla swojego pupila. Rozpieść domowego tygrysa nowym drapakiem dla kota, legowiskiem dla kota lub zabawką dla kota."},
@@ -31,7 +31,7 @@ let breadcrumbs: LinksProps[] = [
   {name: "Karma", link: "/products"},
 ] 
 
-const Products = () => {
+export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -46,13 +46,13 @@ const Products = () => {
   const { data: brandsData } = useBrandsQuery();
   const brands: IBrand[] | undefined = brandsData?.["All brands"];
 
-  const { subcategory, brands: selectedBrands, priceMin, priceMax, rate } = useSelector((state: RootState) => state.filters);
+  const { subcategory, brands: selectedBrands, priceMin, priceMax, rate } = 
+    useSelector((state: RootState) => state.filters);
   const [searchValue, setSearchValue] = useState("");
 
 
-  useEffect(()=>{
-    if(productsData !== undefined)
-    {
+  useEffect(() => {
+    if(productsData !== undefined) {
       setFilteredProducts(productsData["All products"]);
       setSearchedProducts(productsData["All products"]);
     }
@@ -64,13 +64,11 @@ const Products = () => {
   const getFilteredProducts = useCallback(() => {
     let arr: IProduct[] = [...filteredProducts];
 
-    if(subcategory !== null)
-    {
+    if(subcategory !== null) {
       arr = arr.filter((product: IProduct) => product.subcategory_id === subcategory?.id);
     }
     
-    if(selectedBrands.length !== 0)
-    {
+    if(selectedBrands.length !== 0) {
       const filteredByBrandsProducts: IProduct[] = [];
 
       selectedBrands.forEach((brand: IBrand) => {
@@ -80,13 +78,11 @@ const Products = () => {
       arr = filteredByBrandsProducts;
     }
     
-    if(priceMin !== 0 && priceMax !== 0)
-    {
+    if(priceMin !== 0 && priceMax !== 0) {
       arr = arr.filter((product: IProduct) => product.price < priceMax && product.price > priceMin);
     }
     
-    if(rate !== 0)
-    {
+    if(rate !== 0) {
       arr = arr.filter((product: IProduct) => product.rate === rate);
     }
 
@@ -96,11 +92,10 @@ const Products = () => {
   const getSearchedProducts = useCallback(() => {
     let arr: IProduct[] = [...filteredProducts];
 
-    if(searchValue !== "")
-    {
-        arr = arr.filter((item: IProduct) => item.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-        item.short_description?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        item.long_description?.toLowerCase().includes(searchValue.toLowerCase()));
+    if(searchValue !== "") {
+      arr = arr.filter((item: IProduct) => item.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.short_description?.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.long_description?.toLowerCase().includes(searchValue.toLowerCase()));
     }
 
     return arr;
@@ -108,8 +103,8 @@ const Products = () => {
 
   const removeFilters = () => {
     dispatch(clearFilters());
-    if(productsData !== undefined)
-    {
+
+    if(productsData !== undefined) {
       setFilteredProducts(productsData["All products"]);
       setSearchedProducts(productsData["All products"]);
     }
@@ -120,30 +115,33 @@ const Products = () => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
 
-    if(searchedProducts.length)
+    if(searchedProducts.length) {
       return searchedProducts.slice(firstPageIndex, lastPageIndex);
-    else
+    } else {
       return 0;
+    }
   }, [currentPage, pageSize, getSearchedProducts]); 
 
-  if(productsIsLoading)
-  {
+  if(productsIsLoading) {
     return (
-      <div className="bg-dark_green border-2 border-green py-[30px] px-[20px] rounded-[25px] my-[30px] mx-[50px]">
+      <div 
+        className="bg-dark_green border-2 border-green py-[30px] px-[20px] 
+        rounded-[25px] my-[30px] mx-[50px]"
+      >
         <h2 className="text-[32px] text-center">Loading....</h2>
       </div>
     )
   }
   
   return (
-    <div className="flex flex-col px-[40px] py-[55px]">
+    <main className="flex flex-col px-[40px] py-[55px]">
       <div className="flex justify-between">
         <Sidebar 
           products={productsData?.["All products"]} 
           applyFilters={getFilteredProducts} 
           removeFilters={removeFilters}
         />
-        <div className="w-[75%] h-[100%]">
+        <article className="w-[75%] h-[100%]">
           <FastNavigation links={breadcrumbs}/>
           <SearchSection 
             setView={setView} 
@@ -151,15 +149,29 @@ const Products = () => {
             forPage="products" 
             values={[]} 
             placeholder="Szukaj produkt...."/>
-          <div className="bg-dark_green border-2 border-green py-[30px] px-[20px] rounded-[25px] mt-[30px]">
+          <section className="bg-dark_green border-2 border-green py-[30px] px-[20px] rounded-[25px] mt-[30px]">
             {currentProductsCard !== 0 ? 
               <>
                 {view === "cards" ?
                   <div className="flex justify-start items-center flex-wrap gap-[6%]">
-                    {currentProductsCard.map((product: IProduct) => <ProductCard key={product.id} product={product} brands={brands} action={()=>{dispatch(addPosition(product))}}/>)}
+                    {currentProductsCard.map((product: IProduct) => 
+                      <ProductCard 
+                        key={product.id} 
+                        product={product} 
+                        brands={brands} 
+                        action={()=>{dispatch(addPosition(product))}}
+                      />
+                    )}
                   </div> :
                   <div className="flex justify-between items-center flex-wrap">
-                    {currentProductsCard.map((product: IProduct) => <ProductListViewItem key={product.id} product={product} brands={brands} action={()=>{dispatch(addPosition(product))}}/>)}
+                    {currentProductsCard.map((product: IProduct) => 
+                      <ProductListViewItem 
+                        key={product.id} 
+                        product={product} 
+                        brands={brands} 
+                        action={()=>{dispatch(addPosition(product))}}
+                      />
+                    )}
                   </div>
                 }
                 <div className="flex justify-center">
@@ -174,13 +186,11 @@ const Products = () => {
               </>:
               <h2 className="text-[32px] text-center">Nie ma szukanego produktu</h2>
             }
-          </div>
-        </div>
+          </section>
+        </article>
       </div>
       <Newsletter />
-      <FAQ list={questions}/>
-    </div>
+      <FAQ faqs={questions}/>
+    </main>
   )
 }
-
-export default Products;

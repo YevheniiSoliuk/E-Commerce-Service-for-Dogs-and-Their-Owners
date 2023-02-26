@@ -19,44 +19,16 @@ const ContactFormSlice = createSlice({
   initialState,
   reducers: {
     checkEmailNewsletter: (state) => {
-      if(!state.checkedEmailNewsletter)
-      {
-        state.checkedEmailNewsletter = true;
-      }
-      else
-      {
-        state.checkedEmailNewsletter = false;
-      }
+      state.checkedEmailNewsletter = !state.checkedEmailNewsletter;
     },
     checkSMSNewsletter: (state) => {
-      if(!state.checkedSMSNewsletter)
-      {
-        state.checkedSMSNewsletter = true;
-      }
-      else
-      {
-        state.checkedSMSNewsletter = false;
-      }
+      state.checkedSMSNewsletter = !state.checkedSMSNewsletter;
     },
     checkEmailTransmition: (state) => {
-      if(!state.checkedEmailTransmition)
-      {
-        state.checkedEmailTransmition = true;
-      }
-      else
-      {
-        state.checkedEmailTransmition = false;
-      }
+      state.checkedEmailTransmition = !state.checkedEmailTransmition;
     },
     checkTerms: (state) => {
-      if(!state.checkedTerms)
-      {
-        state.checkedTerms = true;
-      }
-      else
-      {
-        state.checkedTerms = false;
-      }
+     state.checkedTerms = !state.checkedTerms;
     },
   }
 })

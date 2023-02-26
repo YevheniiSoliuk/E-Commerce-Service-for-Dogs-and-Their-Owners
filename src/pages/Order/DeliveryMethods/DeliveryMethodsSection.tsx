@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import Input from '../../../components/commons/Input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store/store';
 import { setOrderDeliveryMethod } from '../../../features/OrderSlice';
 import { IDeliveryMethod } from '../../../interfaces/DeliveryMethod';
-import PostalPunktsModal from './PostalPunktsMap';
 import { useDeliveriesQuery } from '../../../features/ApiDeliveryMethods';
+
+import { Input } from '../../../components/commons/Input/Input';
+import { PostalPunktsModal } from './PostalPunktsMap';
+import { ChangeEventValue } from 'google-map-react';
 
 // const deliveryMethods: IDeliveryMethod[] = [
 //   {
@@ -45,20 +47,21 @@ import { useDeliveriesQuery } from '../../../features/ApiDeliveryMethods';
 //   },
 // ]
 
-const DeliveryMethodsSection = () => {
-  const [isPostalPunktsOpen, setIsPostalPunktsOpen] = useState(false);
+export const DeliveryMethodsSection = () => {
+  const [isPostalPunktsOpen, setIsPostalPunktsOpen] = useState<boolean>(false);
   const closePostalPunktsModal = () => setIsPostalPunktsOpen(false);
 
   const method = useSelector((state: RootState) => state.order.deliveryMethod?.name);
   const dispatch: AppDispatch = useDispatch();
   const [deliveryMethod, setDeliveryMethod] = useState<string>(method ? method : "");
 
-  const { data, isLoading } = useDeliveriesQuery();
+  const { data } = useDeliveriesQuery();
   const [deliveryMethods, setDeliveryMethods] = useState<IDeliveryMethod[]>([]);
   
-  useEffect(()=>{
-    if(data)
+  useEffect(() => {
+    if(data) {
       setDeliveryMethods(data["Delivery methods"]);
+    }
   }, [data])
 
   const setDeliveryMethodOnLogoCLick = (value: IDeliveryMethod) => {
@@ -68,7 +71,10 @@ const DeliveryMethodsSection = () => {
   }
   
   return (
-    <div className="w-[45%] h-[100%] bg-dark_green border-[2px] border-green rounded-[20px] px-[30px] py-[30px]">
+    <section 
+      className="w-[45%] h-[100%] bg-dark_green border-[2px] border-green 
+      rounded-[20px] px-[30px] py-[30px]"
+    >
       <h3 className="text-center text-[32px]">Metody dostawy</h3>
       <div className="w-[90%] h-[2px] bg-green ml-auto mr-auto my-[20px]"></div>
       <div className="ml-[30px]">
@@ -80,7 +86,7 @@ const DeliveryMethodsSection = () => {
               name="deliveries" 
               value={delivery.name}
               state={deliveryMethod} 
-              onChange={(e)=>{setDeliveryMethod(e.target.value)}} 
+              onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setDeliveryMethod(e.target.value)}} 
               action={()=>{setDeliveryMethodOnLogoCLick(delivery)}} 
               placeholder={delivery.name} 
               imgSrc={delivery.logo}
@@ -96,8 +102,6 @@ const DeliveryMethodsSection = () => {
           </>
         )}
       </div>
-    </div>
+    </section>
   );
 };
-
-export default DeliveryMethodsSection;

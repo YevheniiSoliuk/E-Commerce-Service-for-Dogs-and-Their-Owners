@@ -1,13 +1,13 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import FastNavigation, { LinksProps } from '../../../components/FastNavigation/FastNavigation';
-import AutorizationSettings from './AutorizationSettings';
-import ContactInfoSettings from './ContactInfoSettings';
-import NotificationSettings from './NotificationSettings';
-import OredrsInfo from './OredrsInfo';
-import SettingsSideBar from './SettingsSideBar';
+import { FastNavigation, LinksProps } from '../../../components/FastNavigation/FastNavigation';
 
-const UserSettings = () => {
+import { AutorizationSettings } from './AutorizationSettings';
+import { ContactInfoSettings } from './ContactInfoSettings';
+import { NotificationSettings } from './NotificationSettings';
+import { OredrsInfo } from './OredrsInfo';
+import { SettingsSideBar } from './SettingsSideBar';
+
+export const UserSettings = () => {
   const {settingsSection} = useSelector((state: any) => state.orderHistory);
 
   const breadcrumbs: LinksProps[] = [
@@ -16,7 +16,7 @@ const UserSettings = () => {
   ]
   
   return (
-    <div className="mx-[40px] my-[50px]">
+    <main className="mx-[40px] my-[50px]">
       <FastNavigation links={breadcrumbs}/>
       <div className="flex justify-between ">
         <SettingsSideBar />
@@ -26,8 +26,6 @@ const UserSettings = () => {
           settingsSection === "notifications" ? <NotificationSettings /> : null
         }
       </div>
-    </div>
+    </main>
   );
 };
-
-export default UserSettings;

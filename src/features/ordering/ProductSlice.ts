@@ -12,7 +12,7 @@ const ProductSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setRating: (state, {payload}:PayloadAction<number>) => {
+    setRating: (state, {payload}: PayloadAction<number>) => {
       state.rating = payload;
     }
   },

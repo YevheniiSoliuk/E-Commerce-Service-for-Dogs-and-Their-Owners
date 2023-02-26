@@ -1,7 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-const FavoriteButton = () => {
+export const FavoriteButton = () => {
   return (
     <>
       <Link to="/favorite">
@@ -12,5 +11,3 @@ const FavoriteButton = () => {
     </>
   )
 }
-
-export default FavoriteButton;

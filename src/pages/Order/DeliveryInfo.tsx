@@ -1,17 +1,18 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { IUser } from '../../interfaces/User';
 import { useGetUserAddressQuery } from '../../features/ApiUserSlice';
 
-const DeliveryInfo = () => {
+export const DeliveryInfo = () => {
 
   const user: IUser | null  = useSelector((state: RootState) => state.auth.user);
   const { name, lastname, email, phone, address_id } = {...user};
   const {data: address} = useGetUserAddressQuery(address_id);
 
   return (
-    <div className="w-[45%] h-[100%] bg-dark_green border-[2px] border-green rounded-[20px] px-[30px] py-[30px]">
+    <section 
+      className="w-[45%] h-[100%] bg-dark_green border-[2px] border-green 
+      rounded-[20px] px-[30px] py-[30px]">
       <h3 className="text-center text-[32px]">Dane dostawy</h3>
       <div className="w-[90%] h-[2px] bg-green ml-auto mr-auto my-[20px]"></div>
         <div className="px-[40px] py-[10px]">
@@ -44,8 +45,6 @@ const DeliveryInfo = () => {
             <p>{email}</p>
           </div>
         </div> 
-    </div>
+    </section>
   );
-};
-
-export default DeliveryInfo;
+}

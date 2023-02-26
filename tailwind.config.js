@@ -1,5 +1,3 @@
-const { transform } = require('typescript')
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -16,13 +14,12 @@ module.exports = {
     colors: {
       'white': '#ffffff',
       'grey': '#e5e7eb',
-      'green': '#4B4D0B',
-      'dark_green': '#00C897',
+      'dark_green': '#4B4D0B',
+      'green': '#00C897',
       'body': '#0b9265',
       'orange': '#FFD365',
       'yellow': '#FDFFA9',
-      'emerald': 
-      {
+      'emerald': {
         500: '#019267',
       },
       'blue': '#93c5fd',
@@ -30,8 +27,7 @@ module.exports = {
       'dark_red': '#CD1515',
     },
     extend: {
-      backgroundImage:
-      {
+      backgroundImage: {
         'row-icon': "#4B4D0B url('../../../assets/icons/arrow.svg') no-repeat left",
       },
       rotate: {

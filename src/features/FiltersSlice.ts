@@ -1,5 +1,4 @@
 import { IBrand } from '../interfaces/Brand';
-import Brands from '../pages/Brands/Brands';
 import { ISubcategory } from './../interfaces/Category';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -29,12 +28,9 @@ const FiltersSlice = createSlice({
     addBrand: (state, {payload}: PayloadAction<IBrand>) => {
       const index = state.brands.findIndex(brand => brand.id === payload.id);
       
-      if(index !== -1)
-      {
+      if(index !== -1) {
         state.brands = state.brands.filter(brand => brand.id !== payload.id);
-      }
-      else 
-      {
+      } else {
         state.brands.push(payload);
       }
     },

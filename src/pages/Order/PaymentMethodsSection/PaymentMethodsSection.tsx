@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Input from '../../../components/commons/Input/Input';
+import { useEffect, useState } from 'react';
+import { Input } from '../../../components/commons/Input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store/store';
 import { setOrderPaymentMethod } from '../../../features/OrderSlice';
@@ -22,17 +22,16 @@ import { usePaymentsQuery } from '../../../features/ApiPaymentMethods';
 //   {logo: "./images/credit-card.png", name: "Karta płatnicza", cards: cards}
 // ]
 
-const PaymentMethodsSection = () => {
+export const PaymentMethodsSection = () => {
   const method: string | undefined = useSelector((state: RootState) => state.order.paymentMethod?.name);
   const dispatch: AppDispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState<string>(method ? method : "");
 
-  const { data, isLoading } = usePaymentsQuery();
+  const { data } = usePaymentsQuery();
   const [paymentMethods, setPaymentMethods] = useState<IPaymentMethod[]>([]);
 
-  useEffect(()=>{
-    if(data)
-    {
+  useEffect(() => {
+    if(data) {
       setPaymentMethods(data["Payment Methods"]);
     }
   }, [data])
@@ -43,7 +42,10 @@ const PaymentMethodsSection = () => {
   }
   
   return (
-    <div className="w-[45%] h-[100%] bg-dark_green border-[2px] border-green rounded-[20px] px-[30px] py-[30px]">
+    <section
+      className="w-[45%] h-[100%] bg-dark_green border-[2px] border-green 
+      rounded-[20px] px-[30px] py-[30px]"
+    >
       <h3 className="text-center text-[32px]">Platności</h3>
       <div className="w-[90%] h-[2px] bg-green ml-auto mr-auto my-[20px]"></div>
       <div className="ml-[30px]">
@@ -63,8 +65,6 @@ const PaymentMethodsSection = () => {
           </>
         )}
       </div>
-    </div>
+    </section>
   );
-};
-
-export default PaymentMethodsSection;
+}

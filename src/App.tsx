@@ -1,24 +1,25 @@
-import React from 'react';
-import './App.css';
-import Header from "../src/components/Header/Header";
 import { Routes, Route } from 'react-router-dom';
-import Products from './pages/Products/Products';
-import Home from './pages/Home/Home';
-import Shops from './pages/Shops/Shops';
-import Brands from './pages/Brands/Brands';
-import Contact from './pages/Contact/Contact';
-import Favorite from './pages/Favorite/Favorite';
-import Signup from './pages/Signup/Signup';
-import Footer from './components/Footer/Footer';
-import Sales from './pages/Sales/Sales';
-import Profile from './pages/Profile/Profile';
-import UserSettings from './pages/Profile/UserSettings/UserSettings';
-import Cart from './pages/Cart/Cart';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Product from './pages/Products/Product';
-import Order from './pages/Order/Order';
+
+import { Header } from "../src/components/Header/Header";
+import { Products } from './pages/Products/Products';
+import { Home } from './pages/Home/Home';
+import { Shops } from './pages/Shops/Shops';
+import { Brands } from './pages/Brands/Brands';
+import { Contact } from './pages/Contact/Contact';
+import { Favorite } from './pages/Favorite/Favorite';
+import { Signup } from './pages/Signup/Signup';
+import { Footer } from './components/Footer/Footer';
+import { Sales } from './pages/Sales/Sales';
+import { Profile } from './pages/Profile/Profile';
+import { UserSettings } from './pages/Profile/UserSettings/UserSettings';
+import { Cart } from './pages/Cart/Cart';
+import { Dashboard } from './pages/Dashboard/Dashboard';
+import { Product } from './pages/Products/Product';
+import { Order } from './pages/Order/Order';
+
+import './App.css';
 
 function App() {
   const {user} = useSelector((state: RootState) => state.auth);
@@ -26,7 +27,6 @@ function App() {
   return (
     <>
       <Header/>
-      
         { user?.email === "admin@admin.com" ?
           <Routes>
             <Route path="/dashboard" element={ <Dashboard /> } /> 

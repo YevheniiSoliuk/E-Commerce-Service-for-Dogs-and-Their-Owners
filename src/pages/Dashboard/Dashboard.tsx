@@ -1,15 +1,9 @@
 import React from 'react';
 
-type Props = {
-  
-};
-
-const Dashboard = (props: Props) => {
+export const Dashboard = () => {
   return (
-    <div>
+    <main>
       Dashboard
-    </div>
+    </main>
   );
 };
-
-export default Dashboard;

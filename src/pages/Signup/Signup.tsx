@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/commons/Button/Button";
-import Input from "../../components/commons/Input/Input";
-import Select from "../../components/commons/Select/Select";
-
 import { AppDispatch, RootState } from "../../store/store";
 import { checkEmailNewsletter, checkSMSNewsletter, checkTerms } from "../../features/registration/ContactFormSlice";
-import axios from "axios";
 import { useRegisterMutation } from "../../features/auth/ApiAuthSlice";
 import { isErrorWithMessage, isFetchBaseQueryError } from "../../helpers";
 import { setCredentials } from "../../features/auth/AuthSlice";
 import { IUser } from "../../interfaces/User";
 
-const REGISTER_URL: string = "user/register/";
+import { Button } from "../../components/commons/Button/Button";
+import { Input } from "../../components/commons/Input/Input";
+import { Select } from "../../components/commons/Select/Select";
 
-const Signup = () => {
+export const Signup = () => {
   const [name, setName] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [age, setAge] = useState<string>("");
@@ -33,18 +30,21 @@ const Signup = () => {
   const [place, setPlace] = useState<string>("Miejscowosc");
 
   const [errMsg, setErrMsg] = useState<string>("");
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const terms: boolean = useSelector((state: RootState) => state.contactForm.checkedTerms);
 
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
     setErrMsg("");
 
     !terms ? setErrMsg("Check terms!") : setErrMsg("");
-  }, [name, lastname, age, sex, email, phone, street, homeNumber, postalCode, login, password, repeatPassword, terms])
+  }, [
+    name, lastname, age, sex, email, phone, street, homeNumber, 
+    postalCode, login, password, repeatPassword, terms
+  ])
 
   const clearFields = () => {
     setLogin("");
@@ -101,48 +101,32 @@ const Signup = () => {
       clearFields();
       navigate("/profile");
     } catch(err) {   
-      if(isFetchBaseQueryError(err))
-      {
+      if(isFetchBaseQueryError(err)) {
         const errMsg = 'error' in err ? err.error : JSON.stringify(err.data);
         setErrMsg(errMsg);
-      }
-      else if(isErrorWithMessage(err))
-      {
+      } else if(isErrorWithMessage(err)) {
         setErrMsg(err.message);
-      }
-      else
-      {
+      } else {
         setErrMsg("Login Failed");
-      }
-      
+      } 
     }
-
-      // try{
-      //   const response = await axios.create({
-      //     baseURL: "http://localhost:8090/",
-      //   }).post(
-      //     REGISTER_URL,
-      //     payload,
-      //     {
-      //       headers: { "Content-Type": "application/json" },
-      //       withCredentials: true,
-      //     }
-      //   );
-
-      //   console.log(response.data);
-      //   navigate("/profile");
-      // } catch(err){
-      //   console.log(err);
-      // }
   }
 
   return (
-    <>
-      <div className="my-[80px] text-left mx-[100px]">
+      <main className="my-[80px] text-left mx-[100px]">
         <h2 className="text-[48px] mb-[60px]">Rejestracja</h2>
-        {errMsg ? <div className="w-full bg-dark_green/80 text-dark_red text-[20px] rounded-2xl border-2 border-green mb-[40px] py-[20px] pl-[30px]">{errMsg}</div> : null}
-        <form method="post" onSubmit={onHandleSubmit} className="flex justify-between bg-dark_green/80 rounded-2xl border-2 border-green px-[40px]">
-          <div>
+        {errMsg ? 
+          <div 
+            className="w-full bg-dark_green/80 text-dark_red text-[20px] rounded-2xl border-2 
+            border-green mb-[40px] py-[20px] pl-[30px]"
+          >{errMsg}</div> : null
+        }
+        <form 
+          method="post" 
+          onSubmit={onHandleSubmit} 
+          className="flex justify-between bg-dark_green/80 rounded-2xl border-2 border-green px-[40px]"
+        >
+          <section>
             <h3 className="w-[300px] text-[32px] mb-[34px] mt-[39px] text-center leading-[40px] tracking-normal">Dane Kontaktowe</h3>
             <Input 
               id="name" 
@@ -193,9 +177,12 @@ const Signup = () => {
               placeholder="Numer komurkowy"
               width="w-[340px]"
               required={true}/>
-          </div>
-          <div>
-            <h3 className="w-[300px] text-[32px] mb-[34px] mt-[39px] text-center leading-[40px] tracking-normal">Adres Dostawy</h3>
+          </section>
+          <section>
+            <h3 
+              className="w-[300px] text-[32px] mb-[34px] mt-[39px] text-center 
+              leading-[40px] tracking-normal"
+            >Adres Dostawy</h3>
             <Select 
               id="wojew"
               values={["dolnośląskie", "mazowieckie", "pomorskie"]} 
@@ -238,9 +225,12 @@ const Signup = () => {
               placeholder="Kod posztowy" 
               width="w-[340px]"
               required={true}/>
-          </div>
-          <div>
-            <h3 className="w-[310px] text-[32px] mb-[34px] mt-[39px] text-center leading-[40px] tracking-normal">Dane Logowania</h3>
+          </section>
+          <section>
+            <h3 
+              className="w-[310px] text-[32px] mb-[34px] mt-[39px] text-center 
+              leading-[40px] tracking-normal"
+            >Dane Logowania</h3>
             <Input 
               id="login" 
               type="text"
@@ -287,20 +277,19 @@ const Signup = () => {
                   text="Zarejestruj konto" 
                   type="submit" 
                   value="signup" 
-                  styles="h-[50px] bg-orange/70 border-2 border-green rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[220px]" 
+                  styles="h-[50px] bg-orange/70 border-2 border-green rounded-3xl text-green 
+                  text-base font-lemon px-6 py-2 w-[220px]" 
                   disabled={true}/> :
                 <Button 
                   text="Zarejestruj konto" 
                   type="submit" 
                   value="signup" 
-                  styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[220px]"/>
+                  styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl 
+                  text-green text-base font-lemon px-6 py-2 w-[220px]"/>
               }
             </div>
-          </div>
+          </section>
         </form>
-      </div>
-    </>
+      </main>
   )
 }
-
-export default Signup;

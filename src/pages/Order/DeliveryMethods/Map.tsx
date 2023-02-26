@@ -1,5 +1,5 @@
 import GoogleMapReact from "google-map-react";
-import MapMarker from "./MapMarker";
+import { MapMarker } from "./MapMarker";
 import { useEffect, useState } from "react";
 import { IPostalPunct, IPostalPunktAddress } from "../../../interfaces/DeliveryMethod";
 import { useGetPostalPunctQuery } from "../../../features/ApiDeliveryMethods";
@@ -8,9 +8,12 @@ type PropsType = {
   ids: number[]
 }
 
-const Map = ({ids}: PropsType) => {
+export const Map: React.FC<PropsType> = ({ids}) => {
   const [zoom, setZoom] = useState<number>(12);
-  const [center, setCenter] = useState<{lat: number, lng: number}>({lat:51.240813919648176, lng: 22.520501234867236});
+  const [center, setCenter] = useState<{lat: number, lng: number}>({
+    lat:51.240813919648176, 
+    lng: 22.520501234867236
+  });
 
   //const {data} = useGetPostalPunctQuery(id);
   
@@ -28,7 +31,7 @@ const Map = ({ids}: PropsType) => {
   return (
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: ""
+        key: "AIzaSyChkys2O1NSfCKHBRS1MKvChEDMXhTagOk"
       }}
       defaultCenter={{
         lat: center.lat,
@@ -47,5 +50,3 @@ const Map = ({ids}: PropsType) => {
     </GoogleMapReact>
   )
 }
-
-export default Map;

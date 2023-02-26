@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Popup from 'reactjs-popup';
 import { Link, useNavigate } from "react-router-dom";
-import Input from "../commons/Input/Input";
-import Button from "../commons/Button/Button";
+import { Input } from "../commons/Input/Input";
+import { Button } from "../commons/Button/Button";
 import { ModalProps } from "./ModalProps";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../features/auth/ApiAuthSlice";
@@ -11,17 +11,16 @@ import { isErrorWithMessage, isFetchBaseQueryError } from "../../helpers";
 import { IUser } from "../../interfaces/User";
 
 
-const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const navigate = useNavigate();
-  const disabled: boolean = false;
+export const LoginModal: React.FC<ModalProps> = ({isOpen, close, goToOtherModal}) => {
+  const [email, setEmail] = useState<string>("");
+  const [pwd, setPwd] = useState<string>("");
+  const [errMsg, setErrMsg] = useState<string>("");
 
-  const [login, { isLoading }] = useLoginMutation();
+  const navigate = useNavigate();
+  const [login] = useLoginMutation();
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     setErrMsg("");
   }, [email, pwd])
 
@@ -36,7 +35,7 @@ const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
     const payload: object = {
       email: email, 
       password: pwd,
-      disabled: disabled
+      disabled: false
     }
 
     try {
@@ -73,12 +72,19 @@ const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
   }
 
   return (
-    <Popup open={isOpen} closeOnDocumentClick onClose={close}>
-      <div className="flex flex-col items-center justify-center w-[600px] h-[100%] bg-dark_green rounded-[20px] border-2 border-green text-base font-lemon text-center text-green">
-        <span className="text-[40px] relative left-[260px] top-[10px] hover:text-yellow cursor-pointer" onClick={close}>
-          &times;
-        </span>
-
+    <Popup 
+      open={isOpen} 
+      closeOnDocumentClick 
+      onClose={close}
+    >
+      <div 
+        className="flex flex-col items-center justify-center w-[600px] h-[100%] bg-dark_green 
+        rounded-[20px] border-2 border-green text-base font-lemon text-center text-green"
+      >
+        <span 
+          className="text-[40px] relative left-[260px] top-[10px] hover:text-yellow cursor-pointer" 
+          onClick={close}
+        >&times;</span>
         <h2 className="text-green text-[40px] font-semibold mt-[20px] mb-[30px]">Login</h2>
         <p className="text-[20px] text-dark_red my-[10px]">{errMsg}</p>
         <form onSubmit={handleSubmit}>
@@ -89,7 +95,8 @@ const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
             onChange={(e)=>setEmail(e.target.value)}
             placeholder="Email" 
             width="w-[340px]" 
-            required={true}/>
+            required={true}
+          />
           <Input 
             type="password" 
             name="pass"
@@ -97,7 +104,8 @@ const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
             onChange={(e)=>setPwd(e.target.value)}
             placeholder="Hasło" 
             width="w-[340px]"
-            required={true}/>
+            required={true}
+          />
           <span 
             className="block my-[17px] text-[14px] underline hover:text-yellow cursor-pointer" 
             onClick={goToOtherModal}
@@ -107,23 +115,28 @@ const LoginModal = ({isOpen, close, goToOtherModal}: ModalProps) => {
               text="Załoguj się" 
               type="submit" 
               value="login" 
-              styles="h-[50px] bg-orange/70 border-2 border-green rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[222px] cursor-none" 
-              onClick={()=>{}}/> :
+              styles="h-[50px] bg-orange/70 border-2 border-green rounded-3xl text-gree text-base 
+              font-lemon px-6 py-2 w-[222px] cursor-none" 
+              onClick={()=>{}}
+            /> :
             <Button 
               text="Załoguj się" 
               type="submit" 
               value="login" 
-              styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl text-gree text-base font-lemon px-6 py-2 w-[222px]" 
-              onClick={email && pwd ? close : undefined}/>
+              styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl 
+              text-green text-base font-lemon px-6 py-2 w-[222px]" 
+              onClick={email && pwd ? close : undefined}
+            />
           }
         </form>
         
         <Link to="/signup">
-          <span className="block my-[18px] text-[14px] underline hover:text-yellow" onClick={close}>Przejdź do rejestracji</span>
+          <span 
+            className="block my-[18px] text-[14px] underline hover:text-yellow" 
+            onClick={close}
+          >Przejdź do rejestracji</span>
         </Link>
       </div>
     </Popup>
   )
 }
-
-export default LoginModal;

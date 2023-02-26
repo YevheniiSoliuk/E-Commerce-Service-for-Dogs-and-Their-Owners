@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState, useRef, LegacyRef } from "react";
+import { useState } from "react";
 import { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { setPrice } from "../../../features/FiltersSlice";
-import Button from "../Button/Button";
+import { Button } from "../Button/Button";
 
 type MultiRangeSliderProps = {
   min: number,
   max: number,
 };
 
-const MultiRangeSlider = ({ min, max }: MultiRangeSliderProps) => {
+export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({ min, max }) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
 
@@ -95,8 +95,8 @@ const MultiRangeSlider = ({ min, max }: MultiRangeSliderProps) => {
   // );
 
   return (
-    <div className="flex flex-col gap-[20px] items-center justify-center w-[100%]">
-      <div className="w-full flex justify-between items-center">
+    <section className="flex flex-col gap-[20px] items-center justify-center w-[100%]">
+      <section className="w-full flex justify-between items-center">
         <p className="text-[14px]">Min:</p> 
         <input 
           type="range"
@@ -106,10 +106,11 @@ const MultiRangeSlider = ({ min, max }: MultiRangeSliderProps) => {
           onChange={(e) => {
             setMinVal(Number(e.target.value));
           }}
-          className="inline-block h-[7px] w-[200px] bg-yellow border-[1px] border-green rounded-[10px] ml-[10px] outline-none z-4 thumb"
+          className="inline-block h-[7px] w-[200px] bg-yellow border-[1px] border-green rounded-[10px] 
+          ml-[10px] outline-none z-4 thumb"
         />
-      </div>
-      <div className="w-full flex justify-between items-center">
+      </section>
+      <section className="w-full flex justify-between items-center">
         <p className="text-[14px]">Max:</p> 
         <input 
           type="range"
@@ -119,17 +120,33 @@ const MultiRangeSlider = ({ min, max }: MultiRangeSliderProps) => {
           onChange={(e) => {
             setMaxVal(Number(e.target.value));
           }}
-          className="inline-block h-[7px] w-[200px] bg-yellow border-[1px] border-green rounded-[10px] ml-[10px] outline-none z-4 thumb"
+          className="inline-block h-[7px] w-[200px] bg-yellow border-[1px] border-green rounded-[10px] 
+          ml-[10px] outline-none z-4 thumb"
         />
-      </div>
-      <div className="w-full">
-        <p className="text-green text-[12px]">Cena: <span className="text-[14px] text-dark_red">{minVal}zł</span> - <span className="text-[14px] text-dark_red">{maxVal}zł</span></p>
+      </section>
+      <section className="w-full">
+        <p 
+          className="text-green text-[12px]"
+        >
+          Cena: 
+          <span 
+            className="text-[14px] text-dark_red"
+          >{minVal}zł</span> 
+          - 
+          <span 
+            className="text-[14px] text-dark_red"
+          >{maxVal}zł</span>
+        </p>
         <div className="flex justify-end mt-[10px]">
-          <Button text="Ustaw" value="add" styles="w-[80px] h-[35px] bg-orange border-2 border-green rounded-[20px] shadow-md px-[5px] py-[5px] text-[12px] text-center hover:border-0 active:border-2" onClick={()=>dispatch(setPrice({minPrice: minVal, maxPrice: maxVal}))}/>
+          <Button 
+            text="Ustaw" 
+            value="add" 
+            styles="w-[80px] h-[35px] bg-orange border-2 border-green rounded-[20px] shadow-md px-[5px] 
+            py-[5px] text-[12px] text-center hover:border-0 active:border-2" 
+            onClick={()=>dispatch(setPrice({minPrice: minVal, maxPrice: maxVal}))}
+          />
         </div>
-      </div>
-    </div>  
+      </section>
+    </section>  
   );
 };
-
-export default MultiRangeSlider;

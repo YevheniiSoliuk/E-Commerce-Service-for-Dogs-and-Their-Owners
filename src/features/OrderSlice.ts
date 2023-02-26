@@ -16,7 +16,7 @@ const OrderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    setOrderPaymentMethod: (state, {payload}:PayloadAction<IPaymentMethod>) => {
+    setOrderPaymentMethod: (state, {payload}: PayloadAction<IPaymentMethod>) => {
       state.paymentMethod = payload;
     },
     setOrderDeliveryMethod: (state, {payload}: PayloadAction<IDeliveryMethod>) => {

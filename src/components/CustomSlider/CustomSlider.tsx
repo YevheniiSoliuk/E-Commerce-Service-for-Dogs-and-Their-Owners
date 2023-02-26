@@ -1,4 +1,3 @@
-import React from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -9,9 +8,9 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper";
 
-import Slide from "./Slide";
+import { Slide } from "./Slide";
 
-const CustomSlider = () => {
+export const CustomSlider = () => {
 
   return (
     <>
@@ -28,5 +27,3 @@ const CustomSlider = () => {
     </>
   );
 }
-
-export default CustomSlider;

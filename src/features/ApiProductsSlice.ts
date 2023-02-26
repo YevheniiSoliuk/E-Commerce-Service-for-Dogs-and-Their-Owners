@@ -9,13 +9,17 @@ const productsApiSlice = apiSlice.injectEndpoints({
     product: builder.query<{[key: string]: IProduct}, number | void>({
       query: (id: number) => `/product/${id}`
     }),
-    addProductToFavorites: builder.mutation<{[key: string]: {[key: string] : number[]}}, number>({
+    addProductToFavorites: builder.mutation<{[key: string]: {
+      [key: string]: number[]
+    }}, number>({
       query: (id) => ({
         url: `/product/${id}/add-to-favourites`,
         method: 'PATCH'
       })
     }),
-    deleteProductFromFavorites: builder.mutation<{[key: string]: {[key: string] : number[]}}, number>({
+    deleteProductFromFavorites: builder.mutation<{[key: string]: {
+      [key: string]: number[]
+    }}, number>({
       query: (id) => ({
         url: `/product/${id}/delete-from-favourites`,
         method: 'PATCH'

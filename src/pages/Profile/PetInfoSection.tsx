@@ -2,17 +2,16 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useAnimalsQuery, useBreedsQuery } from '../../features/ApiAnimalsSlice';
-import PetInfo, { PetInfoProps } from './PetInfo';
+import { PetInfo, PetInfoProps } from './PetInfo';
 import { IAnimal, IBreed } from '../../interfaces/Animal';
-
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-// import required modules
-import { Pagination } from "swiper";
 
-const PetInfoSection = () => {
+export const PetInfoSection = () => {
   const [animals, setAnimals] = useState<IAnimal[]>([]);
   const [breeds, setBreeds] = useState<IBreed[]>([]);
 
@@ -20,9 +19,8 @@ const PetInfoSection = () => {
   const {data: animalsData} = useAnimalsQuery(userId);
   const {data: breedsData} = useBreedsQuery();
 
-  useEffect(()=>{
-    if(animalsData && breedsData)
-    {
+  useEffect(() => {
+    if(animalsData && breedsData) {
       setAnimals(animalsData[`Animals with user_id: ${userId}`]);
       setBreeds(breedsData["All breeds"]);
     }
@@ -31,8 +29,13 @@ const PetInfoSection = () => {
   return (
     <>
       {animals.length === 0 ?
-        <div className="w-[100%] flex items-center justify-center bg-dark_green border-[2px] border-green rounded-[20px] py-[30px]">
-          <h2 className="text-[32px] font-semibold text-center">Jeszcze nie dodałeś pupila!</h2>
+        <div 
+          className="w-[100%] flex items-center justify-center bg-dark_green border-[2px] 
+          border-green rounded-[20px] py-[30px]"
+        >
+          <h2 className="text-[32px] font-semibold text-center">
+            Jeszcze nie dodałeś pupila!
+          </h2>
         </div> :
         <Swiper
           modules={[Pagination]}
@@ -52,5 +55,3 @@ const PetInfoSection = () => {
     </>
   );
 };
-
-export default PetInfoSection;
