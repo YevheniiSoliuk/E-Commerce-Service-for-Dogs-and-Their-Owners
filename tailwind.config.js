@@ -14,8 +14,8 @@ module.exports = {
     colors: {
       'white': '#ffffff',
       'grey': '#e5e7eb',
-      'dark_green': '#4B4D0B',
-      'green': '#00C897',
+      'green': '#4B4D0B',
+      'dark_green': '#00C897',
       'body': '#0b9265',
       'orange': '#FFD365',
       'yellow': '#FDFFA9',

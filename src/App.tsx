@@ -19,8 +19,6 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Product } from './pages/Products/Product';
 import { Order } from './pages/Order/Order';
 
-import './App.css';
-
 function App() {
   const {user} = useSelector((state: RootState) => state.auth);
 
