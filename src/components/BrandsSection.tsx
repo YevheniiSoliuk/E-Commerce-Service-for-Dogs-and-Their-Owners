@@ -17,7 +17,7 @@ export const BrandsSection = () => {
       {[1,2,3].map(_ =>brands.map((brand: IBrand) => 
         <img 
           key={brand.id}
-          src={brand.photo} 
+          src={brand.logoURL} 
           alt={brand.name} 
           className="w-[10%] animate-scrollx"
         />))

@@ -89,8 +89,8 @@ export const DeliveryMethodsSection = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setDeliveryMethod(e.target.value)}} 
               action={()=>{setDeliveryMethodOnLogoCLick(delivery)}} 
               placeholder={delivery.name} 
-              imgSrc={delivery.logo}
-              price={delivery.delivery_payment}
+              imgSrc={delivery.logoURL}
+              price={delivery.deliveryPayment}
             />
             {/* <PostalPunktsModal
               modalProps={({

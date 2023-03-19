@@ -35,10 +35,10 @@ const authSlice = createSlice({
     setPassRecoveryToken : (state, {payload}: PayloadAction<string>) => {
       state.passRecoveryToken = payload;
     },
-    setNewFavoriteProducts: (state, {payload}: PayloadAction<number[]>) => {
-      if(state.user?.favourites)
+    setNewFavoriteProducts: (state, {payload}: PayloadAction<string[]>) => {
+      if(state.user?.favouriteProductsIDs)
       {
-        state.user.favourites = payload;
+        state.user.favouriteProductsIDs = payload;
       }
     }
   },

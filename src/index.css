@@ -4,6 +4,7 @@
 
 body {
   background-color: rgba(11, 147, 102, 0.502);
+  color: #4B4D0B;
 }
 
 .thumb::-webkit-slider-thumb {

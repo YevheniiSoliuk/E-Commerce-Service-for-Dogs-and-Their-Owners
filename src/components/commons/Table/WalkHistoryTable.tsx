@@ -4,7 +4,7 @@ import { IWalk } from '../../../interfaces/Walk';
 
 type PropsType = {
   walks: IWalk[],
-  animalId: number
+  animalId: string
 }
 
 export const WalkHistoryTable: React.FC<PropsType> = ({walks, animalId}) => {
@@ -25,43 +25,43 @@ export const WalkHistoryTable: React.FC<PropsType> = ({walks, animalId}) => {
           </tr>
         </thead>
         <tbody>
-          {walks.map((item: IWalk, index: number) => (
-            item.animals_id.includes(animalId) ?
-              <tr 
-                key={index} 
-                className="h-[110px] text-center border-b-[1px] border-t-[1px] border-green"
-              >
-                <td>
-                  {index+1}
-                </td>
-                {/* <td className="w-[70px]">
-                  <img src={"data:image/png;" + item.photo} alt={"walk" + index} />
-                </td> 
-                <td>
-                  {}
-                </td>*/}
-                <td>
-                  {item.time}
-                </td>
-                <td>
-                  {item.distance}
-                </td>
-                <td>
-                  <div className="flex items-center justify-center">
-                    <img 
-                      src={coin} 
-                      alt="coin" 
-                      className="w-[20%] inline-block mr-[10px]"
-                    />
-                    {item.coins_gained}
-                  </div>
-                </td>
-              </tr> : 
-              <p>No walks yet</p>
-            )
-          )}
+          
         </tbody>
       </table>
     </div>
   );
 }
+
+{/* walks.map((_item: IWalk) => { */}
+            // item.animals_id.includes(animalId) ?
+            //   <tr 
+            //     key={index} 
+            //     className="h-[110px] text-center border-b-[1px] border-t-[1px] border-green"
+            //   >
+            //     <td>
+            //       {index+1}
+            //     </td>
+            //     {/* <td className="w-[70px]">
+            //       <img src={"data:image/png;" + item.photo} alt={"walk" + index} />
+            //     </td> 
+            //     <td>
+            //       {}
+            //     </td>*/}
+            //     <td>
+            //       {item.time}
+            //     </td>
+            //     <td>
+            //       {item.distance}
+            //     </td>
+            //     <td>
+            //       <div className="flex items-center justify-center">
+            //         <img 
+            //           src={coin} 
+            //           alt="coin" 
+            //           className="w-[20%] inline-block mr-[10px]"
+            //         />
+            //         {item.gainedCoins}
+            //       </div>
+            //     </td>
+            //   </tr> : 
+            //   <p>No walks yet</p>

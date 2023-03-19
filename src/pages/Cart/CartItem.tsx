@@ -10,15 +10,16 @@ import { IBrand } from '../../interfaces/Brand';
 export const CartItem: React.FC<IOrderPosition> = ({product, amount}) => {
   const { data: brandsData } = useBrandsQuery();
   const brands = brandsData?.["All brands"];
-  const {id, photos, title, brand_id, price, base_price, discount_price, discount_amount} = {...product};
+  const {id, images, title, brand, price, basePrice, discountAmount} = {...product};
+  const brandID = brand.id;
 
   const dispatch: AppDispatch = useDispatch();
   
   return (
     <section className="flex gap-[50px] items-center relative mb-[30px]">
-      {photos ? 
+      {images ? 
         <img 
-          src={photos[0]} 
+          src={images[0]} 
           alt={"product"+id} 
           className="w-[15%]"
         /> :
@@ -31,7 +32,7 @@ export const CartItem: React.FC<IOrderPosition> = ({product, amount}) => {
       <div className="text-left w-[30%]">
         <h3 className="text-[24px] mb-[20px]">{title}</h3>
         <p className="text-[20px]">
-          {brands?.find((brand: IBrand) => brand.id === brand_id)?.name}
+          {brands?.find((brand: IBrand) => brand.id === brandID)?.name}
         </p>
       </div>
       <div className="flex items-center w-[20%]">
@@ -52,16 +53,16 @@ export const CartItem: React.FC<IOrderPosition> = ({product, amount}) => {
         />
       </div>
       <div className="w-[20%]">
-        {discount_price && discount_amount !== 0 ? 
+        {discountAmount !== null ? 
           <p className="text-center mb-[15px]">
-            <span className="text-[24px] text-dark_red mr-[10px]">{price - discount_price} zł</span>
+            <span className="text-[24px] text-dark_red mr-[10px]">{price - (price*(discountAmount/100))} zł</span>
             <span className="text-[20px] text-red/80 line-through">{price} zł</span>
           </p> : 
           <p className="text-dark_red text-center mb-[15px]">
             <span className="text-[24px]">{price} zł</span>
           </p>
         }
-        <p className="text-[14px] text-center">({base_price} zł/kg)</p>
+        <p className="text-[14px] text-center">({basePrice} zł/kg)</p>
       </div>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-[50px] h-[50px] fill-dark_red hover:cursor-pointer hover:stroke-1 hover:stroke-white" onClick={()=>{dispatch(removePosition(id))}}>
         <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clipRule="evenodd" />

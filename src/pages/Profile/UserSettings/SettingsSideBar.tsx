@@ -24,9 +24,9 @@ export const SettingsSideBar = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const [deleteUser] = useDeleteUserMutation();
-  const id: number | undefined = useSelector((state: RootState) => state.auth.user?.id)
+  const id: string | undefined = useSelector((state: RootState) => state.auth.user?.id)
 
-  const removeUserAccount = (id: number | undefined) => {
+  const removeUserAccount = (id: string | undefined) => {
     if(id) {
       dispatch(logOut());
       deleteUser(id);

@@ -1,10 +1,10 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IAnimal, IAnimalImage, IAnimalUpdate, IBreed } from "../interfaces/Animal";
 
 const animalsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    animals: builder.query<{[key: string]: IAnimal[]}, number | void>({
-      query: (id: number) => `/users/${id}/animals`
+    animals: builder.query<{[key: string]: IAnimal[]}, string | void>({
+      query: (id: string) => `/users/${id}/animals`
     }),
     updateAnimal: builder.mutation<{}, IAnimalUpdate>({
       query: ({id, ...data}) => ({

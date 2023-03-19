@@ -3,7 +3,7 @@ import { Button } from "../../../components/commons/Button/Button";
 import { PetWalkHistoryPopup } from './PetWalkHistoryPopup';
 
 type PropsType = {
-  animalId: number
+  animalId: string
 }
 
 export const PetWalkHistory: React.FC<PropsType> = ({animalId}) => {

@@ -19,8 +19,19 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Product } from './pages/Products/Product';
 import { Order } from './pages/Order/Order';
 
+import { collection, getDocs } from "firebase/firestore";
+import { firestore } from './firebase.config';
+
 function App() {
   const {user} = useSelector((state: RootState) => state.auth);
+
+  const usersSnapshot = getDocs(collection(firestore, "user"));
+
+  usersSnapshot.then(resolve => {
+    resolve.forEach(user => {
+      console.log(`User ID: ${user.id}\nUser data - ${user.get("name")}`);
+    });
+  })
 
   return (
     <>

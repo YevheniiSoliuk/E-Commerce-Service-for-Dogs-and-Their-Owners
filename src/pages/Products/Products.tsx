@@ -18,6 +18,7 @@ import { ProductCard } from "../../components/ProductItem/ProductCard";
 import { ProductListViewItem } from "../../components/ProductItem/ProductListViewItem";
 import { SearchSection } from "../../components/SearchSection/SearchSection";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
+import { getProducts } from "../../controllers/productController";
 
 let questions: AccordeonProps[] = [
   {title: "Jak długi termin dostawy?", content: "Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki. Mogą również występować u nich nietolerancje pokarmowe lub alergie. Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine, Felix, PetBalance, MOMENTS, Animonda i wiele innych, znajdziesz w naszym sklepie z produktami dla kotów w najlepszej cenie. Odkryjesz również szeroką gamę odpowiednich akcesoriów dla swojego pupila. Rozpieść domowego tygrysa nowym drapakiem dla kota, legowiskiem dla kota lub zabawką dla kota."},
@@ -37,42 +38,37 @@ export const Products = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(8);
 
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
-  const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>(getProducts());
+  const [searchedProducts, setSearchedProducts] = useState<IProduct[]>(getProducts());
 
   const [view, setView] = useState<string>("cards");
 
-  const { data: productsData, isLoading: productsIsLoading } = useProductsQuery();
-  const { data: brandsData } = useBrandsQuery();
-  const brands: IBrand[] | undefined = brandsData?.["All brands"];
+  //const { data: productsData, isLoading: productsIsLoading } = useProductsQuery();
+  const [products, setProducts] = useState<IProduct[]>(getProducts());
+  //const { data: brandsData } = useBrandsQuery();
+  //const brands: IBrand[] | undefined = brandsData?.["All brands"];
 
   const { subcategory, brands: selectedBrands, priceMin, priceMax, rate } = 
     useSelector((state: RootState) => state.filters);
   const [searchValue, setSearchValue] = useState("");
 
-
   useEffect(() => {
-    if(productsData !== undefined) {
-      setFilteredProducts(productsData["All products"]);
-      setSearchedProducts(productsData["All products"]);
-    }
-    
     setView(view);
     view === "cards" ? setPageSize(8) : setPageSize(3);
-  }, [view, productsData])
+  }, [view])
 
   const getFilteredProducts = useCallback(() => {
     let arr: IProduct[] = [...filteredProducts];
 
     if(subcategory !== null) {
-      arr = arr.filter((product: IProduct) => product.subcategory_id === subcategory?.id);
+      arr = arr.filter((product: IProduct) => product.subcategoryID === subcategory?.id);
     }
     
     if(selectedBrands.length !== 0) {
       const filteredByBrandsProducts: IProduct[] = [];
 
       selectedBrands.forEach((brand: IBrand) => {
-        filteredByBrandsProducts.push(...arr.filter((product: IProduct) => product.brand_id === brand.id));
+        filteredByBrandsProducts.push(...arr.filter((product: IProduct) => product.brand.id === brand.id));
       });
 
       arr = filteredByBrandsProducts;
@@ -92,10 +88,12 @@ export const Products = () => {
   const getSearchedProducts = useCallback(() => {
     let arr: IProduct[] = [...filteredProducts];
 
+    console.log("Filtered products: " + filteredProducts);
+
     if(searchValue !== "") {
       arr = arr.filter((item: IProduct) => item.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-      item.short_description?.toLowerCase().includes(searchValue.toLowerCase()) ||
-      item.long_description?.toLowerCase().includes(searchValue.toLowerCase()));
+      item.shortDescription?.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.longDescription?.toLowerCase().includes(searchValue.toLowerCase()));
     }
 
     return arr;
@@ -104,16 +102,16 @@ export const Products = () => {
   const removeFilters = () => {
     dispatch(clearFilters());
 
-    if(productsData !== undefined) {
-      setFilteredProducts(productsData["All products"]);
-      setSearchedProducts(productsData["All products"]);
-    }
+    setFilteredProducts(products);
+    setSearchedProducts(products);
   }
 
   const currentProductsCard = useMemo(() => {
     const searchedProducts = getSearchedProducts();
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
+
+    console.log(searchedProducts);
 
     if(searchedProducts.length) {
       return searchedProducts.slice(firstPageIndex, lastPageIndex);
@@ -122,22 +120,22 @@ export const Products = () => {
     }
   }, [currentPage, pageSize, getSearchedProducts]); 
 
-  if(productsIsLoading) {
-    return (
-      <div 
-        className="bg-dark_green border-2 border-green py-[30px] px-[20px] 
-        rounded-[25px] my-[30px] mx-[50px]"
-      >
-        <h2 className="text-[32px] text-center">Loading....</h2>
-      </div>
-    )
-  }
+  // if(productsIsLoading) {
+  //   return (
+  //     <div 
+  //       className="bg-dark_green border-2 border-green py-[30px] px-[20px] 
+  //       rounded-[25px] my-[30px] mx-[50px]"
+  //     >
+  //       <h2 className="text-[32px] text-center">Loading....</h2>
+  //     </div>
+  //   )
+  // }
   
   return (
     <main className="flex flex-col px-[40px] py-[55px]">
       <div className="flex justify-between">
         <Sidebar 
-          products={productsData?.["All products"]} 
+          products={products} 
           applyFilters={getFilteredProducts} 
           removeFilters={removeFilters}
         />
@@ -157,8 +155,7 @@ export const Products = () => {
                     {currentProductsCard.map((product: IProduct) => 
                       <ProductCard 
                         key={product.id} 
-                        product={product} 
-                        brands={brands} 
+                        product={product}
                         action={()=>{dispatch(addPosition(product))}}
                       />
                     )}
@@ -167,8 +164,7 @@ export const Products = () => {
                     {currentProductsCard.map((product: IProduct) => 
                       <ProductListViewItem 
                         key={product.id} 
-                        product={product} 
-                        brands={brands} 
+                        product={product}  
                         action={()=>{dispatch(addPosition(product))}}
                       />
                     )}

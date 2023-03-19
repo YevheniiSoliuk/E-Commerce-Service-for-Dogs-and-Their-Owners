@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IWalk } from "../interfaces/Walk";
 
 const walksApiSlice = apiSlice.injectEndpoints({

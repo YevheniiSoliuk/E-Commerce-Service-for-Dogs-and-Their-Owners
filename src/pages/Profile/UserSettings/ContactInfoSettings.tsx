@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { useGetUserAddressQuery, useUpdateUserMutation } from '../../../features/ApiUserSlice';
-import { IUserUpdate } from '../../../interfaces/User';
+import { IUser, IUserUpdate } from '../../../interfaces/User';
 
 import { Button } from '../../../components/commons/Button/Button';
 import { Input } from '../../../components/commons/Input/Input';
 import { Select } from '../../../components/commons/Select/Select';
+import { auth } from '../../../firebase.config';
+import { getCurrentUser } from '../../../controllers/userController';
 
 export const ContactInfoSettings = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
-  const {data: address} = useGetUserAddressQuery(user?.address_id);
+  // const { user } = useSelector((state: RootState) => state.auth);
+  //const [user, setUser] = useState<IUser>();
+  //const {data: address} = useGetUserAddressQuery(user.address);
   const [updateUser] = useUpdateUserMutation();
 
   const [name, setName] = useState<string>("");
@@ -24,20 +27,20 @@ export const ContactInfoSettings = () => {
   const [homeNumber, setHomeNumber] = useState<string>("");
 
   useEffect(() => {
-    
-    if(user && address) {
+    const user = getCurrentUser();
+
+    if(user !== null) {
       setName(user.name);
       setLastname(user.lastname);
       setEmail(user.email);
-      setPhone(user.phone);
-      setStreet(address.street);
-      setPostalCode(address.post_code);
-      setProvince(address.state);
-      setPlace(address.city);
-      setHomeNumber(address.home_number);
-    }
-    
-  }, [address, user])
+      setPhone(user.phoneNumber);
+      setStreet(user.address.street);
+      setPostalCode(user.address.postalCode);
+      setProvince(user.address.state);
+      setPlace(user.address.city);
+      setHomeNumber(user.address.homeNumber);
+    }   
+  }, [])
 
   const resetInfo = () => {
     setName("");

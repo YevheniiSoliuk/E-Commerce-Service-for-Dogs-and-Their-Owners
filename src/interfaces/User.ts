@@ -1,26 +1,34 @@
+import { IOrder, IProduct } from './Order';
+import { DocumentReference } from 'firebase/firestore';
+import { IAnimal } from './Animal';
+
 interface IUser {
-  id: number,
+  id: string,
+  uid: string,
   name: string,
   lastname: string,
   email: string,
-  phone: string,
+  phoneNumber: string,
   login: string,
   password: string,
-  photo: string,
-  coins: string,
-  address_id: number,
-  is_admin: boolean,
-  favourites: number[]
+  photoURL: string | null,
+  coins: string | null,
+  addressRef: DocumentReference<IAddress> | null,
+  address: IAddress,
+  favouriteProductsRefs: DocumentReference<IProduct>[] | null,
+  favouriteProductsIDs: string[] | null,
+  animalsRefs: DocumentReference<IAnimal>[] | null,
+  animalsIDs: string[] | null,
+  ordersRefs: DocumentReference<IOrder>[] | null,
+  ordersIDs: string[] | null
 }
 
 interface IAddress {
   street: string,
-  id: number,
-  post_code: string,
+  postalCode: string,
   state: string,
   city: string,
-  home_number: string,
-  user_id: number,
+  homeNumber: string,
 }
 
 interface IUserUpdate {

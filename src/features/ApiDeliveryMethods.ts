@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IDeliveryMethod, IPostalPunct, IPostalPunktAddress, IPostalPunktWorkTime } from "../interfaces/DeliveryMethod";
 
 const deliveryMethodsApiSlice = apiSlice.injectEndpoints({

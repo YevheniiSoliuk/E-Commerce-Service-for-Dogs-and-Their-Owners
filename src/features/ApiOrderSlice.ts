@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IOrder } from "../interfaces/Order";
 
 const orderApiSlice = apiSlice.injectEndpoints({

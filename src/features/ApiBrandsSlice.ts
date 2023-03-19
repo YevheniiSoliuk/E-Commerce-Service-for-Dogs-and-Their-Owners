@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IBrand } from "../interfaces/Brand";
 
 const brandsApiSlice = apiSlice.injectEndpoints({

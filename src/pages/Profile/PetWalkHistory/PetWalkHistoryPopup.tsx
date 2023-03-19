@@ -8,7 +8,7 @@ import { WalkHistoryTable } from '../../../components/commons/Table/WalkHistoryT
 
 type PropsType = {
   modal: ModalProps,
-  animalId: number
+  animalId: string
 }
 
 export const PetWalkHistoryPopup: React.FC<PropsType> = ({modal, animalId}) => {

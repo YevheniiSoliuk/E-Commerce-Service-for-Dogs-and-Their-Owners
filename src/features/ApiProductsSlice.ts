@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IProduct } from "../interfaces/Order";
 
 const productsApiSlice = apiSlice.injectEndpoints({
@@ -10,7 +10,7 @@ const productsApiSlice = apiSlice.injectEndpoints({
       query: (id: number) => `/product/${id}`
     }),
     addProductToFavorites: builder.mutation<{[key: string]: {
-      [key: string]: number[]
+      [key: string]: string[]
     }}, number>({
       query: (id) => ({
         url: `/product/${id}/add-to-favourites`,
@@ -18,7 +18,7 @@ const productsApiSlice = apiSlice.injectEndpoints({
       })
     }),
     deleteProductFromFavorites: builder.mutation<{[key: string]: {
-      [key: string]: number[]
+      [key: string]: string[]
     }}, number>({
       query: (id) => ({
         url: `/product/${id}/delete-from-favourites`,

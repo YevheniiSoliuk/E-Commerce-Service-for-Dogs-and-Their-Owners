@@ -4,21 +4,29 @@ import { ProductCart, clearCart } from '../../features/ordering/ProductCartSlice
 import { useNavigate } from 'react-router-dom';
 import { removeOrderData } from '../../features/OrderSlice';
 import { useOrderMutation } from '../../features/ApiOrderSlice';
-import { IOrder } from '../../interfaces/Order';
+import { IOrder, IOrderPosition, IProduct } from '../../interfaces/Order';
 import { useGetUserAddressQuery } from '../../features/ApiUserSlice';
 import { Button } from '../../components/commons/Button/Button';
+import { getCurrentUser } from '../../controllers/userController';
+import { IAddress } from '../../interfaces/User';
+import { useEffect, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '@reduxjs/toolkit/dist/query/react/buildHooks';
 
 export const SummarySection = () => {
   const basket: ProductCart = useSelector((state: RootState) => state.productCart)
   const delivery_price: number | undefined = 
-    useSelector((state: RootState) => state.order.deliveryMethod?.delivery_payment);
-  const paymentMethodId = useSelector((state: RootState) => state.order.paymentMethod?.id);
-  const id = useSelector((state: RootState) => state.auth.user?.address_id);
-  const {data: address} = useGetUserAddressQuery(id);
-
+    useSelector((state: RootState) => state.order.deliveryMethod?.deliveryPayment);
+  const paymentMethod = useSelector((state: RootState) => state.order.paymentMethod);
+  // const id = useSelector((state: RootState) => state.auth.user?.address.id);
+  // const {data: address} = useGetUserAddressQuery(id);
+  const [addressOfCurrentUser, setAddressOfCurrentUser] = useState<IAddress | null>(null);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [order] = useOrderMutation()
+
+  useEffect(() => {
+    setAddressOfCurrentUser(getCurrentUser()!.address);
+  }, [])
 
   const resetOrder = () => {
     dispatch(clearCart());
@@ -27,23 +35,26 @@ export const SummarySection = () => {
   }
 
   const createOrder = async () => {
-    const productsIds: number[] = [];
-    const amountOfProducts: number[] = [];
-
+    const positions: IOrderPosition[] = [];
+    
     basket.positions.forEach(position => {
-      productsIds.push(Number(position.product.id));
-      amountOfProducts.push(Number(position.amount));
+      positions.push({product: position.product, amount: position.amount});
     })
 
     const payload: IOrder = {
-      city: address ? address.city : "",
-      street: address ? address.street : "",
-      home_number: address ? address.home_number : "",
-      post_code: address ? address.post_code : "",
-      status_id: 1,
-      payment_method_id: paymentMethodId ? paymentMethodId : 0,
-      products_id: productsIds,
-      amounts_of_products: amountOfProducts
+      orderCode: "e74783hf83837",
+      city: addressOfCurrentUser ? addressOfCurrentUser.city : "",
+      street: addressOfCurrentUser ? addressOfCurrentUser.street : "",
+      homeNumber: addressOfCurrentUser ? addressOfCurrentUser.homeNumber : "",
+      postalCode: addressOfCurrentUser ? addressOfCurrentUser.postalCode : "",
+      status: { name: "W trakcie realizaji" },
+      paymentMethod: paymentMethod!,
+      products: positions,
+      state: '',
+      statusRef: null,
+      paymentMethodRef: null,
+      deliveryMethodRef: null,
+      deliveryMethod: null
     }
 
     await order(payload)
@@ -84,7 +95,7 @@ export const SummarySection = () => {
               >{position.product.price} zł</p>
               <p 
                 className="text-[16px] text-center font-normal"
-              >({position.product.base_price} zł/kg)</p>
+              >({position.product.basePrice} zł/kg)</p>
             </div>
           </div>
           <div className="w-[90%] h-[2px] bg-green ml-auto mr-auto my-[20px]"></div>

@@ -6,7 +6,7 @@ import { AppDispatch } from '../../store/store';
 import { Button } from '../commons/Button/Button';
 
 export const CartPopupItem: React.FC<IOrderPosition> = ({product, amount}) => {
-  const {id, photos, title, price, base_price, discount_price, discount_amount} = {...product};
+  const {id, images, title, price, basePrice, discountAmount} = {...product};
   const dispatch: AppDispatch = useDispatch();
   
   return (
@@ -15,9 +15,9 @@ export const CartPopupItem: React.FC<IOrderPosition> = ({product, amount}) => {
         className="absolute text-[30px] left-[420px] top-0 hover:text-yellow cursor-pointer" 
         onClick={()=>{dispatch(removePosition(id))}}
       >&times;</span>
-      {photos ? 
+      {images ? 
         <img 
-          src={photos?.[0]} 
+          src={images?.[0]} 
           alt={""} 
           className="w-[30%]"
         /> :
@@ -29,11 +29,11 @@ export const CartPopupItem: React.FC<IOrderPosition> = ({product, amount}) => {
       }
       <div className="w-[40%] ml-[20px]">
         <h3 className="mb-[10px] text-[14px]">{title}</h3>
-        {discount_price !== undefined && discount_price !== null && discount_amount ? 
-          <p className="text-dark_red text-[16px] mb-[5px]">{price - discount_price} zł</p> :
+        {discountAmount !== null ? 
+          <p className="text-dark_red text-[16px] mb-[5px]">{price - (price * (discountAmount/100))} zł</p> :
           <p className="text-dark_red text-[16px] mb-[5px]">{price} zł</p>
         } 
-        <p className="mb-[20px] text-[14px]">({base_price} zł/kg)</p>
+        <p className="mb-[20px] text-[14px]">({basePrice} zł/kg)</p>
       </div>
       <div className="flex items-center">
         <Button 

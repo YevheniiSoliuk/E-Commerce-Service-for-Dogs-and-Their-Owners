@@ -29,11 +29,9 @@ const ProductCartSlice = createSlice({
           isNewPosition = false;
           state.total += payload.price;
 
-          if(payload.discount_amount !== 0 && 
-            payload.discount_price !== null && 
-            payload.discount_price !== undefined)
+          if(payload.discountAmount !== null)
           {
-            state.totalDiscount += payload.discount_price;
+            state.totalDiscount += payload.price * (payload.discountAmount/100);
           }
         }
       });
@@ -44,11 +42,9 @@ const ProductCartSlice = createSlice({
         state.positionsAmount += 1;
         state.total += payload.price;
 
-        if(payload.discount_amount !== 0 && 
-          payload.discount_price !== null && 
-          payload.discount_price !== undefined)
+        if(payload.discountAmount !== null)
         {
-          state.totalDiscount += payload.discount_price;
+          state.totalDiscount += payload.price * (payload.discountAmount/100);
         }
       }
     },
@@ -57,11 +53,9 @@ const ProductCartSlice = createSlice({
         if(position.product.id === payload) 
         { 
           state.total -= position.amount * position.product.price;
-          if(position.product.discount_amount !== 0 && 
-            position.product.discount_price !== null && 
-            position.product.discount_price !== undefined)
+          if(position.product.discountAmount !== null)
           {
-            state.totalDiscount -= position.amount * position.product.discount_price
+            state.totalDiscount -= position.amount * (position.product.price * (position.product.discountAmount/100));
           }
         }     
       });
@@ -81,11 +75,9 @@ const ProductCartSlice = createSlice({
           state.total += payload.product.price * value;
           isNewPosition = false;
 
-          if(payload.product.discount_amount !== 0 && 
-            payload.product.discount_price !== null && 
-            payload.product.discount_price !== undefined)
+          if(payload.product.discountAmount !== null)
           {
-            state.totalDiscount += payload.product.discount_price * value;
+            state.totalDiscount += payload.product.price * (payload.product.discountAmount/100) * value;
           }
         }
       });
@@ -96,11 +88,9 @@ const ProductCartSlice = createSlice({
         state.positionsAmount += 1;
         state.total += payload.product.price * value;
 
-        if(payload.product.discount_amount !== 0 &&
-          payload.product.discount_price !== null &&
-          payload.product.discount_price !== undefined)
+        if(payload.product.discountAmount !== null)
         {
-          state.totalDiscount += payload.product.discount_price * value;
+          state.totalDiscount += payload.product.price * (payload.product.discountAmount/100) * value;
         }
       }
     },
@@ -111,11 +101,9 @@ const ProductCartSlice = createSlice({
           position.amount += 1;
           state.total += position.product.price;
 
-          if(position.product.discount_amount !== 0 &&
-            position.product.discount_price !== null &&
-            position.product.discount_price !== undefined)
+          if(position.product.discountAmount !== null)
           {
-            state.totalDiscount += position.product.discount_price;
+            state.totalDiscount += position.product.price * (position.product.discountAmount/100);
           }
         }
       });
@@ -129,11 +117,9 @@ const ProductCartSlice = createSlice({
             state.positionsAmount -= 1;
             state.total -= position.product.price;
 
-            if(position.product.discount_amount !== 0 &&
-              position.product.discount_price !== null &&
-              position.product.discount_price !== undefined)
+            if(position.product.discountAmount !== null)
             {
-              state.totalDiscount -= position.product.discount_price;
+              state.totalDiscount -= position.product.price * (position.product.discountAmount/100);
             }
           }
           else
@@ -141,11 +127,9 @@ const ProductCartSlice = createSlice({
             position.amount -= 1;
             state.total -= position.product.price;
 
-            if(position.product.discount_amount !== 0 &&
-              position.product.discount_price !== null &&
-              position.product.discount_price !== undefined)
+            if(position.product.discountAmount !== null)
             {
-              state.totalDiscount -= position.product.discount_price;
+              state.totalDiscount -= position.product.price * (position.product.discountAmount/100);
             }
           }
         }

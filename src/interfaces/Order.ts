@@ -1,3 +1,9 @@
+import { ISubcategory } from './Category';
+import { DocumentReference } from 'firebase/firestore';
+import { IBrand } from './Brand';
+import { IPaymentMethod } from './PaymentMethod';
+import { IDeliveryMethod } from './DeliveryMethod';
+
 export interface IOrderPosition {
   product: IProduct,
   amount: number
@@ -8,31 +14,40 @@ export interface IAdvantage {
   image: string
 }
 
+export interface IStatus {
+  name: string
+}
+
 export interface IOrder {
+  orderCode: string,
   city: string,
+  state: string,
   street: string,
-  home_number: string,
-  post_code: string,
-  status_id: number,
-  payment_method_id: number,
-  products_id: number[],
-  amounts_of_products: number[]
+  homeNumber: string,
+  postalCode: string,
+  statusRef: DocumentReference<IStatus> | null,
+  status: IStatus,
+  paymentMethodRef: DocumentReference<IPaymentMethod> | null,
+  paymentMethod: IPaymentMethod,
+  deliveryMethodRef: DocumentReference<IDeliveryMethod> | null,
+  deliveryMethod: IDeliveryMethod | null,
+  products: IOrderPosition[]
 }
 
 export interface IProduct {
-  id: string | number,
+  id: string,
   title: string,
-  brand_id: number,
-  subcategory_id?: number | null,
-  photos: string[],
-  short_description?: string | null,
-  long_description?: string | null,
+  brandRef: DocumentReference<IBrand>,
+  brand: IBrand,
+  subcategoryRef: DocumentReference<ISubcategory>,
+  subcategoryID: string,
+  images: string[],
+  shortDescription: string | null,
+  longDescription: string | null,
   price: number,
-  base_price: number,
-  discount_amount?: number | null,
+  basePrice: number,
+  discountAmount: number | null,
   rate: number,
-  discount_price?: number | null,
-  averages?: IAdvantage[] | null,
-  ingredients?: string | null,
-  dosage?: string | null
+  ingredients: string | null,
+  dosage: string | null
 }

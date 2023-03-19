@@ -1,8 +1,12 @@
+import { DocumentReference } from "firebase/firestore"
+
 export interface ICategory {
+  id: string,
   name: string,
-  id: number
+  type: "category"
 }
 
 export interface ISubcategory extends ICategory {
-  category_id: number
+  categoryID: string,
+  categoryRef: DocumentReference<string>
 }

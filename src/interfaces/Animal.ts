@@ -1,28 +1,33 @@
+import { DocumentReference } from 'firebase/firestore';
+import { IWalk } from './Walk';
+
 interface IAnimal {
+  id: string,
   name: string,
-  birth_date: string,
-  weight: number,
-  photo_url: string,
-  breed_id: number,
-  id: number,
+  birthDate: string,
   sex: string,
   height: number,
+  weight: number,
   bio: string,
-  user_id: number
+  photoURL: string,
+  breedRef: DocumentReference<IBreed>,
+  breedID: string,
+  walksRefs: DocumentReference<IWalk>[],
+  walks: IWalk[]
 }
 
 interface IBreed {
-  id: number,
+  id: string,
   name: string
 }
 
 interface IAnimalImage {
-  id: number,
+  id: string,
   image: FormData
 }
 
 interface IAnimalUpdate {
-  id: number,
+  id: string,
   name: string,
   weight: number,
   height: number,

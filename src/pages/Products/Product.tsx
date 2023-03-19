@@ -18,6 +18,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/virtual";
+import { IBreed } from '../../interfaces/Animal';
 
 export const Product = () => {
   const { id } = useParams();
@@ -35,9 +36,10 @@ export const Product = () => {
   const brands = brandsData?.["All brands"];
   
   const {
-    title, brand_id, long_description, photos, price, 
-    discount_price, discount_amount, base_price, rate
+    title, brand, longDescription, images, price, discountAmount, basePrice, rate
   } = {...product};
+
+  const brandID = brand?.id;
 
   const addToCart = () => {
     if(product) {
@@ -65,10 +67,10 @@ export const Product = () => {
           border-green rounded-[25px] px-[60px]"
         >
           <section className="flex flex-col justify-center items-center pt-[40px]">
-            {photos ? 
+            {images ? 
             <>
               <img 
-                src={"." + photos?.[0]} 
+                src={"." + images?.[0]} 
                 alt="photos" 
                 className="w-[600px]"
               />
@@ -85,28 +87,28 @@ export const Product = () => {
                 >
                   <SwiperSlide>
                     <img 
-                      src={"." + photos?.[0]} 
+                      src={"." + images?.[0]} 
                       alt="photo1" 
                       className="w-[150px]"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img 
-                      src={"." + photos?.[0]} 
+                      src={"." + images?.[0]} 
                       alt="photo1" 
                       className="w-[150px]"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img 
-                      src={"." + photos?.[0]} 
+                      src={"." + images?.[0]} 
                       alt="photo1" 
                       className="w-[150px]"
                     />
                   </SwiperSlide>
                   <SwiperSlide>
                     <img 
-                      src={"." + photos?.[0]} 
+                      src={"." + images?.[0]} 
                       alt="photo1" 
                       className="w-[150px]"
                     />
@@ -167,7 +169,7 @@ export const Product = () => {
           <section className="w-full h-[100%] flex flex-col items-start justify-start">
             <h2 className={"text-[48px] mb-[20px]"}>{title}</h2> 
             <p className={"text-[32px] mb-[20px]"}>
-              {brands?.find((brand: IBrand) => brand.id === brand_id)?.name}
+              {brands?.find((brand: IBrand) => brand.id === brandID)?.name}
             </p>
             {rate ?
               <StarRating 
@@ -178,7 +180,7 @@ export const Product = () => {
                 rates={"23"}
               /> : null
             }
-            <p className="text-[20px] mt-[40px] text-left">{long_description}</p>
+            <p className="text-[20px] mt-[40px] text-left">{longDescription}</p>
             <div 
               className="w-full flex justify-center items-center gap-[80px] mt-[40px] 
               py-[25px] px-[20px] border-t-2 border-b-2 border-green"
@@ -209,7 +211,7 @@ export const Product = () => {
               </div>
             </div>
             <div className="w-full flex justify-center gap-[40px] items-center mt-[40px] text-[20px]">
-              {discount_price && discount_amount !== 0 ? 
+              {discountAmount !== null ? 
                 <div className="text-center">
                   <p className="mb-[10px]">Stara cena</p>
                   <p className="text-[24px] mb-[7px] text-dark_red/50 line-through">{price} zł</p>
@@ -217,11 +219,11 @@ export const Product = () => {
               }
               <div className="text-center">
                 <p className="mb-[10px]">Cena</p>
-                <p className="text-[32px] mb-[7px] text-dark_red">{discount_price} zł</p>
+                <p className="text-[32px] mb-[7px] text-dark_red">{(price!*discountAmount!)/100} zł</p>
               </div>
               <div className="text-center">
                 <p className="mb-[10px]">Cena zasadnicza</p>
-                <p className="text-[20px]">({base_price} zł/kg)</p>
+                <p className="text-[20px]">({basePrice} zł/kg)</p>
               </div>
             </div>
             <div className="w-full flex justify-between items-center mt-[60px]">
@@ -305,7 +307,7 @@ export const Product = () => {
           rounded-[25px] px-[60px] py-[60px]"
         >
           <p className="text-[14px] text-justify">
-            {long_description}
+            {longDescription}
           </p>
         </div>
       </section>

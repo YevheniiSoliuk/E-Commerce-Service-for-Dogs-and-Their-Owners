@@ -60,7 +60,7 @@ export const PaymentMethodsSection = () => {
               onChange={(e)=>{setPaymentMethod(e.target.value)}} 
               action={()=>{setPaymentMethodOnLogoCLick(payment)}} 
               placeholder={payment.name} 
-              imgSrc={payment.photo_url}
+              imgSrc={payment.photoURL}
             />
           </>
         )}

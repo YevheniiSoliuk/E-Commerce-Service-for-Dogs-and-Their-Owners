@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import coin from "../../assets/images/coin.svg";
 import dogAvatar1 from "../../assets/images/dog-avatar-1.png";
 import dogAvatar2 from "../../assets/images/dog-avatar-2.png";
 import dogAvatar3 from "../../assets/images/dog-avatar-3.png";
+import { IUser } from "../../interfaces/User";
+import { getCurrentUser } from "../../controllers/userController";
 
 const dogs = [
   {src: dogAvatar1, index: "1", name: "Miśka", birthdate: "01.12.19r.", breed: "Chow-Chow", sex:"suka"}, 
@@ -24,9 +26,13 @@ const dogs = [
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state: RootState) => state.auth);
-  
+  // const { user } = useSelector((state: RootState) => state.auth);
+  const [user, setUser] = useState<IUser | null>(null);
   const [moreWalkInfoClicked, setMoreWalkInfoClicked] = useState<boolean>(false);
+
+  useEffect(()=> {
+    setUser(getCurrentUser());
+  }, [])
 
   const goToProfileSettings = () => {
     navigate("/profile/settings");
@@ -78,11 +84,18 @@ export const Profile = () => {
           }
         </section>
         <section className="flex flex-col justify-start items-center w-[350px] h-full">
-          <img 
-            src={user?.photo} 
-            alt="user-logo" 
-            className="w-[200px] rounded-full"
-          />
+          {user?.photoURL ?
+            <img 
+              src={user?.photoURL} 
+              alt="user-logo" 
+              className="w-[200px] rounded-full"
+            /> :
+            <img 
+              src={avatar} 
+              alt="user-logo" 
+              className="w-[200px] rounded-full"
+            /> 
+          }
           <h2 className="text-[32px] my-[40px] text-center">{user?.name} {user?.lastname}</h2>
           <div className="w-full flex justify-between">
             <Button 

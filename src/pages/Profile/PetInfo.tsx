@@ -11,7 +11,7 @@ export type PetInfoProps = {
 
 export const PetInfo: React.FC<PetInfoProps> = ({animal, breed}) => {
   
-  const {id, name, photo_url, birth_date, sex, bio} = animal;
+  const {id, name, photoURL, birthDate, sex, bio} = animal;
   
   return (
     <div 
@@ -19,7 +19,7 @@ export const PetInfo: React.FC<PetInfoProps> = ({animal, breed}) => {
       bg-dark_green border-2 border-green rounded-[20px] py-[40px] px-[30px]"
     >
       <img 
-        src={photo_url} 
+        src={photoURL} 
         alt={"pet-avatar-" + id} 
         className="block w-[200px] rounded-full"
       />
@@ -28,7 +28,7 @@ export const PetInfo: React.FC<PetInfoProps> = ({animal, breed}) => {
       <div className="w-[340px]">
         <p className="flex justify-between">
           <span>Data urodzenia:</span>
-          <span>{birth_date}</span>
+          <span>{birthDate}</span>
         </p>
         <p className="flex justify-between">
           <span>Rasa:</span>

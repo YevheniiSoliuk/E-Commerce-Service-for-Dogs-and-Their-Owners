@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyApt4lSS7MWYpZpdUicpi8PFb7h2xSilQc",
@@ -12,14 +12,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app);
-
-try {
-  const usersSnapshot = await getDocs(collection(firestore, "users"));
-
-  usersSnapshot.forEach(user => {
-    console.log(`User ID: ${user.id}\nUser data - ${user.data()}`);
-  })
-} catch (e) {
-  console.error("Error adding document: ", e);
-}
+export const firestore = getFirestore(app);
+export const auth = getAuth(app);

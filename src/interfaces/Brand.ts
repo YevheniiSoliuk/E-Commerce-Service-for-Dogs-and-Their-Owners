@@ -1,6 +1,7 @@
 export interface IBrand {
-  id: number,
+  id: string,
+  type: "brand",
   name: string,
-  photo: string,
+  logoURL: string,
   description: string
 }

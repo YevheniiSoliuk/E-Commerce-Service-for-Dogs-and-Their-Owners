@@ -11,6 +11,7 @@ import { IUser } from "../../interfaces/User";
 import { Button } from "../../components/commons/Button/Button";
 import { Input } from "../../components/commons/Input/Input";
 import { Select } from "../../components/commons/Select/Select";
+import { signUpUser } from "../../controllers/auth/user";
 
 export const Signup = () => {
   const [name, setName] = useState<string>("");
@@ -64,40 +65,53 @@ export const Signup = () => {
   const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const payload: object = {
+    const payload: IUser = {
       name: name,
-      surname: lastname,
+      lastname: lastname,
       email: email,
-      phone_number: phone,
-      state: province,
-      home_number: homeNumber,
-      city: place,
-      post_code: postalCode,
-      street: street,
+      phoneNumber: phone,
+      address: {
+        state: province,
+        homeNumber: homeNumber,
+        city: place,
+        postalCode: postalCode,
+        street: street
+      },
       login: login,
       password: password,
-      password_repeat: repeatPassword
+      id: "",
+      uid: "",
+      photoURL: null,
+      coins: null,
+      addressRef: null,
+      favouriteProductsRefs: null,
+      favouriteProductsIDs: null,
+      animalsRefs: null,
+      animalsIDs: null,
+      ordersRefs: null,
+      ordersIDs: null
     }
 
     try {
-      const userData = await register(payload).unwrap();
-      const token: string = userData["Token"]["acccess token"];
-      const user: IUser = {
-        id: userData["User Info"].id,
-        name: userData["User Info"].name,
-        lastname: userData["User Info"].surname,
-        email: userData["User Info"].email,
-        phone: userData["User Info"].phone_number, 
-        login: userData["User Info"].login,
-        password: userData["User Info"].password,
-        photo: userData["User Info"].photo_url,
-        address_id: userData["User Info"].address_id,
-        coins: userData["User Info"].coins,
-        is_admin: userData["User Info"].is_admin,
-        favourites: userData["User Info"].favourites
-      }
+      // const userData = await register(payload).unwrap();
+      // const token: string = userData["Token"]["acccess token"];
+      // const user: IUser = {
+      //   id: userData["User Info"].id,
+      //   name: userData["User Info"].name,
+      //   lastname: userData["User Info"].surname,
+      //   email: userData["User Info"].email,
+      //   phoneNumber: userData["User Info"].phone_number, 
+      //   login: userData["User Info"].login,
+      //   password: userData["User Info"].password,
+      //   photoURL: userData["User Info"].photo_url,
+      //   address: userData["User Info"].address_id,
+      //   coins: userData["User Info"].coins,
+      //   is_admin: userData["User Info"].is_admin,
+      //   favouriteProductsIDs: userData["User Info"].favourites
+      // }
       
-      dispatch(setCredentials({user, token}));
+      // dispatch(setCredentials({user, token}));
+      signUpUser(payload);
       clearFields();
       navigate("/profile");
     } catch(err) {   

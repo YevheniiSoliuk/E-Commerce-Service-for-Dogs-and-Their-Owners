@@ -2,12 +2,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { IUser } from '../../interfaces/User';
 import { useGetUserAddressQuery } from '../../features/ApiUserSlice';
+import { useEffect, useState } from 'react';
+import { getCurrentUser } from '../../controllers/userController';
 
 export const DeliveryInfo = () => {
 
-  const user: IUser | null  = useSelector((state: RootState) => state.auth.user);
-  const { name, lastname, email, phone, address_id } = {...user};
-  const {data: address} = useGetUserAddressQuery(address_id);
+  // const user: IUser | null  = useSelector((state: RootState) => state.auth.user);
+  // const { name, lastname, email, phoneNumber, address } = {...user};
+  // const {data: userAddress} = useGetUserAddressQuery(address?.id);
+
+  const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    setCurrentUser(getCurrentUser());
+  }, [])
 
   return (
     <section 
@@ -18,31 +26,31 @@ export const DeliveryInfo = () => {
         <div className="px-[40px] py-[10px]">
           <div className="flex items-center justify-between text-[24px] mb-[15px]">
             <p className="font-semibold">Imię:</p>
-            <p>{name}</p>
+            <p>{currentUser?.name}</p>
           </div>
           <div className="flex items-center justify-between text-[24px] mb-[15px]">
             <p className="font-semibold">Nazwisko:</p>
-            <p>{lastname}</p>
+            <p>{currentUser?.lastname}</p>
           </div>
           <div className="flex items-center justify-between text-[24px] mb-[15px]">
             <p className="font-semibold">Ulica i numer:</p>
-            <p>{address?.street} {address?.home_number}</p>
+            <p>{currentUser?.address.street} {currentUser?.address.homeNumber}</p>
           </div>
           <div className="flex items-center justify-between text-[24px] mb-[15px]">
             <p className="font-semibold">Kod pocztowy:</p>
-            <p>{address?.post_code}</p>
+            <p>{currentUser?.address.postalCode}</p>
           </div>
           <div className="flex items-center justify-between text-[24px] mb-[15px]">
             <p className="font-semibold">Miasto:</p>
-            <p>{address?.city}</p>
+            <p>{currentUser?.address.city}</p>
           </div>
           <div className="flex items-center justify-between text-[24px] mb-[15px]">
             <p className="font-semibold">Telefon:</p>
-            <p>{phone}</p>
+            <p>{currentUser?.phoneNumber}</p>
           </div>
           <div className="flex items-center justify-between text-[24px]">
             <p className="font-semibold">Email:</p>
-            <p>{email}</p>
+            <p>{currentUser?.email}</p>
           </div>
         </div> 
     </section>

@@ -27,46 +27,53 @@ export const List: React.FC<ListProps> = ({title, items, subitems}) => {
     setShowList(!showList);
   }
 
-  // const isBrand = (item: any): item is IBrand => { 
-  //   return 'description' in item;
+  // function isBrand(items: IBrand[] | ICategory[] | undefined): items is IBrand[] {
+  //   items.forEach(item => {
+  //     if(!(item as IBrand).logoURL !== undefined)
+  //     {
+  //       return false;
+  //     }
+  //   })
+
+  //   return true;
   // }
 
   return (
     <section>
       <h2 
-        className={"relative text-[16px] text-left mb-[15px] before:content[''] before:absolute before:w-[15px] before:h-[15px] before:border-b-[3px] before:border-r-[3px] before:border-green before:right-[30px] " 
+        className={"relative text-[20px] text-left font-bold mb-[15px] before:content[''] before:absolute before:w-[15px] before:h-[15px] before:border-b-[3px] before:border-r-[3px] before:border-green before:right-[30px] " 
         + rotate + " hover:cursor-pointer"} 
         onClick={toggleList}
       >{title}</h2>
       {showList && 
         <>
           <ul>
-            {'description' in items![0] ? 
+            {"logoURL" in items?.[0]! ? 
               items?.map(brand => 
                 <li 
-                  className="text-[12px] list-none hover:text-yellow active:text-yellow hover:cursor-pointer"
+                  className="list-none hover:text-yellow active:text-yellow hover:cursor-pointer"
                   key={brand.id}
                 >
                   <Input 
-                    id={brand.id.toString()} 
+                    id={brand.id}
                     type="checkbox" 
                     name="brand" 
                     placeholder={brand.name} 
-                    width="" 
+                    imgSrc={(brand as IBrand).logoURL}
                     action={()=>{dispatch(addBrand(brand as IBrand))}}
                   />
                 </li>
               ) :
               items?.map(category => 
                 <li 
-                  className="text-[12px] list-disc list-inside ml-[10px] mb-[10px]" 
-                  key={category.name}
-                > {category.name}
+                  className="list-none list-inside ml-[10px] mb-[10px]" 
+                  key={category.id}
+                > <span className="text-[16px] font-semibold">{category.name}</span>
                   <ul>
                     {subitems?.map((subcategory: ISubcategory, index: number) => 
-                      subcategory.category_id === category.id ?
+                      subcategory.categoryID === category.id ?
                       <li 
-                        className="text-[12px] list-disc list-inside ml-[10px] hover:text-yellow hover:cursor-pointer active:text-yellow" 
+                        className="text-[14px] list-disc list-inside ml-[10px] hover:text-yellow hover:cursor-pointer active:text-yellow" 
                         key={index} 
                         onClick={()=>dispatch(setCategory(subcategory))}
                       >{subcategory.name}</li> : null

@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { List } from "../commons/List";
 import { MultiRangeSlider } from "../commons/Slider/MultiRangeSlider";
 import { StarRating } from "../commons/StarRating";
-import { useBrandsQuery } from "../../features/ApiBrandsSlice";
-import { useCategoriesQuery, useSubcategoriesQuery } from "../../features/ApiFiltersSlice";
 import { IProduct } from "../../interfaces/Order";
 import { Button } from "../commons/Button/Button";
+import { ICategory, ISubcategory } from "../../interfaces/Category";
+import { IBrand } from "../../interfaces/Brand";
+import { getCategories } from "../../controllers/categoryController";
+import { getSubcategories } from "../../controllers/subcategoryController";
+import { getBrands } from "../../controllers/brandController";
 
 type SideBarProps = {
   products: IProduct[] | undefined,
@@ -14,22 +17,26 @@ type SideBarProps = {
 }
 
 export const Sidebar: React.FC<SideBarProps> = ({products, applyFilters, removeFilters}) => {
-  const {data: brandsData} = useBrandsQuery();
-  const {data: categoriesData} = useCategoriesQuery();
-  const {data: subcategoriesData} = useSubcategoriesQuery();  
+  const [brands, setBrands] = useState<IBrand[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [subcategories, setSubcategories] = useState<ISubcategory[]>([]);
 
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
 
   useEffect(()=>{
-    if(products) {
-      setMinPrice(Number([...products]
-        .sort((a: IProduct, b: IProduct) => a.price - b.price)[0]
-        .price.toFixed(0)));
-      setMaxPrice(Number([...products]
-        .sort((a: IProduct, b: IProduct) => b.price - a.price)[0]
-        .price.toFixed(0)));
-    }
+    setBrands(getBrands());
+    setCategories(getCategories());
+    setSubcategories(getSubcategories());
+
+    // if(products) {
+    //   setMinPrice(Number([...products]
+    //     .sort((a: IProduct, b: IProduct) => a.price - b.price)[0]
+    //     .price.toFixed(0)));
+    //   setMaxPrice(Number([...products]
+    //     .sort((a: IProduct, b: IProduct) => b.price - a.price)[0]
+    //     .price.toFixed(0)));
+    // }
   }, [products])
 
   return (
@@ -40,12 +47,12 @@ export const Sidebar: React.FC<SideBarProps> = ({products, applyFilters, removeF
       <h2 className="text-[24px] text-left mb-[25px]">FILTRY</h2>
       <List 
         title="Kategoria" 
-        items={categoriesData?.Categories} 
-        subitems={subcategoriesData?.["Added subcategory"]}
+        items={categories} 
+        subitems={subcategories}
       />
       <List 
         title="Marki" 
-        items={brandsData?.["All brands"]}
+        items={brands}
       />
       <section>
         <h2 className="text-[16px] text-left mb-[15px]">Filtruj wg ceny</h2>

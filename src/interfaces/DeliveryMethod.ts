@@ -1,31 +1,40 @@
+import { DocumentReference } from 'firebase/firestore';
+
+interface ICoordinates {
+  latitude: number,
+  longitude: number
+}
+
 interface IPostalPunktAddress {
-  id: number,
+  id: string,
   city: string,
   street: string,
-  build_number: string,
-  latitude: string,
-  longtitude: string
+  postalCode: string,
+  coordinates: ICoordinates
 }
 
 interface IPostalPunktWorkTime {
-  id: number,
-  post_office_id: number,
-  name: string,
-  work_time: string
+  id: string,
+  day: string,
+  time: string
 }
 
 interface IPostalPunct {
-  id: number,
+  id: string,
   name: string,
-  post_office_address_id: number,
+  type: string,
+  postalPunctAddress: IPostalPunktAddress,
+  postalPunctWorkTime: IPostalPunktWorkTime[]
 }
 
 interface IDeliveryMethod {
+  id: string,
   name: string,
-  logo: string,
-  delivery_payment: number,
-  delivery_time: string,
-  postal_points: number[]
+  logoURL: string,
+  deliveryPayment: number,
+  deliveryTime: number,
+  postalPunctsRefs: DocumentReference<IPostalPunct>[]
+  postalPuncts: IPostalPunct[]
 }
 
 

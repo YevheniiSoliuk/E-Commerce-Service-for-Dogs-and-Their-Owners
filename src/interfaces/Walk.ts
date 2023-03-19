@@ -1,11 +1,9 @@
 interface IWalk {
+  id: string,
   time: string,
-  id: number,
-  photo: Array<number>,
-  user_id: number,
-  coins_gained: number,
-  distance: number,
-  animals_id: number[]
+  mapScreenURL: string,
+  gainedCoins: number,
+  distance: number
 }
 
 export type {

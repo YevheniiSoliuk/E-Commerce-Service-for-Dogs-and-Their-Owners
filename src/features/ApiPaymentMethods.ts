@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IPaymentMethod } from "../interfaces/PaymentMethod";
 
 const paymentMethodsApiSlice = apiSlice.injectEndpoints({

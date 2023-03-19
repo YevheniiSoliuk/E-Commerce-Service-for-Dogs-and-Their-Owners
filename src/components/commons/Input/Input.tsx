@@ -56,18 +56,18 @@ export const Input: React.FC<InputProps> = ({id, type, name, value, required, pl
               checked={isCheck}
             />
           }
-          <span className="absolute top-1 left-0 h-[20px] w-[20px] bg-yellow rounded-[5px] border-2 border-green ml-[-20px] peer-checked:before:content[''] peer-checked:before:w-[12px] peer-checked:before:h-[10px] peer-checked:before:border-b-[3px] peer-checked:before:border-r-[3px] peer-checked:before:border-green peer-checked:before:rotate-45 peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.4rem] peer-checked:before:-translate-y-[0.4rem] peer-checked:before:rounded-[3px] peer-invalid:border-dark_red"></span>
+          <span className="absolute top-[15px] left-0 h-[20px] w-[20px] bg-yellow rounded-[5px] border-2 border-green ml-[-20px] peer-checked:before:content[''] peer-checked:before:w-[12px] peer-checked:before:h-[10px] peer-checked:before:border-b-[3px] peer-checked:before:border-r-[3px] peer-checked:before:border-green peer-checked:before:rotate-45 peer-checked:before:absolute peer-checked:before:left-[50%] peer-checked:before:top-[50%] peer-checked:before:-translate-x-[0.4rem] peer-checked:before:-translate-y-[0.4rem] peer-checked:before:rounded-[3px] peer-invalid:border-dark_red"></span>
           {name === "brand" ?
             <label 
               htmlFor={id} 
               className="flex items-center w-[330px] ml-[15px] text-[12px] text-green tracking-normal mb-[10px]" 
               onClick={toggleCheck}>
               <img 
-                src={avatar} 
+                src={imgSrc} 
                 alt={placeholder} 
-                className="inline-block w-[30px] h-[30px] border-full mr-[10px]"
+                className="inline-block w-[50px] h-[50px] border-full mr-[10px]"
               />
-              {placeholder}
+              <span className="text-[14px]">{placeholder}</span>
             </label> : 
             <label 
               htmlFor={id} 

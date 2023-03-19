@@ -46,14 +46,20 @@ export const LoginModal: React.FC<ModalProps> = ({isOpen, close, goToOtherModal}
         name: userData["User Info"].name,
         lastname: userData["User Info"].surname,
         email: userData["User Info"].email,
-        phone: userData["User Info"].phone_number, 
+        phoneNumber: userData["User Info"].phone_number,
         login: userData["User Info"].login,
         password: userData["User Info"].password,
-        photo: userData["User Info"].photo_url,
-        address_id: userData["User Info"].address_id,
+        photoURL: userData["User Info"].photo_url,
+        address: userData["User Info"].address,
         coins: userData["User Info"].coins,
-        is_admin: userData["User Info"].is_admin,
-        favourites: userData["User Info"].favourites
+        favouriteProductsIDs: userData["User Info"].favourites,
+        uid: "",
+        addressRef: null,
+        favouriteProductsRefs: null,
+        animalsRefs: null,
+        animalsIDs: null,
+        ordersRefs: null,
+        ordersIDs: null
       }
 
       dispatch(setCredentials({token, user}));

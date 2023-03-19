@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { ICategory, ISubcategory } from "../interfaces/Category";
 
 const filtersApiSlice = apiSlice.injectEndpoints({

@@ -21,11 +21,11 @@ export const EditPetInfoPopup: React.FC<PropsType> = ({modal, animal, animalBree
 
   const [petName, setPetName] = useState<string>(animal.name);
   const [breed, setBreed] = useState<string>(animalBreed);
-  const [birthday, setBirthday] = useState<string>(animal.birth_date);
+  const [birthday, setBirthday] = useState<string>(animal.birthDate);
   const [sex, setSex] = useState<string>(animal.sex);
   const [weight, setWeight] = useState<number>(animal.weight);
   const [description, setDescription] = useState<string>(animal.bio);
-  const [avatar, setAvatar] = useState<string>(animal.photo_url);
+  const [avatar, setAvatar] = useState<string>(animal.photoURL);
   const [newImage, setNewImage] = useState<File>();
 
   const [setImage] = useSetImageMutation();

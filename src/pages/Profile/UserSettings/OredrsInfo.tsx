@@ -1,9 +1,18 @@
-import { orders } from '../../../data/orders';
+//import { orders } from '../../../data/orders';
 
+import { useEffect, useState } from 'react';
 import { OrdersTable } from '../../../components/commons/Table/OrdersTable';
 import { SearchSection } from '../../../components/SearchSection/SearchSection';
+import { IOrder } from '../../../interfaces/Order';
+import { getOrders } from '../../../controllers/orderController';
 
 export const OredrsInfo = () => {
+  const [orders, setOrders] = useState<IOrder[]>([]);
+
+  useEffect(() => {
+    setOrders(getOrders());
+  }, [])
+
   return (
     <section 
       className="w-[950px] h-[100%] bg-dark_green border-2 border-green 

@@ -1,4 +1,4 @@
-import {apiSlice} from "../api/apiSlice";
+import {apiSlice} from "../controllers/apiSlice";
 import { IAddress, IUser, IUserUpdate, IUserUpdatePass } from "../interfaces/User";
 
 const usersApiSlice = apiSlice.injectEndpoints({
@@ -6,8 +6,8 @@ const usersApiSlice = apiSlice.injectEndpoints({
     users: builder.query<IUser[], void>({
       query: () => "/users",
     }),
-    getUserAddress: builder.query<IAddress, number | void>({
-      query: (id: number) => `/user/${id}`
+    getUserAddress: builder.query<IAddress, string | void>({
+      query: (id: string) => `/user/${id}`
     }),
     updateUser: builder.mutation<{}, IUserUpdate>({
       query: (payload: IUserUpdate) => ({
@@ -23,8 +23,8 @@ const usersApiSlice = apiSlice.injectEndpoints({
         body: payload
       })
     }),
-    deleteUser: builder.mutation<{}, number>({
-      query: (id: number) => ({
+    deleteUser: builder.mutation<{}, string>({
+      query: (id: string) => ({
         url: `/user/delete/${id}`,
         method: "DELETE"
       })
