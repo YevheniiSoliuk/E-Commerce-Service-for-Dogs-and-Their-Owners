@@ -31,7 +31,7 @@ export const Map: React.FC<PropsType> = ({ids}) => {
   return (
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: "AIzaSyChkys2O1NSfCKHBRS1MKvChEDMXhTagOk"
+        key: process.env.REACT_APP_GOOGLE_MAP_API_KEY || ""
       }}
       defaultCenter={{
         lat: center.lat,

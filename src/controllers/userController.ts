@@ -2,125 +2,98 @@ import { auth, firestore } from './../firebase.config';
 import { doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { userCol } from "../utils/db";
 import { IUser } from '../interfaces/User';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getUserAnimal } from './animalController';
+import { IAnimal } from '../interfaces/Animal';
 
-export const createUser = (user: IUser) => {
+export const createUser = async (user: IUser) => {
   let usersAmount = 0;
 
-  const userDocs = async () => {
-    return await getDocs(userCol);
-  }
-
-  userDocs().then(resolve => {
+  await getDocs(userCol).then(resolve => {
     usersAmount = resolve.size;
+    console.log(usersAmount);
   })
 
   const userRef = doc(firestore, userCol.path, `user${usersAmount}`);
   user.id = `user${usersAmount}`;
 
-  setDoc(userRef, user)
-  .then(resolve => {
+  await setDoc(userRef, user)
+  .then(() => {
     console.log("User with id: " + userRef.id + " successfully added to firestore.");
-    console.log(resolve);
   })
   .catch(error => {
     console.log("Error " + error);
   });
 }
 
-type getUserFn = () => IUser | null;
+type getUserFn = (userID: string) => Promise<IUser | null>;
 
-export const getCurrentUser: getUserFn = () => {
-  const userID = auth.currentUser?.uid;
-
+export const getCurrentUser: getUserFn = async (userID) => {
   let currentUser: IUser | null = null;
+
+  try {
+    const userDocs = await getDocs(userCol);
   
-  const usersDocs = async () => {
-    return await getDocs(userCol);
-  }
-
-  usersDocs().then(resolve => {
-    resolve.forEach(userDoc => {
-      let user = userDoc.data();
-      
-      if(user.uid === userID)
-      {
-        if(user.addressRef)
+    userDocs.forEach(userDoc => {
+        let user = userDoc.data();
+        
+        if(user.uid === userID)
         {
-          const addressDoc = async () => {
-            if(!user.addressRef){
-              return;
-            }
-
-            return await getDoc(user.addressRef);
+          if(user.addressRef)
+          {
+            getDoc(user.addressRef)
+            .then(resolve => {
+              if(resolve !== undefined && resolve.exists())
+              {
+                user.address = resolve.data();
+              }
+            })
           }
 
-          addressDoc().then(resolve => {
-            if(resolve !== undefined && resolve.exists())
-            {
-              let address = resolve.data();
-              user.address = address;
-            }
-          })
-        }
+          if(user.animalsRefs)
+          {
+            user.animals = [];
+            user.animalsRefs.forEach(animalRef => {
+              user.animals?.push(getUserAnimal(animalRef));
+            }) 
+          }
 
-        if(user.animalsRefs)
-        {
-          user.animalsIDs = [];
+          if(user.favouriteProductsRefs)
+          {
+            user.favouriteProductsIDs = [];
 
-          user.animalsRefs.forEach(animalRef => {
-            const animalDoc = async () => {
-              return await getDoc(animalRef);
-            }
-
-            animalDoc().then(resolve => {
-              if(resolve.exists() && user.animalsIDs !== null)
-              {
-                user.animalsIDs.push(resolve.id);
-              }
+            user.favouriteProductsRefs.forEach(async favouriteProductRef => {
+              await getDoc(favouriteProductRef)
+              .then(resolve => {
+                if(resolve.exists() && user.favouriteProductsIDs !== null && user.favouriteProductsIDs !== undefined)
+                {
+                  user.favouriteProductsIDs.push(resolve.id); 
+                }
+              })
             })
-          }) 
-        }
+          }
 
-        if(user.favouriteProductsRefs)
-        {
-          user.favouriteProductsIDs = [];
+          if(user.ordersRefs)
+          {
+            let ordersIDs: string[] = [];
 
-          user.favouriteProductsRefs.forEach(favouriteProductRef => {
-            const favouriteProductDoc = async () => {
-              return await getDoc(favouriteProductRef);
-            }
-
-            favouriteProductDoc().then(resolve => {
-              if(resolve.exists() && user.favouriteProductsIDs !== null)
-              {
-                user.favouriteProductsIDs.push(resolve.id); 
-              }
+            user.ordersRefs.forEach(async orderRef => {
+              await getDoc(orderRef).then(resolve => {
+                if(resolve.exists())
+                {
+                  ordersIDs.push(resolve.id);
+                }
+              })
             })
-          })
+          }
+          
+          currentUser = Object.assign({} as IUser, user);
+          console.log(currentUser);
         }
-
-        if(user.ordersRefs)
-        {
-          let ordersIDs: string[] = [];
-
-          user.ordersRefs.forEach(orderRef => {
-            const orderDoc = async () => {
-              return await getDoc(orderRef);
-            }
-
-            orderDoc().then(resolve => {
-              if(resolve.exists())
-              {
-                ordersIDs.push(resolve.id);
-              }
-            })
-          })
-        }
-
-        currentUser = user;
-      }
     })
-  })
+  } catch(error) {
+    console.log(error);
+  }
 
   return currentUser;
 }

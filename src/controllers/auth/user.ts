@@ -1,16 +1,24 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../../firebase.config";
-import { IUser } from "../../interfaces/User";
+import { ILoginCredentials, IUser } from "../../interfaces/User";
 import { createUser } from "../userController";
 
 
 export const signUpUser = (user: IUser) => {
   createUserWithEmailAndPassword(auth, user.email, user.password)
-  .then(userCredential => {
+  .then(async userCredential => {
     user.uid = userCredential.user.uid;
-    createUser(user);
+    await createUser(user);
   })
   .catch(error => {
-    return error;
+    console.log(error.message);
   })
+}
+
+export const login = (credentials: ILoginCredentials) => {
+  return signInWithEmailAndPassword(auth, credentials.email, credentials.password)
+}
+
+export const logout = () => {
+  return signOut(auth);
 }

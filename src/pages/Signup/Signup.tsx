@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store/store";
-import { checkEmailNewsletter, checkSMSNewsletter, checkTerms } from "../../features/registration/ContactFormSlice";
-import { useRegisterMutation } from "../../features/auth/ApiAuthSlice";
+import { 
+  checkEmailNewsletter, 
+  checkSMSNewsletter, 
+  checkTerms 
+} from "../../features/registration/ContactFormSlice";
 import { isErrorWithMessage, isFetchBaseQueryError } from "../../helpers";
-import { setCredentials } from "../../features/auth/AuthSlice";
 import { IUser } from "../../interfaces/User";
 
 import { Button } from "../../components/commons/Button/Button";
@@ -31,7 +33,6 @@ export const Signup = () => {
   const [place, setPlace] = useState<string>("Miejscowosc");
 
   const [errMsg, setErrMsg] = useState<string>("");
-  const [register] = useRegisterMutation();
 
   const terms: boolean = useSelector((state: RootState) => state.contactForm.checkedTerms);
 
@@ -65,7 +66,7 @@ export const Signup = () => {
   const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const payload: IUser = {
+    const credentials: IUser = {
       name: name,
       lastname: lastname,
       email: email,
@@ -78,51 +79,15 @@ export const Signup = () => {
         street: street
       },
       login: login,
-      password: password,
-      id: "",
-      uid: "",
-      photoURL: null,
-      coins: null,
-      addressRef: null,
-      favouriteProductsRefs: null,
-      favouriteProductsIDs: null,
-      animalsRefs: null,
-      animalsIDs: null,
-      ordersRefs: null,
-      ordersIDs: null
+      password: password
     }
 
     try {
-      // const userData = await register(payload).unwrap();
-      // const token: string = userData["Token"]["acccess token"];
-      // const user: IUser = {
-      //   id: userData["User Info"].id,
-      //   name: userData["User Info"].name,
-      //   lastname: userData["User Info"].surname,
-      //   email: userData["User Info"].email,
-      //   phoneNumber: userData["User Info"].phone_number, 
-      //   login: userData["User Info"].login,
-      //   password: userData["User Info"].password,
-      //   photoURL: userData["User Info"].photo_url,
-      //   address: userData["User Info"].address_id,
-      //   coins: userData["User Info"].coins,
-      //   is_admin: userData["User Info"].is_admin,
-      //   favouriteProductsIDs: userData["User Info"].favourites
-      // }
-      
-      // dispatch(setCredentials({user, token}));
-      signUpUser(payload);
+      await signUpUser(credentials);
       clearFields();
       navigate("/profile");
     } catch(err) {   
-      if(isFetchBaseQueryError(err)) {
-        const errMsg = 'error' in err ? err.error : JSON.stringify(err.data);
-        setErrMsg(errMsg);
-      } else if(isErrorWithMessage(err)) {
-        setErrMsg(err.message);
-      } else {
-        setErrMsg("Login Failed");
-      } 
+      setErrMsg("Failed to create user");
     }
   }
 

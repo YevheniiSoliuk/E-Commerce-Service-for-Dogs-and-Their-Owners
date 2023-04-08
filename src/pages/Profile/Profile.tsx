@@ -14,6 +14,9 @@ import dogAvatar2 from "../../assets/images/dog-avatar-2.png";
 import dogAvatar3 from "../../assets/images/dog-avatar-3.png";
 import { IUser } from "../../interfaces/User";
 import { getCurrentUser } from "../../controllers/userController";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase.config";
+import { useAuthState } from "../../hooks/usePagination";
 
 const dogs = [
   {src: dogAvatar1, index: "1", name: "Miśka", birthdate: "01.12.19r.", breed: "Chow-Chow", sex:"suka"}, 
@@ -26,13 +29,16 @@ const dogs = [
 
 export const Profile = () => {
   const navigate = useNavigate();
-  // const { user } = useSelector((state: RootState) => state.auth);
   const [user, setUser] = useState<IUser | null>(null);
   const [moreWalkInfoClicked, setMoreWalkInfoClicked] = useState<boolean>(false);
 
+  const userID = useAuthState();
+
   useEffect(()=> {
-    setUser(getCurrentUser());
-  }, [])
+    getCurrentUser(userID).then(resolve => {
+      setUser(resolve);
+    })
+  }, [userID])
 
   const goToProfileSettings = () => {
     navigate("/profile/settings");

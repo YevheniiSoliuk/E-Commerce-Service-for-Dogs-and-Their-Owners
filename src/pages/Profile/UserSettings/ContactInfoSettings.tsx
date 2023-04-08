@@ -9,6 +9,7 @@ import { Input } from '../../../components/commons/Input/Input';
 import { Select } from '../../../components/commons/Select/Select';
 import { auth } from '../../../firebase.config';
 import { getCurrentUser } from '../../../controllers/userController';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export const ContactInfoSettings = () => {
   // const { user } = useSelector((state: RootState) => state.auth);
@@ -27,19 +28,22 @@ export const ContactInfoSettings = () => {
   const [homeNumber, setHomeNumber] = useState<string>("");
 
   useEffect(() => {
-    const user = getCurrentUser();
-
-    if(user !== null) {
-      setName(user.name);
-      setLastname(user.lastname);
-      setEmail(user.email);
-      setPhone(user.phoneNumber);
-      setStreet(user.address.street);
-      setPostalCode(user.address.postalCode);
-      setProvince(user.address.state);
-      setPlace(user.address.city);
-      setHomeNumber(user.address.homeNumber);
-    }   
+    onAuthStateChanged(auth, user => {
+      const userID = user?.uid || "";
+      getCurrentUser(userID).then(user => {
+        if(user !== null) {
+          setName(user.name);
+          setLastname(user.lastname);
+          setEmail(user.email);
+          setPhone(user.phoneNumber);
+          setStreet(user.address.street);
+          setPostalCode(user.address.postalCode);
+          setProvince(user.address.state);
+          setPlace(user.address.city);
+          setHomeNumber(user.address.homeNumber);
+        }   
+      });
+    })
   }, [])
 
   const resetInfo = () => {

@@ -11,6 +11,8 @@ import { getCurrentUser } from '../../controllers/userController';
 import { IAddress } from '../../interfaces/User';
 import { useEffect, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '@reduxjs/toolkit/dist/query/react/buildHooks';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase.config';
 
 export const SummarySection = () => {
   const basket: ProductCart = useSelector((state: RootState) => state.productCart)
@@ -25,7 +27,12 @@ export const SummarySection = () => {
   const [order] = useOrderMutation()
 
   useEffect(() => {
-    setAddressOfCurrentUser(getCurrentUser()!.address);
+    onAuthStateChanged(auth, user => {
+      const userID = user?.uid || "";
+      getCurrentUser(userID).then(resolve => {
+        setAddressOfCurrentUser(resolve!.address);
+      });
+    })
   }, [])
 
   const resetOrder = () => {

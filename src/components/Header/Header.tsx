@@ -1,8 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import { logOut } from "../../features/auth/AuthSlice";
-import { AppDispatch, RootState } from "../../store/store";
 
 import { Navbar } from "../commons/Navbar/Navbar";
 import { LoginPopup } from "../Login/Login";
@@ -11,15 +7,52 @@ import { FavoriteButton } from "../IconButtons/FavoriteButton";
 import { Button } from "../commons/Button/Button";
 
 import logo from "../../assets/images/logo.webp";
+import { getCurrentUser } from "../../controllers/userController";
+import { useEffect, useState } from "react";
+import { logout } from "../../controllers/auth/user";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { setIsAuth } from "../../features/auth/AuthSlice";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase.config";
 
 export const Header = () => {
-  const {user, isAuth} = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+  const [username, setUsername] = useState<string>("");
 
-  const logout = () => {
-    dispatch(logOut());
-    navigate("/");
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      const userID = user?.uid || "";
+
+      const fetchData = async () => {
+        try {
+          const user = await getCurrentUser(userID);
+          
+          if(user !== null){
+            dispatch(setIsAuth(true));
+            setUsername(user.name);
+          }
+        } catch(error) {
+          console.log(error);
+        }
+      }
+  
+      fetchData();
+    })
+    
+  }, [dispatch])
+
+  const signOut = async () => {
+    try {
+      await logout();
+      dispatch(setIsAuth(false));
+      setUsername("");
+      navigate("/");
+    } catch(error) {
+      console.log("Failed to logout");
+    }
   }
 
   return (
@@ -44,13 +77,13 @@ export const Header = () => {
           <p 
             className="text-[32px] mr-10px hover:text-yellow hover:cursor-pointer" 
             onClick={()=>{navigate("/profile")}}
-          >{user?.name}</p>
+          >{username}</p>
           <Button 
             text="Wyloguj się" 
             value="logout" 
             styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl 
             text-green text-base font-lemon px-6 py-2 w-[160px]" 
-            onClick={() => logout()}
+            onClick={() => signOut()}
           />
         </> :
         <>

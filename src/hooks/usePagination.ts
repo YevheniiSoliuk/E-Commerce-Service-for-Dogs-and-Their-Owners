@@ -1,10 +1,25 @@
-import { useMemo } from "react";
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useMemo, useState } from "react";
+import { auth } from '../firebase.config';
+import { IUser } from '../interfaces/User';
 
 type usePaginationProps = {
   totalCount: number,
   siblingCount: number,
   currentPage: number,
   pageSize: number
+}
+
+export const useAuthState = () => {
+  const [userID, setUserID] = useState<string>("");
+
+  useEffect(() => {
+    onAuthStateChanged(auth, credentials => {
+      setUserID(credentials?.uid || "");
+    })
+  }, [])
+
+  return userID;
 }
 
 export const usePagination = ({totalCount, pageSize, siblingCount = 1, currentPage}: usePaginationProps) => {

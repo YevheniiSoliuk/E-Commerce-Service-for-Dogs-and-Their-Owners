@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { setNewFavoriteProducts } from "../../features/auth/AuthSlice";
 import { getCurrentUser } from "../../controllers/userController";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase.config";
 
 export type ProductCardProps = {
   product: IProduct,
@@ -24,7 +26,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({product, action}) => {
   const dispatch: AppDispatch = useDispatch();
 
   const isFavourite = useCallback((id: string) => {
-    return getCurrentUser()?.favouriteProductsIDs?.includes(id);
+    let isFavourite = false;
+    
+    onAuthStateChanged(auth, user => {
+      const userID = user?.uid || "";
+      getCurrentUser(userID).then(resolve => {
+        resolve?.favouriteProductsIDs?.includes(id);
+      });
+    })
+
+    return isFavourite;
   }, [])
 
   const addToFavourites = async (id: number) => {

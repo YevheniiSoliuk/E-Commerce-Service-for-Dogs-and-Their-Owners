@@ -4,11 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../commons/Input/Input";
 import { Button } from "../commons/Button/Button";
 import { ModalProps } from "./ModalProps";
+import { ILoginCredentials } from "../../interfaces/User";
+import { login } from "../../controllers/auth/user";
+import { setIsAuth } from "../../features/auth/AuthSlice";
+import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
-import { useLoginMutation } from "../../features/auth/ApiAuthSlice";
-import { setCredentials } from "../../features/auth/AuthSlice";
-import { isErrorWithMessage, isFetchBaseQueryError } from "../../helpers";
-import { IUser } from "../../interfaces/User";
 
 
 export const LoginModal: React.FC<ModalProps> = ({isOpen, close, goToOtherModal}) => {
@@ -17,8 +17,7 @@ export const LoginModal: React.FC<ModalProps> = ({isOpen, close, goToOtherModal}
   const [errMsg, setErrMsg] = useState<string>("");
 
   const navigate = useNavigate();
-  const [login] = useLoginMutation();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     setErrMsg("");
@@ -32,48 +31,19 @@ export const LoginModal: React.FC<ModalProps> = ({isOpen, close, goToOtherModal}
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     
-    const payload: object = {
+    const credentials: ILoginCredentials = {
       email: email, 
-      password: pwd,
-      disabled: false
+      password: pwd
     }
 
     try {
-      const userData = await login(payload).unwrap();
-      const token: string = userData.Tokens;
-      const user: IUser = {
-        id: userData["User Info"].id,
-        name: userData["User Info"].name,
-        lastname: userData["User Info"].surname,
-        email: userData["User Info"].email,
-        phoneNumber: userData["User Info"].phone_number,
-        login: userData["User Info"].login,
-        password: userData["User Info"].password,
-        photoURL: userData["User Info"].photo_url,
-        address: userData["User Info"].address,
-        coins: userData["User Info"].coins,
-        favouriteProductsIDs: userData["User Info"].favourites,
-        uid: "",
-        addressRef: null,
-        favouriteProductsRefs: null,
-        animalsRefs: null,
-        animalsIDs: null,
-        ordersRefs: null,
-        ordersIDs: null
-      }
-
-      dispatch(setCredentials({token, user}));
+      await login(credentials);
+      dispatch(setIsAuth(true));
+      console.log("login");
       clearLoginForm();
       navigate("/profile");
     } catch(err) {   
-      if(isFetchBaseQueryError(err)) {
-        const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
-        setErrMsg(errMsg);
-      } else if(isErrorWithMessage(err)) {
-        setErrMsg(err.message);
-      } else {
-        setErrMsg("Login Failed");
-      }
+      setErrMsg("Login failed");
     }
   }
 

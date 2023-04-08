@@ -1,54 +1,36 @@
-import { getDoc, getDocs } from "firebase/firestore";
+import { getAnimalBreed } from './breedController';
+import { DocumentReference, getDoc } from "firebase/firestore";
 import { IAnimal } from "../interfaces/Animal";
-import { animalCol } from "../utils/db";
 
-export const getAnimals = () => {
-  let animals: IAnimal[] = [];
+type getUserAnimalFn = (animalRef: DocumentReference<IAnimal>) => IAnimal;
 
-  const animalDocs = async () => {
-    return await getDocs(animalCol);
-  }
+export const getUserAnimal: getUserAnimalFn = (animalRef) => {
+  let userAnimal = {} as IAnimal;
 
-  animalDocs().then(resolve => {
-    resolve.forEach(animalDoc => {
-      let animal = animalDoc.data();
-      animal.id = animalDoc.id;
+  getDoc(animalRef).then(resolve => {
+    if(resolve.exists()) {
+      let animal = resolve.data();
+      animal.id = resolve.id;
 
-      if(animal.breedRef)
-      {
-        const breedDoc = async () => {
-          return await getDoc(animal.breedRef);
-        }
-
-        breedDoc().then(resolve => {
-          if(resolve.exists())
-          {
-            animal.breedID = resolve.id;
-          }
-        })
+      if(animal.breedRef) {
+        animal.breed = getAnimalBreed(animal.breedRef);
       }
 
-      if(animal.walksRefs)
-      {
+      if(animal.walksRefs) {
         animal.walks = [];
 
         animal.walksRefs.forEach(walkRef => {
-          const walkDoc = async () => {
-            return await getDoc(walkRef);
-          }
-
-          walkDoc().then(resolve => {
-            if(resolve.exists())
-            {
+          getDoc(walkRef).then(resolve => {
+            if(resolve.exists()) {
               animal.walks.push(resolve.data());
             }
           })
         })
       }
-
-      animals.push(animal);
-    })
+       
+      userAnimal = animal;
+    }
   })
 
-  return animals;
+  return userAnimal;
 }

@@ -40,7 +40,10 @@ const authSlice = createSlice({
       {
         state.user.favouriteProductsIDs = payload;
       }
-    }
+    },
+    setIsAuth(state, {payload}: PayloadAction<boolean>) {
+      state.isAuth = payload;
+    } 
   },
 })
 
@@ -48,7 +51,8 @@ export const {
   setCredentials,
   logOut,
   setPassRecoveryToken,
-  setNewFavoriteProducts
+  setNewFavoriteProducts,
+  setIsAuth
 } = authSlice.actions;
 
 export default authSlice.reducer;

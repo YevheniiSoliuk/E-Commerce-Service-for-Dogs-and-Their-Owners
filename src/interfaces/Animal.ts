@@ -11,7 +11,7 @@ interface IAnimal {
   bio: string,
   photoURL: string,
   breedRef: DocumentReference<IBreed>,
-  breedID: string,
+  breed: IBreed,
   walksRefs: DocumentReference<IWalk>[],
   walks: IWalk[]
 }

@@ -4,6 +4,8 @@ import { IUser } from '../../interfaces/User';
 import { useGetUserAddressQuery } from '../../features/ApiUserSlice';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from '../../controllers/userController';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase.config';
 
 export const DeliveryInfo = () => {
 
@@ -14,7 +16,12 @@ export const DeliveryInfo = () => {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    setCurrentUser(getCurrentUser());
+    onAuthStateChanged(auth, user => {
+      const userID = user?.uid || "";
+      getCurrentUser(userID).then(resolve => {
+        setCurrentUser(resolve);
+      });
+    })
   }, [])
 
   return (
