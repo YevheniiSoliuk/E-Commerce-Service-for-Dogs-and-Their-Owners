@@ -1,25 +1,23 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SliceState = {
-  rating: number,
-}
+  rating: number;
+};
 
 const initialState = {
   rating: 0
-}
+};
 
 const ProductSlice = createSlice({
-  name: "product",
+  name: 'product',
   initialState,
   reducers: {
-    setRating: (state, {payload}: PayloadAction<number>) => {
+    setRating: (state, { payload }: PayloadAction<number>) => {
       state.rating = payload;
     }
-  },
+  }
 });
 
-export const {
-  setRating
-} = ProductSlice.actions;
+export const { setRating } = ProductSlice.actions;
 
 export default ProductSlice.reducer;

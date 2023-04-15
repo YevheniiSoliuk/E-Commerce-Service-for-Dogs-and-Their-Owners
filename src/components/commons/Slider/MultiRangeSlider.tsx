@@ -1,15 +1,18 @@
-import { useState } from "react";
-import { AppDispatch } from "../../../store/store";
-import { useDispatch } from "react-redux";
-import { setPrice } from "../../../features/FiltersSlice";
-import { Button } from "../Button/Button";
+import { useState } from 'react';
+import { AppDispatch } from '../../../store/store';
+import { useDispatch } from 'react-redux';
+import { setPrice } from '../../../features/FiltersSlice';
+import { Button } from '../Button/Button';
 
 type MultiRangeSliderProps = {
-  min: number,
-  max: number,
+  min: number;
+  max: number;
 };
 
-export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({ min, max }) => {
+export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
+  min,
+  max
+}) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
 
@@ -97,8 +100,8 @@ export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({ min, max }) 
   return (
     <section className="flex flex-col gap-[20px] items-center justify-center w-[100%]">
       <section className="w-full flex justify-between items-center">
-        <p className="text-[14px]">Min:</p> 
-        <input 
+        <p className="text-[14px]">Min:</p>
+        <input
           type="range"
           min={min}
           max={max}
@@ -111,8 +114,8 @@ export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({ min, max }) 
         />
       </section>
       <section className="w-full flex justify-between items-center">
-        <p className="text-[14px]">Max:</p> 
-        <input 
+        <p className="text-[14px]">Max:</p>
+        <input
           type="range"
           min={min}
           max={max}
@@ -125,28 +128,23 @@ export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({ min, max }) 
         />
       </section>
       <section className="w-full">
-        <p 
-          className="text-green text-[12px]"
-        >
-          Cena: 
-          <span 
-            className="text-[14px] text-dark_red"
-          >{minVal}zł</span> 
-          - 
-          <span 
-            className="text-[14px] text-dark_red"
-          >{maxVal}zł</span>
+        <p className="text-green text-[12px]">
+          Cena:
+          <span className="text-[14px] text-dark_red">{minVal}zł</span>-
+          <span className="text-[14px] text-dark_red">{maxVal}zł</span>
         </p>
         <div className="flex justify-end mt-[10px]">
-          <Button 
-            text="Ustaw" 
-            value="add" 
+          <Button
+            text="Ustaw"
+            value="add"
             styles="w-[80px] h-[35px] bg-orange border-2 border-green rounded-[20px] shadow-md px-[5px] 
-            py-[5px] text-[12px] text-center hover:border-0 active:border-2" 
-            onClick={()=>dispatch(setPrice({minPrice: minVal, maxPrice: maxVal}))}
+            py-[5px] text-[12px] text-center hover:border-0 active:border-2"
+            onClick={() =>
+              dispatch(setPrice({ minPrice: minVal, maxPrice: maxVal }))
+            }
           />
         </div>
       </section>
-    </section>  
+    </section>
   );
 };

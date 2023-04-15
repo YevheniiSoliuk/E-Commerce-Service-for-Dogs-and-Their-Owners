@@ -1,18 +1,15 @@
-import {apiSlice} from "../controllers/apiSlice";
-import { ICategory, ISubcategory } from "../interfaces/Category";
+import { apiSlice } from '../controllers/apiSlice';
+import { ICategory, ISubcategory } from '../interfaces/Category';
 
 const filtersApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
-    categories: builder.query<{[key: string]: ICategory[]}, void>({
-      query: () => "/categories"
+  endpoints: (builder) => ({
+    categories: builder.query<{ [key: string]: ICategory[] }, void>({
+      query: () => '/categories'
     }),
-    subcategories: builder.query<{[key: string]: ISubcategory[]}, void>({
-      query: () => "/subcategories"
+    subcategories: builder.query<{ [key: string]: ISubcategory[] }, void>({
+      query: () => '/subcategories'
     })
   })
-})
+});
 
-export const {
-  useCategoriesQuery,
-  useSubcategoriesQuery
-} = filtersApiSlice;
+export const { useCategoriesQuery, useSubcategoriesQuery } = filtersApiSlice;

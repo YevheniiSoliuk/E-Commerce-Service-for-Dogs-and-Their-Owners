@@ -1,15 +1,15 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export type ordersHistoryState = {
-  settingsSection: string
-}
+  settingsSection: string;
+};
 
 const initialState: ordersHistoryState = {
-  settingsSection: "user"
-}
+  settingsSection: 'user'
+};
 
 const ordersHistorySlice = createSlice({
-  name: "ordersHistory",
+  name: 'ordersHistory',
   initialState,
   reducers: {
     changeSettingsSection(state, action) {
@@ -18,8 +18,6 @@ const ordersHistorySlice = createSlice({
   }
 });
 
-export const {
-  changeSettingsSection,
-} = ordersHistorySlice.actions;
+export const { changeSettingsSection } = ordersHistorySlice.actions;
 
 export default ordersHistorySlice.reducer;

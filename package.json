@@ -30,7 +30,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint -c .eslintrc --ext .tsx,.ts .",
+    "lint-fix": "npm run lint -- --fix",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|tsx|json)\""
   },
   "eslintConfig": {
     "extends": [
@@ -52,9 +55,20 @@
   },
   "devDependencies": {
     "@types/google-map-react": "^2.1.7",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
     "postcss": "^8.4.21",
-    "prettier": "2.8.1",
+    "prettier": "^2.8.1",
     "tailwindcss": "^3.2.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm run lint"
+    }
   }
 }

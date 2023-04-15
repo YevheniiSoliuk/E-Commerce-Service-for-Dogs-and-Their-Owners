@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const Shops = () => {
   return (
@@ -6,4 +6,4 @@ export const Shops = () => {
       <h1>Shops</h1>
     </main>
   );
-}
+};

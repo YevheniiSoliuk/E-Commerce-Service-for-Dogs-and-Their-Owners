@@ -3,23 +3,29 @@ import { IDeliveryMethod } from '../interfaces/DeliveryMethod';
 import { IPaymentMethod } from '../interfaces/PaymentMethod';
 
 type State = {
-  paymentMethod: IPaymentMethod | null,
-  deliveryMethod: IDeliveryMethod | null
-}
+  paymentMethod: IPaymentMethod | null;
+  deliveryMethod: IDeliveryMethod | null;
+};
 
 const initialState: State = {
   paymentMethod: null,
-  deliveryMethod: null,
-}
+  deliveryMethod: null
+};
 
 const OrderSlice = createSlice({
-  name: "order",
+  name: 'order',
   initialState,
   reducers: {
-    setOrderPaymentMethod: (state, {payload}: PayloadAction<IPaymentMethod>) => {
+    setOrderPaymentMethod: (
+      state,
+      { payload }: PayloadAction<IPaymentMethod>
+    ) => {
       state.paymentMethod = payload;
     },
-    setOrderDeliveryMethod: (state, {payload}: PayloadAction<IDeliveryMethod>) => {
+    setOrderDeliveryMethod: (
+      state,
+      { payload }: PayloadAction<IDeliveryMethod>
+    ) => {
       state.deliveryMethod = payload;
     },
     removeOrderData: (state) => {
@@ -27,7 +33,7 @@ const OrderSlice = createSlice({
       state.paymentMethod = null;
     }
   }
-})
+});
 
 export const {
   setOrderPaymentMethod,

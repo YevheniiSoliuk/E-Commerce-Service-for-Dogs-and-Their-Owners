@@ -1,30 +1,35 @@
-import {apiSlice} from "../controllers/apiSlice";
-import { IAnimal, IAnimalImage, IAnimalUpdate, IBreed } from "../interfaces/Animal";
+import { apiSlice } from '../controllers/apiSlice';
+import {
+  IAnimal,
+  IAnimalImage,
+  IAnimalUpdate,
+  IBreed
+} from '../interfaces/Animal';
 
 const animalsApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
-    animals: builder.query<{[key: string]: IAnimal[]}, string | void>({
+  endpoints: (builder) => ({
+    animals: builder.query<{ [key: string]: IAnimal[] }, string | void>({
       query: (id: string) => `/users/${id}/animals`
     }),
     updateAnimal: builder.mutation<{}, IAnimalUpdate>({
-      query: ({id, ...data}) => ({
+      query: ({ id, ...data }) => ({
         url: `/animal/${id}`,
         method: 'PATCH',
         body: data
       })
     }),
-    breeds: builder.query<{[key: string]: IBreed[]}, void>({
-      query: () => "/breeds"
+    breeds: builder.query<{ [key: string]: IBreed[] }, void>({
+      query: () => '/breeds'
     }),
     setImage: builder.mutation<{}, IAnimalImage>({
-      query: ({id, image}) => ({
+      query: ({ id, image }) => ({
         url: `/animal/${id}/animal-image-change`,
         method: 'PATCH',
         body: image
       })
-    }),
+    })
   })
-})
+});
 
 export const {
   useAnimalsQuery,

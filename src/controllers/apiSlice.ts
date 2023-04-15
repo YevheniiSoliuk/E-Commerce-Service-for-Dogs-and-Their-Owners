@@ -1,25 +1,25 @@
 import { RootState } from '../store/store';
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8090",
-  credentials: "include",
-  mode: "cors",
-  prepareHeaders: (headers, {getState}) => {
+  baseUrl: 'http://localhost:8090',
+  credentials: 'include',
+  mode: 'cors',
+  prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
 
-    if(token) {
-      headers.set("Authorization", `Bearer ${token}`);
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
     }
 
     return headers;
   }
-})
+});
 
 export const apiSlice = createApi({
   baseQuery,
-  endpoints: builder => ({}),
-})
+  endpoints: (builder) => ({})
+});
 
 // const baseQueryWithReauth = async (args, api, extraOptions) => {
 //   let result = await baseQuery(args, api, extraOptions);
@@ -46,4 +46,3 @@ export const apiSlice = createApi({
 
 //   return result;
 // }
-

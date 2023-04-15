@@ -1,32 +1,34 @@
-import { DocumentReference, getDoc, getDocs } from "firebase/firestore";
-import { IBreed } from "../interfaces/Animal";
-import { breedCol } from "../utils/db";
+import { DocumentReference, getDoc, getDocs } from 'firebase/firestore';
+import { IBreed } from '../interfaces/Animal';
+import { breedCol } from '../utils/db';
 
-type getAnimalBreedFn = (animalBreedRef: DocumentReference<IBreed>) => IBreed;
+type getAnimalBreedFn = (
+  animalBreedRef: DocumentReference<IBreed>
+) => Promise<IBreed>;
 
-export const getAnimalBreed: getAnimalBreedFn = (animalBreedRef) => {
+export const getAnimalBreed: getAnimalBreedFn = async (animalBreedRef) => {
   let breed = {} as IBreed;
 
-  getDoc(animalBreedRef).then(resolve => {
-    if(resolve.exists()) {
-      breed.id = resolve.id;
-      breed = resolve.data();
-    }
-  })
+  const snapshot = await getDoc(animalBreedRef);
+
+  if (snapshot.exists()) {
+    breed.id = snapshot.id;
+    breed = snapshot.data();
+  }
 
   return breed;
-}
+};
 
 export const getBreeds = () => {
-  let breeds: IBreed[] = [];
+  const breeds: IBreed[] = [];
 
-  getDocs(breedCol).then(resolve => {
-    resolve.forEach(breedDoc => {
-      let breed = breedDoc.data();
+  getDocs(breedCol).then((resolve) => {
+    resolve.forEach((breedDoc) => {
+      const breed = breedDoc.data();
       breed.id = breedDoc.id;
       breeds.push(breed);
-    })
-  })
+    });
+  });
 
   return breeds;
-}
+};

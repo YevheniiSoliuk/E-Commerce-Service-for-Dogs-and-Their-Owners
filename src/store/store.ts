@@ -1,12 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { apiSlice } from "../controllers/apiSlice";
-import AuthSlice from "../features/auth/AuthSlice";
-import OrderHistorySlice from "../features/ordering/OrderHistorySlice";
-import ProductCartSlice from "../features/ordering/ProductCartSlice";
-import ProductSlice from "../features/ordering/ProductSlice";
-import ContactFormSlice from "../features/registration/ContactFormSlice";
-import FiltersSlice from "../features/FiltersSlice";
-import OrderSlice from "../features/OrderSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { apiSlice } from '../controllers/apiSlice';
+import AuthSlice from '../features/auth/AuthSlice';
+import OrderHistorySlice from '../features/ordering/OrderHistorySlice';
+import ProductCartSlice from '../features/ordering/ProductCartSlice';
+import ProductSlice from '../features/ordering/ProductSlice';
+import ContactFormSlice from '../features/registration/ContactFormSlice';
+import FiltersSlice from '../features/FiltersSlice';
+import OrderSlice from '../features/OrderSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,12 +17,12 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: AuthSlice,
     filters: FiltersSlice,
-    order: OrderSlice,
+    order: OrderSlice
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
   devTools: true
 });
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

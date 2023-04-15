@@ -1,21 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface ContactFormState {
-  checkedEmailNewsletter: boolean,
-  checkedSMSNewsletter: boolean,
-  checkedEmailTransmition: boolean,
-  checkedTerms: boolean,
+  checkedEmailNewsletter: boolean;
+  checkedSMSNewsletter: boolean;
+  checkedEmailTransmition: boolean;
+  checkedTerms: boolean;
 }
 
 const initialState: ContactFormState = {
   checkedEmailNewsletter: false,
   checkedSMSNewsletter: false,
   checkedEmailTransmition: false,
-  checkedTerms: false,
-}
+  checkedTerms: false
+};
 
 const ContactFormSlice = createSlice({
-  name: "contactForm",
+  name: 'contactForm',
   initialState,
   reducers: {
     checkEmailNewsletter: (state) => {
@@ -28,15 +28,15 @@ const ContactFormSlice = createSlice({
       state.checkedEmailTransmition = !state.checkedEmailTransmition;
     },
     checkTerms: (state) => {
-     state.checkedTerms = !state.checkedTerms;
-    },
+      state.checkedTerms = !state.checkedTerms;
+    }
   }
-})
+});
 
-export const { 
-  checkEmailNewsletter, 
+export const {
+  checkEmailNewsletter,
   checkSMSNewsletter,
-  checkEmailTransmition, 
+  checkEmailTransmition,
   checkTerms
 } = ContactFormSlice.actions;
 

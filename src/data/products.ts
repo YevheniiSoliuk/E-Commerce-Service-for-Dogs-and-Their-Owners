@@ -1,4 +1,4 @@
-export {}
+export {};
 //import { IProduct } from "../interfaces/Order";
 
 // export const data: IProduct[] = [

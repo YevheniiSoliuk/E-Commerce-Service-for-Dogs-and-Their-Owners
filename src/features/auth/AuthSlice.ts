@@ -1,28 +1,28 @@
 import { RootState } from './../../store/store';
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../interfaces/User';
 
 type Credentials = {
-  user: IUser | null,
-  token: string | null,
-  isAuth?: boolean
-  passRecoveryToken?: string
-}
+  user: IUser | null;
+  token: string | null;
+  isAuth?: boolean;
+  passRecoveryToken?: string;
+};
 
 const initialState: Credentials = {
   user: null,
   token: null,
   isAuth: false,
-  passRecoveryToken: ""
-}
+  passRecoveryToken: ''
+};
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state, {payload}: PayloadAction<Credentials>) => {
-      const {user, token} = payload;
-      
+    setCredentials: (state, { payload }: PayloadAction<Credentials>) => {
+      const { user, token } = payload;
+
       state.user = user;
       state.token = token;
       state.isAuth = true;
@@ -32,20 +32,19 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuth = false;
     },
-    setPassRecoveryToken : (state, {payload}: PayloadAction<string>) => {
+    setPassRecoveryToken: (state, { payload }: PayloadAction<string>) => {
       state.passRecoveryToken = payload;
     },
-    setNewFavoriteProducts: (state, {payload}: PayloadAction<string[]>) => {
-      if(state.user?.favouriteProductsIDs)
-      {
+    setNewFavoriteProducts: (state, { payload }: PayloadAction<string[]>) => {
+      if (state.user?.favouriteProductsIDs) {
         state.user.favouriteProductsIDs = payload;
       }
     },
-    setIsAuth(state, {payload}: PayloadAction<boolean>) {
+    setIsAuth(state, { payload }: PayloadAction<boolean>) {
       state.isAuth = payload;
-    } 
-  },
-})
+    }
+  }
+});
 
 export const {
   setCredentials,

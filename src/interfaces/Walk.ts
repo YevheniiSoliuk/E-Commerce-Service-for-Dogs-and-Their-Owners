@@ -1,11 +1,9 @@
 interface IWalk {
-  id: string,
-  time: string,
-  mapScreenURL: string,
-  gainedCoins: number,
-  distance: number
+  id: string;
+  time: string;
+  mapScreenURL: string;
+  gainedCoins: number;
+  distance: number;
 }
 
-export type {
-  IWalk
-}
+export type { IWalk };

@@ -1,24 +1,28 @@
-import GoogleMapReact from "google-map-react";
-import { MapMarker } from "./MapMarker";
-import { useEffect, useState } from "react";
-import { IPostalPunct, IPostalPunktAddress } from "../../../interfaces/DeliveryMethod";
-import { useGetPostalPunctQuery } from "../../../features/ApiDeliveryMethods";
+import GoogleMapReact from 'google-map-react';
+import { MapMarker } from './MapMarker';
+import { useEffect, useState } from 'react';
+import {
+  IPostalPunct,
+  IPostalPunktAddress
+} from '../../../interfaces/DeliveryMethod';
+import { useGetPostalPunctQuery } from '../../../features/ApiDeliveryMethods';
 
 type PropsType = {
-  ids: number[]
-}
+  ids: number[];
+};
 
-export const Map: React.FC<PropsType> = ({ids}) => {
+export const Map: React.FC<PropsType> = ({ ids }) => {
   const [zoom, setZoom] = useState<number>(12);
-  const [center, setCenter] = useState<{lat: number, lng: number}>({
-    lat:51.240813919648176, 
+  const [center, setCenter] = useState<{ lat: number; lng: number }>({
+    lat: 51.240813919648176,
     lng: 22.520501234867236
   });
 
   //const {data} = useGetPostalPunctQuery(id);
-  
+
   const [postalPunct, setPostalPunct] = useState<IPostalPunct | null>(null);
-  const [postalPunctAddres, setPostalPunctAddress] = useState<IPostalPunktAddress | null>(null);
+  const [postalPunctAddres, setPostalPunctAddress] =
+    useState<IPostalPunktAddress | null>(null);
 
   // useEffect(()=>{
   //   if(data)
@@ -31,7 +35,7 @@ export const Map: React.FC<PropsType> = ({ids}) => {
   return (
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: process.env.REACT_APP_GOOGLE_MAP_API_KEY || ""
+        key: process.env.REACT_APP_GOOGLE_MAP_API_KEY || ''
       }}
       defaultCenter={{
         lat: center.lat,
@@ -39,14 +43,14 @@ export const Map: React.FC<PropsType> = ({ids}) => {
       }}
       defaultZoom={zoom}
       center={center}
-      onChange={({center, zoom}) => {
+      onChange={({ center, zoom }) => {
         setCenter(center);
         setZoom(zoom);
       }}
     >
-    {ids.map((id: number) => 
-      <MapMarker lat={center.lat} lng={center.lng} id={id}/>
-    )}
+      {ids.map((id: number) => (
+        <MapMarker lat={center.lat} lng={center.lng} id={id} />
+      ))}
     </GoogleMapReact>
-  )
-}
+  );
+};

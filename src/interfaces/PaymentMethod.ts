@@ -1,9 +1,7 @@
 interface IPaymentMethod {
-  id: string,
-  name: string,
-  photoURL: string
+  id: string;
+  name: string;
+  photoURL: string;
 }
 
-export type {
-  IPaymentMethod
-}
+export type { IPaymentMethod };

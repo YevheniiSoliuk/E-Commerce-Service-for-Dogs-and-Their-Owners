@@ -18,28 +18,28 @@ import { ChangeEventValue } from 'google-map-react';
 //     postal_punkts: []
 //   },
 //   {
-//     logo: "./images/dpd.png", 
+//     logo: "./images/dpd.png",
 //     name: "DPD Paczka - kurier",
 //     delivery_payment: 0,
 //     delivery_time: "1-2 dni",
 //     postal_punkts: []
 //   },
 //   {
-//     logo: "./images/inpost-kurier.png", 
+//     logo: "./images/inpost-kurier.png",
 //     name: "InPost Kurier Paczka",
 //     delivery_payment: 3,
 //     delivery_time: "2-3 dni",
 //     postal_punkts: []
 //   },
 //   {
-//     logo: "./images/inpost-paczkomaty.jpg", 
+//     logo: "./images/inpost-paczkomaty.jpg",
 //     name: "InPost Paczkomaty 24/7",
 //     delivery_payment: 2,
 //     delivery_time: "1 dzień",
 //     postal_punkts: []
 //   },
 //   {
-//     logo: "./images/orlen-paczka.png", 
+//     logo: "./images/orlen-paczka.png",
 //     name: "Orlen Paczka – kioski Ruchu, salony współpartnerskie",
 //     delivery_payment: 0,
 //     delivery_time: "1-2 dni",
@@ -51,44 +51,52 @@ export const DeliveryMethodsSection = () => {
   const [isPostalPunktsOpen, setIsPostalPunktsOpen] = useState<boolean>(false);
   const closePostalPunktsModal = () => setIsPostalPunktsOpen(false);
 
-  const method = useSelector((state: RootState) => state.order.deliveryMethod?.name);
+  const method = useSelector(
+    (state: RootState) => state.order.deliveryMethod?.name
+  );
   const dispatch: AppDispatch = useDispatch();
-  const [deliveryMethod, setDeliveryMethod] = useState<string>(method ? method : "");
+  const [deliveryMethod, setDeliveryMethod] = useState<string>(
+    method ? method : ''
+  );
 
   const { data } = useDeliveriesQuery();
   const [deliveryMethods, setDeliveryMethods] = useState<IDeliveryMethod[]>([]);
-  
+
   useEffect(() => {
-    if(data) {
-      setDeliveryMethods(data["Delivery methods"]);
+    if (data) {
+      setDeliveryMethods(data['Delivery methods']);
     }
-  }, [data])
+  }, [data]);
 
   const setDeliveryMethodOnLogoCLick = (value: IDeliveryMethod) => {
     setDeliveryMethod(value.name);
     dispatch(setOrderDeliveryMethod(value));
-    setIsPostalPunktsOpen(o => !o);
-  }
-  
+    setIsPostalPunktsOpen((o) => !o);
+  };
+
   return (
-    <section 
+    <section
       className="w-[45%] h-[100%] bg-dark_green border-[2px] border-green 
       rounded-[20px] px-[30px] py-[30px]"
     >
       <h3 className="text-center text-[32px]">Metody dostawy</h3>
       <div className="w-[90%] h-[2px] bg-green ml-auto mr-auto my-[20px]"></div>
       <div className="ml-[30px]">
-        {deliveryMethods.map((delivery: IDeliveryMethod) =>
+        {deliveryMethods.map((delivery: IDeliveryMethod) => (
           <>
             <Input
               key={delivery.name}
-              type="radio" 
-              name="deliveries" 
+              type="radio"
+              name="deliveries"
               value={delivery.name}
-              state={deliveryMethod} 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setDeliveryMethod(e.target.value)}} 
-              action={()=>{setDeliveryMethodOnLogoCLick(delivery)}} 
-              placeholder={delivery.name} 
+              state={deliveryMethod}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setDeliveryMethod(e.target.value);
+              }}
+              action={() => {
+                setDeliveryMethodOnLogoCLick(delivery);
+              }}
+              placeholder={delivery.name}
               imgSrc={delivery.logoURL}
               price={delivery.deliveryPayment}
             />
@@ -100,7 +108,7 @@ export const DeliveryMethodsSection = () => {
               postalPunctIds={delivery.postal_points}
             /> */}
           </>
-        )}
+        ))}
       </div>
     </section>
   );
