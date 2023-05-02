@@ -36,12 +36,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const isFavourite = useCallback((id: string) => {
     const isFavourite = false;
 
-    onAuthStateChanged(auth, (user) => {
-      const userID = user?.uid || '';
-      getCurrentUser(userID).then((resolve) => {
-        resolve?.favouriteProductsIDs?.includes(id);
-      });
-    });
+    // onAuthStateChanged(auth, (user) => {
+    //   const userID = user?.uid || '';
+    //   getCurrentUser(userID).then((resolve) => {
+    //     resolve?.favouriteProductsIDs?.includes(id);
+    //   });
+    // });
 
     return isFavourite;
   }, []);
@@ -53,7 +53,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         dispatch(
           setNewFavoriteProducts(
             payload[`Updated product with id: ${id}`][
-              `Record with id: ${id} added successfully to favourites!`
+            `Record with id: ${id} added successfully to favourites!`
             ]
           )
         )
@@ -68,7 +68,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         dispatch(
           setNewFavoriteProducts(
             payload[`Updated product with id: ${id}`][
-              `Record with id: ${id} removed successfully!`
+            `Record with id: ${id} removed successfully!`
             ]
           )
         )
@@ -122,7 +122,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </span>
         </>
       ) : null}
-      <h3 className="text-[16px] mb-[10px]">{}</h3>
+      <h3 className="text-[16px] mb-[10px]">{ }</h3>
       <p className="text-[12px] truncate mb-[6px]">{title}</p>
       <StarRating
         type="static"

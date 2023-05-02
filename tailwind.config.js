@@ -40,14 +40,19 @@ module.exports = {
           '0%': { width: '0%' },
           '100%': { width: '75%' }
         },
-        scrollx: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(calc(-100% - 30px))' }
+        primary: {
+          '0%': { left: '0%' },
+          '100%': { left: '-200%' }
+        },
+        secondary: {
+          '0%': { left: '200%' },
+          '100%': { left: '0%' }
         }
       },
       animation: {
         full: 'full 1s linear',
-        scrollx: 'scrollx 10s linear infinite'
+        scrollx_primary: 'primary 15s linear infinite',
+        scrollx_secondary: 'secondary 15s linear infinite'
       }
     }
   },

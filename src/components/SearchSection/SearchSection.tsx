@@ -63,7 +63,9 @@ export const SearchSection: React.FC<SearchSectionProps> = ({
           src={sortByNameIcon}
           alt="sortByName"
           className="inline-block mr-[15px] cursor-pointer"
-          onClick={() => {}}
+          onClick={() => {
+            console.log('Sort by name');
+          }}
         />
         <img
           src={listViewIcon}

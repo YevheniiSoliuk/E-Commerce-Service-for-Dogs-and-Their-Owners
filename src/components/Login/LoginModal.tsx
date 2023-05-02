@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '../commons/Input/Input';
@@ -31,7 +31,7 @@ export const LoginModal: React.FC<ModalProps> = ({
     setPwd('');
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.SyntheticEvent
   ) => {
     e.preventDefault();
@@ -41,14 +41,17 @@ export const LoginModal: React.FC<ModalProps> = ({
       password: pwd
     };
 
-    try {
-      await login(credentials);
-      dispatch(setIsAuth(true));
-      clearLoginForm();
-      navigate('/profile');
-    } catch (err) {
-      setErrMsg('Login failed');
-    }
+    login(credentials)
+      .then((resolve) => {
+        console.log(resolve);
+      })
+      .catch((err) => {
+        setErrMsg('Login failed');
+      });
+
+    dispatch(setIsAuth(true));
+    clearLoginForm();
+    navigate('/profile');
   };
 
   return (
@@ -99,7 +102,6 @@ export const LoginModal: React.FC<ModalProps> = ({
               value="login"
               styles="h-[50px] bg-orange/70 border-2 border-green rounded-3xl text-gree text-base 
               font-lemon px-6 py-2 w-[222px] cursor-none"
-              onClick={() => {}}
             />
           ) : (
             <Button

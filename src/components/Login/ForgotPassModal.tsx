@@ -19,7 +19,7 @@ export const ForgotPassModal: React.FC<ModalProps> = ({
 
   const dispatch: AppDispatch = useDispatch();
 
-  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.SyntheticEvent
   ) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export const ForgotPassModal: React.FC<ModalProps> = ({
       email_receiver: email
     };
 
-    const result = await getRecoveryToken(payload).unwrap();
+    const result = getRecoveryToken(payload).unwrap();
     const recoveryToken: string = result['Email send'];
 
     dispatch(setPassRecoveryToken(recoveryToken));

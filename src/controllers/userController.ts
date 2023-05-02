@@ -1,8 +1,7 @@
-import { auth, firestore } from './../firebase.config';
-import { doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { firestore } from './../firebase.config';
+import { doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { userCol } from '../utils/db';
 import { IUser } from '../interfaces/User';
-import { onAuthStateChanged } from 'firebase/auth';
 import { getUserAnimal } from './animalController';
 import { IAnimal } from '../interfaces/Animal';
 
@@ -22,64 +21,62 @@ export const createUser = async (user: IUser) => {
 type getUserFn = (userID: string) => Promise<IUser | null>;
 
 export const getCurrentUser: getUserFn = async (userID) => {
-  const currentUser = {};
-
   try {
-    const userDocs = await getDocs(userCol);
+    const userQuery = query(userCol, where('uid', '==', userID));
+    const querySnapshot = await getDocs(userQuery);
 
-    userDocs.forEach(async (userDoc) => {
-      const user = userDoc.data();
+    if (querySnapshot.docs[0]?.data()) {
+      const user = querySnapshot.docs[0]?.data();
 
-      if (user.uid === userID) {
-        // if(user.addressRef) {
-        //   const addressSnapshot = await getDoc(user.addressRef);
-
-        //   if(addressSnapshot !== undefined && addressSnapshot.exists()) {
-        //     user.address = addressSnapshot.data();
-        //   }
-        // }
-
-        if (user.animalsRefs) {
-          user.animals = [];
-          user.animalsRefs.forEach(async (animalRef) => {
-            const animal = await getUserAnimal(animalRef);
-            user.animals?.push(animal);
-          });
-        }
-
-        if (user.favouriteProductsRefs) {
-          user.favouriteProductsIDs = [];
-
-          user.favouriteProductsRefs.forEach(async (favouriteProductRef) => {
-            const favouriteProductSnapshot = await getDoc(favouriteProductRef);
-            if (
-              favouriteProductSnapshot.exists() &&
-              user.favouriteProductsIDs !== null &&
-              user.favouriteProductsIDs !== undefined
-            ) {
-              user.favouriteProductsIDs.push(favouriteProductSnapshot.id);
-            }
-          });
-        }
-
-        if (user.ordersRefs) {
-          const ordersIDs: string[] = [];
-
-          user.ordersRefs.forEach(async (orderRef) => {
-            const orderSnapshot = await getDoc(orderRef);
-            if (orderSnapshot.exists()) {
-              ordersIDs.push(orderSnapshot.id);
-            }
-          });
-        }
-
-        Object.assign(currentUser, user);
-        debugger;
+      if (user.animalsRefs) {
+        user.animals = await Promise.all(
+          user.animalsRefs.map(
+            async (animalRef) => await getUserAnimal(animalRef)
+          )
+        );
       }
-    });
-  } catch (error) {
-    console.log(error);
-  }
 
-  return currentUser as IUser;
+      if (user.favouriteProductsRefs) {
+        user.favouriteProductsIDs = [];
+
+        await Promise.all(
+          user.favouriteProductsRefs.map((favouriteProductRef) => {
+            getDoc(favouriteProductRef).then((resolve) => {
+              if (
+                resolve.exists() &&
+                user.favouriteProductsIDs !== null &&
+                user.favouriteProductsIDs !== undefined
+              ) {
+                user.favouriteProductsIDs.push(resolve.id);
+              }
+            });
+          })
+        );
+      }
+
+      if (user.ordersRefs) {
+        user.ordersIDs = [];
+
+        await Promise.all(
+          user.ordersRefs.map((orderRef) => {
+            getDoc(orderRef).then((resolve) => {
+              if (
+                resolve.exists() &&
+                user.ordersIDs !== null &&
+                user.ordersIDs !== undefined
+              ) {
+                user.ordersIDs.push(resolve.id);
+              }
+            });
+          })
+        );
+      }
+
+      return user;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    return null;
+  }
 };

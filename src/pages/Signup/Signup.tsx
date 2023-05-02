@@ -7,7 +7,6 @@ import {
   checkSMSNewsletter,
   checkTerms
 } from '../../features/registration/ContactFormSlice';
-import { isErrorWithMessage, isFetchBaseQueryError } from '../../helpers';
 import { IUser } from '../../interfaces/User';
 
 import { Button } from '../../components/commons/Button/Button';
@@ -78,9 +77,7 @@ export const Signup = () => {
     setRepeatPassword('');
   };
 
-  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (
-    e: React.SyntheticEvent
-  ) => {
+  const onHandleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const credentials: IUser = {
@@ -99,21 +96,18 @@ export const Signup = () => {
       password: password
     };
 
-    try {
-      signUpUser(credentials)
-        .then((userCredential) => {
-          credentials.uid = userCredential.user.uid;
-          createUser(credentials);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      dispatch(setIsAuth(true));
-      clearFields();
-      navigate('/profile');
-    } catch (err) {
-      setErrMsg('Failed to create user');
-    }
+    signUpUser(credentials)
+      .then(async (userCredentials) => {
+        credentials.uid = userCredentials.user.uid;
+        await createUser(credentials);
+      })
+      .catch((reject) => {
+        console.log(reject);
+      });
+
+    dispatch(setIsAuth(true));
+    clearFields();
+    navigate('/profile');
   };
 
   return (

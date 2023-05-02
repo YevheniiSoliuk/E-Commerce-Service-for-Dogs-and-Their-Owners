@@ -11,15 +11,21 @@ type usePaginationProps = {
 };
 
 export const useAuthState = () => {
-  const [userID, setUserID] = useState<string>('');
+  const [userID, setUserID] = useState<string | undefined>();
 
   useEffect(() => {
     onAuthStateChanged(auth, (credentials) => {
-      setUserID(credentials?.uid || '');
+      setUserID(credentials?.uid);
     });
   }, []);
 
   return userID;
+};
+
+export const useActualYear = () => {
+  const year = new Date().getFullYear();
+
+  return year;
 };
 
 export const usePagination = ({

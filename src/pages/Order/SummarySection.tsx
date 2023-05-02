@@ -36,12 +36,12 @@ export const SummarySection = () => {
   const [order] = useOrderMutation();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      const userID = user?.uid || '';
-      getCurrentUser(userID).then((resolve) => {
-        setAddressOfCurrentUser(resolve!.address);
-      });
-    });
+    // onAuthStateChanged(auth, (user) => {
+    //   const userID = user?.uid || '';
+    //   getCurrentUser(userID).then((resolve) => {
+    //     setAddressOfCurrentUser(resolve!.address);
+    //   });
+    // });
   }, []);
 
   const resetOrder = () => {

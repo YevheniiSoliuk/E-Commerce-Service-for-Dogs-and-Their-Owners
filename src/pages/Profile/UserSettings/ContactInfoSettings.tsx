@@ -13,11 +13,13 @@ import { Select } from '../../../components/commons/Select/Select';
 import { auth } from '../../../firebase.config';
 import { getCurrentUser } from '../../../controllers/userController';
 import { onAuthStateChanged } from 'firebase/auth';
+import { useAuthState } from '../../../hooks/usePagination';
 
 export const ContactInfoSettings = () => {
   // const { user } = useSelector((state: RootState) => state.auth);
   //const [user, setUser] = useState<IUser>();
   //const {data: address} = useGetUserAddressQuery(user.address);
+  const userId = useAuthState();
   const [updateUser] = useUpdateUserMutation();
 
   const [name, setName] = useState<string>('');
@@ -31,23 +33,30 @@ export const ContactInfoSettings = () => {
   const [homeNumber, setHomeNumber] = useState<string>('');
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      const userID = user?.uid || '';
-      getCurrentUser(userID).then((user) => {
-        if (user !== null) {
-          setName(user.name);
-          setLastname(user.lastname);
-          setEmail(user.email);
-          setPhone(user.phoneNumber);
-          setStreet(user.address.street);
-          setPostalCode(user.address.postalCode);
-          setProvince(user.address.state);
-          setPlace(user.address.city);
-          setHomeNumber(user.address.homeNumber);
+    const fetchUser = async () => {
+      try {
+        if (userId) {
+          const user = await getCurrentUser(userId);
+
+          if (user) {
+            setName(user.name);
+            setLastname(user.lastname);
+            setEmail(user.email);
+            setPhone(user.phoneNumber);
+            setStreet(user.address.street);
+            setPostalCode(user.address.postalCode);
+            setProvince(user.address.state);
+            setPlace(user.address.city);
+            setHomeNumber(user.address.homeNumber);
+          }
         }
-      });
-    });
-  }, []);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
 
   const resetInfo = () => {
     setName('');
@@ -60,7 +69,7 @@ export const ContactInfoSettings = () => {
     setPlace('Miejscowosc');
   };
 
-  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.SyntheticEvent
   ) => {
     e.preventDefault();
@@ -76,7 +85,7 @@ export const ContactInfoSettings = () => {
       street: street
     };
 
-    await updateUser(payload)
+    updateUser(payload)
       .unwrap()
       .then((payload) => console.log('fullfilled', payload))
       .catch((error) => console.error('rejected', error));

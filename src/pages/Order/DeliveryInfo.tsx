@@ -15,12 +15,12 @@ export const DeliveryInfo = () => {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      const userID = user?.uid || '';
-      getCurrentUser(userID).then((resolve) => {
-        setCurrentUser(resolve);
-      });
-    });
+    // onAuthStateChanged(auth, (user) => {
+    //   const userID = user?.uid || '';
+    //   getCurrentUser(userID).then((resolve) => {
+    //     setCurrentUser(resolve);
+    //   });
+    // });
   }, []);
 
   return (

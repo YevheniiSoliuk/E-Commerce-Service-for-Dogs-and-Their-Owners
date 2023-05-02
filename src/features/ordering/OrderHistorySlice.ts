@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type ordersHistoryState = {
   settingsSection: string;
@@ -12,7 +12,7 @@ const ordersHistorySlice = createSlice({
   name: 'ordersHistory',
   initialState,
   reducers: {
-    changeSettingsSection(state, action) {
+    changeSettingsSection(state, action: PayloadAction<string>) {
       state.settingsSection = action.payload;
     }
   }

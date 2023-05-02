@@ -1,6 +1,6 @@
 import { IBrand } from '../interfaces/Brand';
 import { ISubcategory } from './../interfaces/Category';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export type FiltersState = {
   subcategory: ISubcategory | null;

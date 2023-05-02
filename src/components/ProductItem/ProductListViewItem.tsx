@@ -39,12 +39,12 @@ export const ProductListViewItem: React.FC<ProductCardProps> = ({
   const isFavourite = useCallback((id: string) => {
     const isFavourite = false;
 
-    onAuthStateChanged(auth, (user) => {
-      const userID = user?.uid || '';
-      getCurrentUser(userID).then((resolve) => {
-        resolve?.favouriteProductsIDs?.includes(id);
-      });
-    });
+    // onAuthStateChanged(auth, (user) => {
+    //   const userID = user?.uid || '';
+    //   getCurrentUser(userID).then((resolve) => {
+    //     resolve?.favouriteProductsIDs?.includes(id);
+    //   });
+    // });
 
     return isFavourite;
   }, []);
@@ -56,7 +56,7 @@ export const ProductListViewItem: React.FC<ProductCardProps> = ({
         dispatch(
           setNewFavoriteProducts(
             payload[`Updated product with id: ${id.toString()}`][
-              `Record with id: ${id.toString()} added successfully to favourites!`
+            `Record with id: ${id.toString()} added successfully to favourites!`
             ]
           )
         )
@@ -71,7 +71,7 @@ export const ProductListViewItem: React.FC<ProductCardProps> = ({
         dispatch(
           setNewFavoriteProducts(
             payload[`Updated product with id: ${id}`][
-              `Record with id: ${id} removed successfully!`
+            `Record with id: ${id} removed successfully!`
             ]
           )
         )

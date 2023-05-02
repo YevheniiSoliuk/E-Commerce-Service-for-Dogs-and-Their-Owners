@@ -14,8 +14,6 @@ import dogAvatar2 from '../../assets/images/dog-avatar-2.png';
 import dogAvatar3 from '../../assets/images/dog-avatar-3.png';
 import { IUser } from '../../interfaces/User';
 import { getCurrentUser } from '../../controllers/userController';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../firebase.config';
 import { useAuthState } from '../../hooks/usePagination';
 
 const dogs = [
@@ -71,16 +69,31 @@ const dogs = [
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IUser>({} as IUser);
   const [moreWalkInfoClicked, setMoreWalkInfoClicked] =
     useState<boolean>(false);
 
   const userID = useAuthState();
 
+  // const fetchCurrentUser = async () => {
+  //   const currentUser = await getCurrentUser(userID);
+  //   console.log(currentUser);
+  //   setUser(currentUser);
+  // };
+
   useEffect(() => {
-    getCurrentUser(userID).then((resolve) => {
-      setUser(resolve);
-    });
+    if (userID) {
+      getCurrentUser(userID)
+        .then((resolve) => {
+          console.log(resolve);
+          if (resolve) {
+            setUser(resolve);
+          }
+        })
+        .catch((reject) => {
+          console.log(reject);
+        });
+    }
   }, [userID]);
 
   const goToProfileSettings = () => {
@@ -163,7 +176,9 @@ export const Profile = () => {
               value="edit"
               styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl 
               text-green text-base font-lemon px-[6px] py-[2px] w-[150px] text-[16px]"
-              onClick={() => {}}
+              onClick={() => {
+                console.log('Avatar changed');
+              }}
             />
           </div>
         </section>
@@ -193,7 +208,7 @@ export const Profile = () => {
       </section>
       <section className="my-[105px] w-full">
         <h1 className="text-[48px] mb-[60px] text-center">Twoje pupile</h1>
-        <PetInfoSection />
+        <PetInfoSection user={user} />
       </section>
     </main>
   );

@@ -4,7 +4,7 @@ import {
   checkSMSNewsletter
 } from '../../../features/registration/ContactFormSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../store/store';
+import { AppDispatch, RootState } from '../../../store/store';
 
 import { Input } from '../../../components/commons/Input/Input';
 
@@ -13,7 +13,7 @@ export const NotificationSettings = () => {
     checkedEmailNewsletter,
     checkedSMSNewsletter,
     checkedEmailTransmition
-  } = useSelector((state: any) => state.contactForm);
+  } = useSelector((state: RootState) => state.contactForm);
 
   const dispatch: AppDispatch = useDispatch();
 

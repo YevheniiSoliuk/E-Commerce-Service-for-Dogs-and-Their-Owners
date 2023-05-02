@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CartPopup } from './CartPopup';
+import { RootState } from '../../store/store';
 
 export const CartButton = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const closeCartModal = () => setIsCartOpen(false);
 
-  const { positionsAmount } = useSelector((state: any) => state.productCart);
+  const { positionsAmount } = useSelector(
+    (state: RootState) => state.productCart
+  );
 
   return (
     <section className="relative">

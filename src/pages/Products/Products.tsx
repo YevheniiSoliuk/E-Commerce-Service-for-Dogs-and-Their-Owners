@@ -57,19 +57,11 @@ export const Products = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(8);
 
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>(
-    getProducts()
-  );
-  const [searchedProducts, setSearchedProducts] = useState<IProduct[]>(
-    getProducts()
-  );
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+  const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([]);
 
   const [view, setView] = useState<string>('cards');
-
-  //const { data: productsData, isLoading: productsIsLoading } = useProductsQuery();
-  const [products, setProducts] = useState<IProduct[]>(getProducts());
-  //const { data: brandsData } = useBrandsQuery();
-  //const brands: IBrand[] | undefined = brandsData?.["All brands"];
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   const {
     subcategory,
@@ -81,16 +73,30 @@ export const Products = () => {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      let products = await getProducts();
+
+      if (subcategory !== null) {
+        products = products.filter(
+          (product: IProduct) => product.subcategoryID === subcategory.id
+        );
+      }
+
+      setProducts(products);
+      setFilteredProducts(products);
+    };
+
+    fetchProducts();
     setView(view);
     view === 'cards' ? setPageSize(8) : setPageSize(3);
-  }, [view]);
+  }, [subcategory, view]);
 
   const getFilteredProducts = useCallback(() => {
-    let arr: IProduct[] = [...filteredProducts];
+    let arr: IProduct[] = [...products];
 
     if (subcategory !== null) {
       arr = arr.filter(
-        (product: IProduct) => product.subcategoryID === subcategory?.id
+        (product: IProduct) => product.subcategoryID === subcategory.id
       );
     }
 
@@ -118,12 +124,10 @@ export const Products = () => {
     }
 
     setFilteredProducts(arr);
-  }, [subcategory, selectedBrands, priceMin, priceMax, rate, filteredProducts]);
+  }, [products, subcategory, selectedBrands, priceMin, priceMax, rate]);
 
   const getSearchedProducts = useCallback(() => {
     let arr: IProduct[] = [...filteredProducts];
-
-    console.log('Filtered products: ' + filteredProducts);
 
     if (searchValue !== '') {
       arr = arr.filter(
@@ -152,8 +156,6 @@ export const Products = () => {
     const searchedProducts = getSearchedProducts();
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-
-    console.log(searchedProducts);
 
     if (searchedProducts.length) {
       return searchedProducts.slice(firstPageIndex, lastPageIndex);
@@ -194,7 +196,7 @@ export const Products = () => {
             {currentProductsCard !== 0 ? (
               <>
                 {view === 'cards' ? (
-                  <div className="flex justify-start items-center flex-wrap gap-[6%]">
+                  <div className="flex justify-between items-center flex-wrap">
                     {currentProductsCard.map((product: IProduct) => (
                       <ProductCard
                         key={product.id}

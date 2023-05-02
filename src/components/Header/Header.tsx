@@ -20,18 +20,21 @@ import { useAuthState } from '../../hooks/usePagination';
 export const Header = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+  // const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const userID = useAuthState();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = await getCurrentUser(userID);
+        if (userID) {
+          const user = await getCurrentUser(userID);
 
-        if (user !== null) {
-          dispatch(setIsAuth(true));
-          setUsername(user.name);
+          if (user !== null) {
+            setIsAuth(true);
+            setUsername(user.name);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -41,15 +44,18 @@ export const Header = () => {
     fetchData();
   }, [dispatch, userID]);
 
-  const signOut = async () => {
-    try {
-      await logout();
-      dispatch(setIsAuth(false));
-      setUsername('');
-      navigate('/');
-    } catch (error) {
-      console.log('Failed to logout');
-    }
+  const signOut = () => {
+    logout()
+      .then((resolve) => {
+        console.log(resolve);
+      })
+      .catch((reject: string) => {
+        console.log(`Failed to logout ${reject}`);
+      });
+
+    setIsAuth(false);
+    setUsername('');
+    navigate('/');
   };
 
   return (

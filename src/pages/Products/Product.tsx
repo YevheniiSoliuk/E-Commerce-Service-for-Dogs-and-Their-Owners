@@ -25,6 +25,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/virtual';
 import { IBreed } from '../../interfaces/Animal';
+import { getProduct } from '../../controllers/productController';
 
 export const Product = () => {
   const { id } = useParams();
@@ -34,11 +35,15 @@ export const Product = () => {
   ];
   const dispatch: AppDispatch = useDispatch();
   const [amount, setAmount] = useState(1);
+  const [product, setProduct] = useState<IProduct>();
 
   const { data: productsData, isLoading: productsIsLoading } = useProductQuery(
     Number(id)
   );
-  const product = productsData?.Product;
+
+  if (id) {
+    setProduct(getProduct(id));
+  }
 
   const { data: brandsData } = useBrandsQuery();
   const brands = brandsData?.['All brands'];
@@ -306,31 +311,41 @@ export const Product = () => {
             text="Opis produktu"
             value="add"
             styles="min-w-[20%] h-[55px] border-2 border-green rounded-[15px] shadow-md px-[20px] py-[10px] text-center text-[20px] text-yellow hover:bg-orange hover:text-green active:border-0"
-            onClick={() => {}}
+            onClick={() => {
+              console.log('Opis produktu');
+            }}
           />
           <Button
             text="Skład"
             value="add"
             styles="min-w-[150px] h-[55px] border-2 border-green rounded-[15px] shadow-md px-[5px] py-[10px] text-center text-[20px] text-yellow hover:bg-orange hover:text-green active:border-0"
-            onClick={() => {}}
+            onClick={() => {
+              console.log('Skład produktu');
+            }}
           />
           <Button
             text="Dawkowanie"
             value="add"
             styles="min-w-[20%] h-[55px] border-2 border-green rounded-[15px] shadow-md px-[20px] py-[10px] text-center text-[20px] text-yellow hover:bg-orange hover:text-green active:border-0"
-            onClick={() => {}}
+            onClick={() => {
+              console.log('Dawkowanie produktu');
+            }}
           />
           <Button
             text="Opinie"
             value="add"
             styles="min-w-[10%] h-[55px] border-2 border-green rounded-[15px] shadow-md px-[5px] py-[10px] text-center text-[20px] text-yellow hover:bg-orange hover:text-green active:border-0"
-            onClick={() => {}}
+            onClick={() => {
+              console.log('Opinie o produkcie');
+            }}
           />
           <Button
             text="Zadaj pytanie"
             value="add"
             styles="min-w-[20%] h-[55px] border-2 border-green rounded-[15px] shadow-md px-[20px] py-[10px] text-center text-[20px] text-yellow hover:bg-orange hover:text-green active:border-0"
-            onClick={() => {}}
+            onClick={() => {
+              console.log('Zadaj pytanie');
+            }}
           />
         </div>
         <div

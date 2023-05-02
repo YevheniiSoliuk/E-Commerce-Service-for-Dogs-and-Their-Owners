@@ -5,6 +5,8 @@
 body {
   background-color: rgba(11, 147, 102, 0.502);
   color: #4B4D0B;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .thumb::-webkit-slider-thumb {

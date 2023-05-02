@@ -1,6 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
+import { Route, Routes } from 'react-router-dom';
 
 import { Header } from '../src/components/Header/Header';
 import { Products } from './pages/Products/Products';
@@ -19,56 +17,48 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Product } from './pages/Products/Product';
 import { Order } from './pages/Order/Order';
 
-import { collection, getDocs } from 'firebase/firestore';
-import { firestore } from './firebase.config';
 import { useAuthState } from './hooks/usePagination';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from './controllers/userController';
 
 function App() {
   const [userEmail, setUserEmail] = useState('');
-  const userID = useAuthState();
+  // const userID = useAuthState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const user = await getCurrentUser(userID);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const user = await getCurrentUser(userID);
 
-        if (user !== null) {
-          setUserEmail(user.email);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       if (user !== null) {
+  //         setUserEmail(user.email);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [userID]);
+  //   fetchData();
+  // }, [userID]);
 
   return (
     <>
       <Header />
-      {userEmail === 'admin@admin.com' ? (
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/shops" element={<Shops />} />
-          <Route path="/brands" element={<Brands />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/favorite" element={<Favorite />} />
-          <Route path="/sales" element={<Sales />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/settings" element={<UserSettings />} />
-        </Routes>
-      )}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/shops" element={<Shops />} />
+        <Route path="/brands" element={<Brands />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/favorite" element={<Favorite />} />
+        <Route path="/sales" element={<Sales />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/settings" element={<UserSettings />} />
+      </Routes>
       <Footer />
     </>
   );

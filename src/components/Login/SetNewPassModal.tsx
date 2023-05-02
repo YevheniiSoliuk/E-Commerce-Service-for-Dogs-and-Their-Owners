@@ -21,7 +21,7 @@ export const SetNewPassModal: React.FC<ModalProps> = ({ isOpen, close }) => {
     setErrorMsg('');
   }, [email, recoveryToken, newPass, repeatPass]);
 
-  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.SyntheticEvent
   ) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ export const SetNewPassModal: React.FC<ModalProps> = ({ isOpen, close }) => {
       if (newPass !== repeatPass) {
         setErrorMsg("Passwords don't match each other");
       } else {
-        await setNewPassword(payload);
+        setNewPassword(payload);
         setIsSuccess(true);
       }
     } catch (err) {
@@ -123,7 +123,7 @@ export const SetNewPassModal: React.FC<ModalProps> = ({ isOpen, close }) => {
             value="set_new_pass"
             styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl 
             text-green text-base font-lemon px-6 py-2 w-[222px]"
-            onClick={isSuccess ? close : () => {}}
+            onClick={isSuccess ? close : undefined}
           />
         </form>
         {/* <span className="block my-[18px] text-[14px] underline hover:text-yellow cursor-pointer" onClick={goToOtherModal}>Wróć do logowania</span> */}

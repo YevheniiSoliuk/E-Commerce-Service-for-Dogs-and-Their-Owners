@@ -21,7 +21,7 @@ export const AutorizationSettings = () => {
     setNewPassword('');
   };
 
-  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  const onHandleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.SyntheticEvent
   ) => {
     e.preventDefault();
@@ -31,10 +31,10 @@ export const AutorizationSettings = () => {
       new_password: newPassword
     };
 
-    await updatePassword(payload)
+    updatePassword(payload)
       .unwrap()
       .then((result) => console.log('fullfilled', result))
-      .catch((error) => setErrorMsg(error));
+      .catch((error: string) => setErrorMsg(error));
   };
 
   return (

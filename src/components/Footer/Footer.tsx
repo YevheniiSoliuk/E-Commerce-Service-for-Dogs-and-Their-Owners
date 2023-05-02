@@ -4,6 +4,8 @@ import FBIcon from '../../assets/icons/facebook-mini.svg';
 import TwitterIcon from '../../assets/icons/twitter-mini.svg';
 import InstaIcon from '../../assets/icons/instagram-mini.svg';
 import GeoIcon from '../../assets/icons/place-marker.svg';
+import { useActualYear } from '../../hooks/usePagination';
+import { Link } from 'react-router-dom';
 
 type FastLink = {
   name: string;
@@ -26,45 +28,63 @@ const supportLinks: FastLink[] = [
 ];
 
 export const Footer = () => {
+  const year = useActualYear();
+  const author = 'Yevhenii Soliuk';
+
   return (
-    <footer
-      className="flex justify-between w-full h-[400px] bg-dark_green px-[100px] py-[50px] 
-      border-t-[2px] border-b-green"
-    >
-      <FastLinks title="Zakupy" fast_links={shoppingLinks} />
-      <FastLinks title="Nasze wsparcie" fast_links={supportLinks} />
-      <section className="text-left">
-        <h2 className="text-[32px] mb-[30px]">Social media</h2>
-        <img
-          src={FBIcon}
-          className="inline-block hover:border-[3px] hover:border-orange hover:rounded-lg 
-          mr-[20px] cursor-pointer"
-          alt="FBICon"
-        />
-        <img
-          src={TwitterIcon}
-          className="inline-block hover:border-[3px] hover:border-orange hover:rounded-lg 
-          mr-[20px] cursor-pointer"
-          alt="TwitterCon"
-        />
-        <img
-          src={InstaIcon}
-          className="inline-block hover:border-[3px] hover:border-orange hover:rounded-lg 
-          mr-[20px] cursor-pointer"
-          alt="InstaCon"
-        />
-        <h2 className="text-[32px] mt-[37px] mb-[22px]">Adres</h2>
-        <p className="text-[20px]">Lublin,</p>
-        <p className="text-[20px] mb-[24px]">Nadbystrzycka 42A</p>
-        <img
-          src={GeoIcon}
-          className="inline-block hover:border-green mr-[10px]"
-          alt="GeoCon"
-        />
-        <span className="text-[16px] hover:text-orange hover:underline hover:decoration-1 cursor-pointer">
-          Sprawdź na mapie
-        </span>
-      </section>
-    </footer>
+    <>
+      <footer
+        className="flex justify-between w-full h-[400px] bg-dark_green px-[100px] py-[50px] 
+        border-t-[2px] border-b-green"
+      >
+        <FastLinks title="Zakupy" fast_links={shoppingLinks} />
+        <FastLinks title="Nasze wsparcie" fast_links={supportLinks} />
+        <section className="text-left">
+          <h2 className="text-[32px] mb-[20px]">Social media</h2>
+          <a
+            href="https://www.facebook.com/profile.php?id=100041035039263"
+            target="_blank"
+          >
+            <img
+              src={FBIcon}
+              className="inline-block hover:border-[3px] hover:border-orange hover:rounded-lg 
+              mr-[20px] cursor-pointer"
+              alt="FBICon"
+            />
+          </a>
+          <a href="https://twitter.com/" target="_blank">
+            <img
+              src={TwitterIcon}
+              className="inline-block hover:border-[3px] hover:border-orange hover:rounded-lg 
+              mr-[20px] cursor-pointer"
+              alt="TwitterCon"
+            />
+          </a>
+          <a href="https://www.instagram.com/svikt02/" target="_blank">
+            <img
+              src={InstaIcon}
+              className="inline-block hover:border-[3px] hover:border-orange hover:rounded-lg 
+              mr-[20px] cursor-pointer"
+              alt="InstaCon"
+            />
+          </a>
+          <h2 className="text-[32px] mt-[25px] mb-[15px]">Adres</h2>
+          <p className="text-[20px] mb-[20px]">Lublin, Nadbystrzycka 42A</p>
+          <Link to="/shops">
+            <img
+              src={GeoIcon}
+              className="inline-block hover:border-green mr-[10px]"
+              alt="GeoCon"
+            />
+            <span className="text-[16px] hover:text-orange hover:underline hover:decoration-1 cursor-pointer">
+              Sprawdź na mapie
+            </span>
+          </Link>
+        </section>
+      </footer>
+      <p className="text-center text-20 mt-20px">
+        {author} © {year}
+      </p>
+    </>
   );
 };

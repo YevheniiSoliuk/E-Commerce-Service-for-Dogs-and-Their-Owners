@@ -37,7 +37,9 @@ export const Newsletter = () => {
             value="subscribe"
             styles="h-[50px] bg-orange border-2 border-green hover:border-yellow rounded-3xl 
             text-green text-base font-lemon px-6 py-2 w-[150px] mb-[5px]"
-            onClick={() => {}}
+            onClick={() => {
+              console.log('Zapisz się');
+            }}
           />
         </div>
         <p className="text-[12px]">

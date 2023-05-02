@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 type ListProps = {
   title: string;
-  items: IBrand[] | ICategory[] | undefined;
+  items: IBrand[] | ICategory[];
   subitems?: ISubcategory[];
 };
 
@@ -52,7 +52,7 @@ export const List: React.FC<ListProps> = ({ title, items, subitems }) => {
       {showList && (
         <>
           <ul>
-            {'logoURL' in items?.[0]!
+            {'logoURL' in items[0]
               ? items?.map((brand) => (
                   <li
                     className="list-none hover:text-yellow active:text-yellow hover:cursor-pointer"

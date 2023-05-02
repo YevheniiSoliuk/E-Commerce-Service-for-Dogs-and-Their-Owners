@@ -1,7 +1,7 @@
 import { usePagination } from '../../hooks/usePagination';
 
 type PaginationProps = {
-  onPageChange: Function;
+  onPageChange: (currentPage: number) => void;
   totalCount: number;
   siblingCount: number;
   currentPage: number;
@@ -70,7 +70,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
                 ? 'text-[20px] hover: text-yellow cursor-pointer'
                 : 'text-[20px] cursor-pointer'
             }
-            onClick={() => onPageChange(pageNumber)}
+            onClick={() => onPageChange(Number(pageNumber))}
           >
             {pageNumber}
           </li>

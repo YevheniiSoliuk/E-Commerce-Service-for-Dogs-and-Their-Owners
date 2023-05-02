@@ -29,9 +29,13 @@ export const Sidebar: React.FC<SideBarProps> = ({
   const [maxPrice, setMaxPrice] = useState<number>(0);
 
   useEffect(() => {
-    setBrands(getBrands());
-    setCategories(getCategories());
-    setSubcategories(getSubcategories());
+    const fetchData = async () => {
+      setBrands(await getBrands());
+      setCategories(await getCategories());
+      setSubcategories(await getSubcategories());
+    };
+
+    fetchData();
 
     // if(products) {
     //   setMinPrice(Number([...products]
@@ -41,7 +45,7 @@ export const Sidebar: React.FC<SideBarProps> = ({
     //     .sort((a: IProduct, b: IProduct) => b.price - a.price)[0]
     //     .price.toFixed(0)));
     // }
-  }, [products]);
+  }, []);
 
   return (
     <aside

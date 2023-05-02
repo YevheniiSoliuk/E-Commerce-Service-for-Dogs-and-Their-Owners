@@ -11,7 +11,7 @@ export const LoginPopup = () => {
   const [isForgotPassOpen, setIsForgotPassOpen] = useState<boolean>(false);
   const closeForgotPassModal = () => setIsForgotPassOpen(false);
 
-  const [isNewPassModalOpen, setIsNewPassModalOpen] = useState<boolean>(true);
+  const [isNewPassModalOpen, setIsNewPassModalOpen] = useState<boolean>(false);
   const closeNewPassModal = () => setIsNewPassModalOpen(false);
 
   const goToForgotPassModal = () => {

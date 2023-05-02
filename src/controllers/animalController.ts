@@ -1,6 +1,11 @@
 import { getAnimalBreed } from './breedController';
-import { DocumentReference, getDoc } from 'firebase/firestore';
+import {
+  DocumentReference,
+  DocumentSnapshot,
+  getDoc
+} from 'firebase/firestore';
 import { IAnimal } from '../interfaces/Animal';
+import { IWalk } from '../interfaces/Walk';
 
 type getUserAnimalFn = (
   animalRef: DocumentReference<IAnimal>
@@ -21,13 +26,18 @@ export const getUserAnimal: getUserAnimalFn = async (animalRef) => {
 
     if (animal.walksRefs) {
       animal.walks = [];
+      const promises: Promise<DocumentSnapshot<IWalk>>[] = [];
 
-      animal.walksRefs.forEach(async (walkRef) => {
-        const walkSnapshot = await getDoc(walkRef);
+      animal.walksRefs.forEach((walkRef) => {
+        promises.push(getDoc(walkRef));
+      });
 
-        if (walkSnapshot.exists()) {
-          animal.walks = [...animal.walks, walkSnapshot.data()];
-        }
+      Promise.all(promises).then((walks) => {
+        walks.forEach((walk) => {
+          if (walk.exists()) {
+            animal.walks.push(walk.data());
+          }
+        });
       });
     }
 

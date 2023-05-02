@@ -1,5 +1,5 @@
 import { IOrderPosition, IProduct } from './../../interfaces/Order';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export type ProductCart = {
   positions: IOrderPosition[];

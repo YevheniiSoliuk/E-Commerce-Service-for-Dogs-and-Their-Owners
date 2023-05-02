@@ -2,15 +2,17 @@ import { getDoc, getDocs } from 'firebase/firestore';
 import { ISubcategory } from '../interfaces/Category';
 import { subcategoryCol } from '../utils/db';
 
-export const getSubcategories = () => {
+export const getSubcategories = async () => {
   const subcategories: ISubcategory[] = [];
 
-  const subcategoriesDocs = async () => {
-    return await getDocs(subcategoryCol);
-  };
+  try {
+    const subcategoriesDocs = async () => {
+      return await getDocs(subcategoryCol);
+    };
 
-  subcategoriesDocs().then((resolve) => {
-    resolve.forEach((subcategoryDoc) => {
+    const subcategoriesSnapshot = await subcategoriesDocs();
+
+    subcategoriesSnapshot.forEach((subcategoryDoc) => {
       const subcategory = subcategoryDoc.data();
       subcategory.id = subcategoryDoc.id;
 
@@ -28,7 +30,9 @@ export const getSubcategories = () => {
 
       subcategories.push(subcategory);
     });
-  });
+  } catch (e) {
+    console.log(e);
+  }
 
   return subcategories;
 };
