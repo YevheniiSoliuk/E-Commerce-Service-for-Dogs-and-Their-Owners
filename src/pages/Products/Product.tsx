@@ -56,7 +56,8 @@ export const Product = () => {
     price,
     discountAmount,
     basePrice,
-    rate
+    rate,
+    ratesAmount
   } = { ...product };
 
   const brandID = brand?.id;
@@ -200,7 +201,7 @@ export const Product = () => {
                 active={rate}
                 size={'w-[20px]'}
                 alignment=""
-                rates={'23'}
+                rates={ratesAmount ? ratesAmount : 0}
               />
             ) : null}
             <p className="text-[20px] mt-[40px] text-left">{longDescription}</p>

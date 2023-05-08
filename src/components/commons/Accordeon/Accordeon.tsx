@@ -18,10 +18,10 @@ export const Accordeon: React.FC<AccordeonProps> = ({ title, content }) => {
   };
 
   return (
-    <div className="w-full bg-dark_green border-green border-2 rounded-[15px] px-[30px] py-[30px] mb-[40px]">
+    <div className="w-full bg-dark_green border-green border-2 rounded-[15px] px-[15px] py-[15px] mb-[40px]">
       <h2
         className={
-          "relative text-[32px] text-left hover:text-yellow before:content[''] before:absolute before:w-[15px] before:h-[15px] before:border-b-[3px] before:border-r-[3px] before:border-green before:right-[30px] before:hover:border-yellow hover:cursor-pointer " +
+          "relative text-[32px] text-left hover:text-yellow before:content[''] before:absolute before:w-[15px] before:h-[15px] before:border-b-[3px] before:border-r-[3px] before:border-green before:right-[30px] before:top-[10px] before:hover:border-yellow hover:cursor-pointer " +
           rotate
         }
         onClick={toggleList}
@@ -29,7 +29,7 @@ export const Accordeon: React.FC<AccordeonProps> = ({ title, content }) => {
         {title}
       </h2>
       {showContent ? (
-        <p className="text-[14px] text-left mt-[30px]">{content}</p>
+        <p className="text-[16px] text-left mt-[30px]">{content}</p>
       ) : null}
     </div>
   );

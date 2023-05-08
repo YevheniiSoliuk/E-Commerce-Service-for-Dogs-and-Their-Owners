@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppDispatch } from '../../../store/store';
 import { useDispatch } from 'react-redux';
 import { setPrice } from '../../../features/FiltersSlice';
@@ -18,13 +18,12 @@ export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
 
   const dispatch: AppDispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if(maxVal - minVal <= 100)
-  //   {
-  //       setMinVal(minVal-1);
-  //       setMaxVal(maxVal+1);
-  //   }
-  // }, [minVal, maxVal]);
+  useEffect(() => {
+    if (maxVal - minVal <= 100) {
+      setMinVal((prevState) => prevState - 1);
+      setMaxVal((prevState) => prevState + 1);
+    }
+  }, [minVal, maxVal]);
 
   // const range: LegacyRef<HTMLDivElement> = useRef(null);
 
@@ -100,7 +99,7 @@ export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
   return (
     <section className="flex flex-col gap-[20px] items-center justify-center w-[100%]">
       <section className="w-full flex justify-between items-center">
-        <p className="text-[14px]">Min:</p>
+        <p className="text-[16px] font-bold">Min:</p>
         <input
           type="range"
           min={min}
@@ -114,7 +113,7 @@ export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
         />
       </section>
       <section className="w-full flex justify-between items-center">
-        <p className="text-[14px]">Max:</p>
+        <p className="text-[16px] font-bold">Max:</p>
         <input
           type="range"
           min={min}
@@ -124,14 +123,19 @@ export const MultiRangeSlider: React.FC<MultiRangeSliderProps> = ({
             setMaxVal(Number(e.target.value));
           }}
           className="inline-block h-[7px] w-[200px] bg-yellow border-[1px] border-green rounded-[10px] 
-          ml-[10px] outline-none z-4 thumb"
+        ml-[10px] outline-none z-4 thumb"
         />
       </section>
       <section className="w-full">
-        <p className="text-green text-[12px]">
+        <p className="text-green text-[16px] font-bold">
           Cena:
-          <span className="text-[14px] text-dark_red">{minVal}zł</span>-
-          <span className="text-[14px] text-dark_red">{maxVal}zł</span>
+          <span className="ml-[20px] text-[20px] text-dark_red mr-[10px]">
+            {minVal}zł
+          </span>
+          -
+          <span className="ml-[10px] text-[20px] text-dark_red">
+            {maxVal}zł
+          </span>
         </p>
         <div className="flex justify-end mt-[10px]">
           <Button

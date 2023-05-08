@@ -19,7 +19,7 @@ body {
   width: 18px;
   pointer-events: all;
   position: relative;
-}
+} 
 
 .thumb,
 .thumb::-webkit-slider-thumb {

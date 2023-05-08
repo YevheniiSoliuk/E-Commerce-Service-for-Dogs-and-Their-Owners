@@ -6,13 +6,9 @@ export const getBrands = async () => {
   const brands: IBrand[] = [];
 
   try {
-    const brandsDocs = async () => {
-      return await getDocs(brandCol);
-    };
+    const brandsDocs = await getDocs(brandCol);
 
-    const brandsSnapshot = await brandsDocs();
-
-    brandsSnapshot.forEach((brandDoc) => {
+    brandsDocs.forEach((brandDoc) => {
       const brand = brandDoc.data();
       brand.id = brandDoc.id;
 

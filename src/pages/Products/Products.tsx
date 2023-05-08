@@ -1,50 +1,27 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AccordeonProps } from '../../components/commons/Accordeon/Accordeon';
 import {
   FastNavigation,
   LinksProps
 } from '../../components/FastNavigation/FastNavigation';
-import { useProductsQuery } from '../../features/ApiProductsSlice';
 import { addPosition } from '../../features/ordering/ProductCartSlice';
 import { IProduct } from '../../interfaces/Order';
 import { AppDispatch, RootState } from '../../store/store';
-import { useBrandsQuery } from '../../features/ApiBrandsSlice';
 import { IBrand } from '../../interfaces/Brand';
 import { clearFilters } from '../../features/FiltersSlice';
 
 import { FAQ } from '../../components/FAQ/FAQ';
 import { Newsletter } from '../../components/Newsletter/Newsletter';
 import { Pagination } from '../../components/Pagination/Pagination';
-import { ProductCard } from '../../components/ProductItem/ProductCard';
-import { ProductListViewItem } from '../../components/ProductItem/ProductListViewItem';
 import { SearchSection } from '../../components/SearchSection/SearchSection';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { getProducts } from '../../controllers/productController';
-
-const questions: AccordeonProps[] = [
-  {
-    title: 'Jak długi termin dostawy?',
-    content:
-      'Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki. Mogą również występować u nich nietolerancje pokarmowe lub alergie. Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine, Felix, PetBalance, MOMENTS, Animonda i wiele innych, znajdziesz w naszym sklepie z produktami dla kotów w najlepszej cenie. Odkryjesz również szeroką gamę odpowiednich akcesoriów dla swojego pupila. Rozpieść domowego tygrysa nowym drapakiem dla kota, legowiskiem dla kota lub zabawką dla kota.'
-  },
-  {
-    title: 'Jak lepiej obrać typ pokarmu dla psa?',
-    content:
-      'Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki. Mogą również występować u nich nietolerancje pokarmowe lub alergie. Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine, Felix, PetBalance, MOMENTS, Animonda i wiele innych, znajdziesz w naszym sklepie z produktami dla kotów w najlepszej cenie. Odkryjesz również szeroką gamę odpowiednich akcesoriów dla swojego pupila. Rozpieść domowego tygrysa nowym drapakiem dla kota, legowiskiem dla kota lub zabawką dla kota.'
-  },
-  {
-    title: 'Czy są przesyłane rabaty po podpisaniu newslettera?',
-    content:
-      'Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki. Mogą również występować u nich nietolerancje pokarmowe lub alergie. Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine, Felix, PetBalance, MOMENTS, Animonda i wiele innych, znajdziesz w naszym sklepie z produktami dla kotów w najlepszej cenie. Odkryjesz również szeroką gamę odpowiednich akcesoriów dla swojego pupila. Rozpieść domowego tygrysa nowym drapakiem dla kota, legowiskiem dla kota lub zabawką dla kota.'
-  },
-  {
-    title: 'Czy są przesyłane rabaty po podpisaniu newslettera?',
-    content:
-      'Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki. Mogą również występować u nich nietolerancje pokarmowe lub alergie. Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine, Felix, PetBalance, MOMENTS, Animonda i wiele innych, znajdziesz w naszym sklepie z produktami dla kotów w najlepszej cenie. Odkryjesz również szeroką gamę odpowiednich akcesoriów dla swojego pupila. Rozpieść domowego tygrysa nowym drapakiem dla kota, legowiskiem dla kota lub zabawką dla kota.'
-  }
-];
+import { faqType } from '../../utils/db';
+import { getFAQ } from '../../controllers/faqController';
+import { ProductWrapper } from '../../components/ProductItem/ProductWrapper';
+import { useAuthState } from '../../hooks/usePagination';
+import { getCurrentUser } from '../../controllers/userController';
 
 const breadcrumbs: LinksProps[] = [
   { name: 'Produkty', link: '/products' },
@@ -56,12 +33,13 @@ export const Products = () => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(8);
-
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [searchedProducts, setSearchedProducts] = useState<IProduct[]>([]);
-
   const [view, setView] = useState<string>('cards');
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [faqs, setFAQs] = useState<faqType[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [favouriteProducts, setFavouriteProducts] = useState<string[]>([]);
 
   const {
     subcategory,
@@ -71,9 +49,12 @@ export const Products = () => {
     rate
   } = useSelector((state: RootState) => state.filters);
   const [searchValue, setSearchValue] = useState('');
+  const userID = useAuthState();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    setLoading(true);
+
+    const fetchData = async () => {
       let products = await getProducts();
 
       if (subcategory !== null) {
@@ -84,12 +65,28 @@ export const Products = () => {
 
       setProducts(products);
       setFilteredProducts(products);
+      setFAQs(await getFAQ('delivery'));
     };
 
-    fetchProducts();
+    const fetchFavoutiteProducts = async () => {
+      if (userID) {
+        try {
+          const currentUser = await getCurrentUser(userID);
+
+          if (currentUser?.favouriteProductsIDs) {
+            setFavouriteProducts(currentUser.favouriteProductsIDs);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchData();
+    fetchFavoutiteProducts();
     setView(view);
     view === 'cards' ? setPageSize(8) : setPageSize(3);
-  }, [subcategory, view]);
+  }, [subcategory, userID, view]);
 
   const getFilteredProducts = useCallback(() => {
     let arr: IProduct[] = [...products];
@@ -147,9 +144,7 @@ export const Products = () => {
 
   const removeFilters = () => {
     dispatch(clearFilters());
-
     setFilteredProducts(products);
-    setSearchedProducts(products);
   };
 
   const currentProductsCard = useMemo(() => {
@@ -157,29 +152,21 @@ export const Products = () => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
 
+    setSearchedProducts(searchedProducts);
+
     if (searchedProducts.length) {
+      setLoading(false);
       return searchedProducts.slice(firstPageIndex, lastPageIndex);
     } else {
-      return 0;
+      return [];
     }
   }, [currentPage, pageSize, getSearchedProducts]);
-
-  // if(productsIsLoading) {
-  //   return (
-  //     <div
-  //       className="bg-dark_green border-2 border-green py-[30px] px-[20px]
-  //       rounded-[25px] my-[30px] mx-[50px]"
-  //     >
-  //       <h2 className="text-[32px] text-center">Loading....</h2>
-  //     </div>
-  //   )
-  // }
 
   return (
     <main className="flex flex-col px-[40px] py-[55px]">
       <div className="flex justify-between">
         <Sidebar
-          products={products}
+          products={currentProductsCard}
           applyFilters={getFilteredProducts}
           removeFilters={removeFilters}
         />
@@ -192,55 +179,54 @@ export const Products = () => {
             values={[]}
             placeholder="Szukaj produkt...."
           />
-          <section className="bg-dark_green border-2 border-green py-[30px] px-[20px] rounded-[25px] mt-[30px]">
-            {currentProductsCard !== 0 ? (
-              <>
-                {view === 'cards' ? (
-                  <div className="flex justify-between items-center flex-wrap">
+          {loading ? (
+            <section className="bg-dark_green border-2 border-green py-[30px] px-[20px] rounded-[25px] my-[30px] mx-[50px]">
+              <h2 className="text-[32px] text-center">Loading....</h2>
+            </section>
+          ) : (
+            <section className="bg-dark_green border-2 border-green py-[30px] px-[20px] rounded-[25px] mt-[30px]">
+              {currentProductsCard.length !== 0 ? (
+                <>
+                  <div
+                    className={`flex items-center flex-wrap ${view === 'cards' ? 'gap-[4%]' : 'justify-between'
+                      }`}
+                  >
                     {currentProductsCard.map((product: IProduct) => (
-                      <ProductCard
+                      <ProductWrapper
                         key={product.id}
                         product={product}
-                        action={() => {
+                        addToCart={() => {
                           dispatch(addPosition(product));
                         }}
+                        view={view}
+                        favouriteProducts={favouriteProducts}
+                        setFavouriteProducts={setFavouriteProducts}
+                        currentUserID={userID}
                       />
                     ))}
                   </div>
-                ) : (
-                  <div className="flex justify-between items-center flex-wrap">
-                    {currentProductsCard.map((product: IProduct) => (
-                      <ProductListViewItem
-                        key={product.id}
-                        product={product}
-                        action={() => {
-                          dispatch(addPosition(product));
-                        }}
-                      />
-                    ))}
+                  <div className="flex justify-center">
+                    <Pagination
+                      className="w-[320px] flex justify-between items-center mt-[15px]"
+                      currentPage={currentPage}
+                      totalCount={searchedProducts.length}
+                      pageSize={pageSize}
+                      siblingCount={1}
+                      onPageChange={(page: number) => setCurrentPage(page)}
+                    />
                   </div>
-                )}
-                <div className="flex justify-center">
-                  <Pagination
-                    className="w-[320px] flex justify-between items-center mt-[15px]"
-                    currentPage={currentPage}
-                    totalCount={searchedProducts.length}
-                    pageSize={pageSize}
-                    siblingCount={1}
-                    onPageChange={(page: number) => setCurrentPage(page)}
-                  />
-                </div>
-              </>
-            ) : (
-              <h2 className="text-[32px] text-center">
-                Nie ma szukanego produktu
-              </h2>
-            )}
-          </section>
+                </>
+              ) : (
+                <h2 className="text-[32px] text-center">
+                  Nie ma szukanego produktu
+                </h2>
+              )}
+            </section>
+          )}
         </article>
       </div>
       <Newsletter />
-      <FAQ faqs={questions} />
+      <FAQ faqs={faqs} />
     </main>
   );
 };

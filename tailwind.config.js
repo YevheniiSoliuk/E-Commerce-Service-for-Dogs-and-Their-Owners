@@ -51,8 +51,8 @@ module.exports = {
       },
       animation: {
         full: 'full 1s linear',
-        scrollx_primary: 'primary 15s linear infinite',
-        scrollx_secondary: 'secondary 15s linear infinite'
+        scrollx_primary: 'primary 30s linear infinite',
+        scrollx_secondary: 'secondary 30s linear infinite'
       }
     }
   },

@@ -54,47 +54,47 @@ export const List: React.FC<ListProps> = ({ title, items, subitems }) => {
           <ul>
             {'logoURL' in items[0]
               ? items?.map((brand) => (
-                  <li
-                    className="list-none hover:text-yellow active:text-yellow hover:cursor-pointer"
-                    key={brand.id}
-                  >
-                    <Input
-                      id={brand.id}
-                      type="checkbox"
-                      name="brand"
-                      placeholder={brand.name}
-                      imgSrc={(brand as IBrand).logoURL}
-                      action={() => {
-                        dispatch(addBrand(brand as IBrand));
-                      }}
-                    />
-                  </li>
-                ))
+                <li
+                  className="list-none hover:text-yellow active:text-yellow hover:cursor-pointer"
+                  key={brand.id}
+                >
+                  <Input
+                    id={brand.id}
+                    type="checkbox"
+                    name="brand"
+                    placeholder={brand.name}
+                    imgSrc={(brand as IBrand).logoURL}
+                    action={() => {
+                      dispatch(addBrand(brand as IBrand));
+                    }}
+                  />
+                </li>
+              ))
               : items?.map((category) => (
-                  <li
-                    className="list-none list-inside ml-[10px] mb-[10px]"
-                    key={category.id}
-                  >
-                    {' '}
-                    <span className="text-[16px] font-semibold">
-                      {category.name}
-                    </span>
-                    <ul>
-                      {subitems?.map(
-                        (subcategory: ISubcategory, index: number) =>
-                          subcategory.categoryID === category.id ? (
-                            <li
-                              className="text-[14px] list-disc list-inside ml-[10px] hover:text-yellow hover:cursor-pointer active:text-yellow"
-                              key={index}
-                              onClick={() => dispatch(setCategory(subcategory))}
-                            >
-                              {subcategory.name}
-                            </li>
-                          ) : null
-                      )}
-                    </ul>
-                  </li>
-                ))}
+                <li
+                  className="list-none list-inside ml-[10px] mb-[10px]"
+                  key={category.id}
+                >
+                  {' '}
+                  <span className="text-[16px] font-semibold">
+                    {category.name}
+                  </span>
+                  <ul>
+                    {subitems?.map(
+                      (subcategory: ISubcategory, index: number) =>
+                        subcategory.categoryID === category.id ? (
+                          <li
+                            className="text-[14px] list-disc list-inside ml-[10px] hover:text-yellow hover:cursor-pointer visited:text-yellow"
+                            key={index}
+                            onClick={() => dispatch(setCategory(subcategory))}
+                          >
+                            {subcategory.name}
+                          </li>
+                        ) : null
+                    )}
+                  </ul>
+                </li>
+              ))}
           </ul>
         </>
       )}

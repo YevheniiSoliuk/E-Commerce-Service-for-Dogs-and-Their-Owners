@@ -11,7 +11,7 @@ import { getSubcategories } from '../../controllers/subcategoryController';
 import { getBrands } from '../../controllers/brandController';
 
 type SideBarProps = {
-  products: IProduct[] | undefined;
+  products: IProduct[];
   applyFilters: () => void;
   removeFilters: () => void;
 };
@@ -36,38 +36,31 @@ export const Sidebar: React.FC<SideBarProps> = ({
     };
 
     fetchData();
-
-    // if(products) {
-    //   setMinPrice(Number([...products]
-    //     .sort((a: IProduct, b: IProduct) => a.price - b.price)[0]
-    //     .price.toFixed(0)));
-    //   setMaxPrice(Number([...products]
-    //     .sort((a: IProduct, b: IProduct) => b.price - a.price)[0]
-    //     .price.toFixed(0)));
-    // }
-  }, []);
+  }, [products]);
 
   return (
     <aside
       className="flex flex-col w-[330px] h-[100%] bg-dark_green border-2 border-green 
       rounded-[20px] p-[30px]"
     >
-      <h2 className="text-[24px] text-left mb-[25px]">FILTRY</h2>
+      <h2 className="text-[24px] font-bold text-left mb-[25px]">FILTRY</h2>
       <List title="Kategoria" items={categories} subitems={subcategories} />
       <List title="Marki" items={brands} />
       <section>
-        <h2 className="text-[16px] text-left mb-[15px]">Filtruj wg ceny</h2>
-        <MultiRangeSlider min={minPrice} max={maxPrice} />
+        <h2 className="text-[20px] font-bold text-left mb-[15px]">
+          Filtruj wg ceny
+        </h2>
+        <MultiRangeSlider min={0} max={500} />
         <div className="w-[250px] h-[2px] bg-green/50 my-[15px]"></div>
       </section>
       <section className="w-full flex flex-wrap flex-col">
-        <h2 className="text-[16px] text-left mb-[15px]">Ocena</h2>
+        <h2 className="text-[20px] font-bold text-left mb-[15px]">Ocena</h2>
         <StarRating
           type="active"
           active={0}
           size="h-[40px] w-[40px]"
           alignment="text-center"
-          rates=""
+          rates={8}
         />
         <div className="w-[250px] h-[2px] bg-green/50 my-[15px]"></div>
       </section>

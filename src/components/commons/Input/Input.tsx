@@ -1,5 +1,4 @@
 import { ChangeEventHandler, useEffect, useState } from 'react';
-import avatar from '../../../assets/images/avatar.png';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 

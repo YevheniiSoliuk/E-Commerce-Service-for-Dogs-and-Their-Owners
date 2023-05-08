@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../store/store';
-import { useSelector } from 'react-redux';
 
 import { Button } from '../../components/commons/Button/Button';
 import { ProgressBar } from '../../components/commons/ProgressBars/ProgressBar';
@@ -75,17 +73,10 @@ export const Profile = () => {
 
   const userID = useAuthState();
 
-  // const fetchCurrentUser = async () => {
-  //   const currentUser = await getCurrentUser(userID);
-  //   console.log(currentUser);
-  //   setUser(currentUser);
-  // };
-
   useEffect(() => {
     if (userID) {
       getCurrentUser(userID)
         .then((resolve) => {
-          console.log(resolve);
           if (resolve) {
             setUser(resolve);
           }

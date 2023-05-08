@@ -11,8 +11,16 @@ import { IBrand } from '../interfaces/Brand';
 import { IDeliveryMethod, IPostalPunct } from '../interfaces/DeliveryMethod';
 import { IPaymentMethod } from '../interfaces/PaymentMethod';
 import { IOrder, IProduct, IStatus } from './../interfaces/Order';
-import { IAddress, IUser } from '../interfaces/User';
-import { IWalk } from '../interfaces/Walk';
+import { IUser } from '../interfaces/User';
+
+export type faqsType = {
+  faqs: faqType[];
+};
+
+export type faqType = {
+  question: string;
+  answer: string;
+};
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(firestore, collectionName) as CollectionReference<T>;
@@ -32,5 +40,4 @@ export const statusCol = createCollection<IStatus>('status');
 export const paymentMethodCol =
   createCollection<IPaymentMethod>('paymentMethod');
 export const userCol = createCollection<IUser>('user');
-//export const addressCol = createCollection<IAddress>("address");
-//export const walkCol = createCollection<IWalk>("walk");
+export const faqCol = createCollection<faqsType>('faq');

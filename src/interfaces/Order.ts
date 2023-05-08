@@ -48,6 +48,7 @@ export interface IProduct {
   basePrice: number;
   discountAmount: number | null;
   rate: number;
+  ratesAmount: number;
   ingredients: string | null;
   dosage: string | null;
 }
