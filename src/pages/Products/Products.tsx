@@ -225,7 +225,11 @@ export const Products = () => {
           )}
         </article>
       </div>
-      <Newsletter />
+      <Newsletter
+        discountProducts={products.filter(
+          (product) => product.discountAmount !== null
+        )}
+      />
       <FAQ faqs={faqs} />
     </main>
   );

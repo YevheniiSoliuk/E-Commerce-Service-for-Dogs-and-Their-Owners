@@ -12,6 +12,7 @@ import { IDeliveryMethod, IPostalPunct } from '../interfaces/DeliveryMethod';
 import { IPaymentMethod } from '../interfaces/PaymentMethod';
 import { IOrder, IProduct, IStatus } from './../interfaces/Order';
 import { IUser } from '../interfaces/User';
+import { IShopReviews } from '../interfaces/Reviews';
 
 export type faqsType = {
   faqs: faqType[];
@@ -41,3 +42,4 @@ export const paymentMethodCol =
   createCollection<IPaymentMethod>('paymentMethod');
 export const userCol = createCollection<IUser>('user');
 export const faqCol = createCollection<faqsType>('faq');
+export const shopReviewsCol = createCollection<IShopReviews>('shopReviews');

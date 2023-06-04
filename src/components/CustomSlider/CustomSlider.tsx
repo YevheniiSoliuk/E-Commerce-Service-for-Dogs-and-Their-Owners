@@ -6,26 +6,35 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Pagination } from 'swiper';
+import { Pagination, Virtual } from 'swiper';
 
 import { Slide } from './Slide';
+import { IShopReviews } from '../../interfaces/Reviews';
 
-export const CustomSlider = () => {
+type SliderProps = {
+  data: IShopReviews[];
+};
+
+export const CustomSlider: React.FC<SliderProps> = ({ data }) => {
   return (
     <>
-      <Swiper modules={[Pagination]} spaceBetween={50} slidesPerView={3}>
-        <SwiperSlide>
-          <Slide />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Slide />
-        </SwiperSlide>
+      <Swiper
+        modules={[Pagination, Virtual]}
+        spaceBetween={50}
+        slidesPerView={3}
+        virtual
+      >
+        {data.map((review, index) => (
+          <SwiperSlide key={review.reviewText} virtualIndex={index}>
+            <Slide
+              userName={review.userName}
+              slideImageURL={review.userPhotoURL}
+              rate={review.rate}
+              date={'12-05-2023'}
+              text={review.reviewText}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );

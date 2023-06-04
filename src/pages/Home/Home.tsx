@@ -13,12 +13,8 @@ import googlePlayDownloadImage from '../../assets/images/google-play.png';
 import appStoreDownloadImage from '../../assets/images/app-store.png';
 import { getSubcategories } from '../../controllers/subcategoryController';
 import { CustomSlider } from '../../components/CustomSlider/CustomSlider';
-
-// type Categories = {
-//   name: string;
-//   bg_color: string;
-//   link: string;
-// };
+import { IShopReviews } from '../../interfaces/Reviews';
+import { getShopReviews } from '../../controllers/reviewsController';
 
 const colors: string[] = [
   'bg-red/40',
@@ -31,13 +27,15 @@ export const Home = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [subcategories, setSubcategories] = useState<ISubcategory[]>([]);
+  const [shopReviews, setShopReviews] = useState<IShopReviews[]>([]);
 
   useEffect(() => {
-    const fetchSubcategories = async () => {
+    const fetchData = async () => {
       setSubcategories(await getSubcategories());
+      setShopReviews(await getShopReviews());
     };
 
-    fetchSubcategories();
+    fetchData();
   }, []);
 
   const goToProductsPageWithCategory = (subcategory: ISubcategory) => {
@@ -114,7 +112,7 @@ export const Home = () => {
       <BrandsSection />
       <section className="mx-[50px] mb-[70px] mt-[35px]">
         <section className="flex justify-between items-center my-[76px]">
-          <p className="w-[710px] text-[14px]">
+          <p className="w-[710px] text-[16px]">
             Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki.
             Mogą również występować u nich nietolerancje pokarmowe lub alergie.
             Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine,
@@ -129,12 +127,12 @@ export const Home = () => {
       </section>
       <div className="h-[400px] w-full flex flex-wrap justify-center items-center text-center bg-yellow px-[50px] py-[40px]">
         <h2 className="text-[32px] w-full">POLECAJĄ NAS</h2>
-        <CustomSlider />
+        <CustomSlider data={shopReviews} />
       </div>
       <section className="mx-[50px]">
         <div className="flex justify-between items-center my-[76px]">
           <img src={homeImage} alt="image1" className="w-[550px] h-[300px]" />
-          <p className="w-[710px] text-[14px]">
+          <p className="w-[710px] text-[16px]">
             Większość kotów jest bardzo wymagająca, jeśli chodzi o ich posiłki.
             Mogą również występować u nich nietolerancje pokarmowe lub alergie.
             Najwyższe jakości karmy dla kotów, marek takich jak Kitty’s Cuisine,

@@ -8,7 +8,7 @@ type StarRatingProps = {
   active: number;
   size: string;
   alignment: string;
-  rates: number;
+  rates?: number;
 };
 
 export const StarRating: React.FC<StarRatingProps> = ({
@@ -98,11 +98,12 @@ export const StarRating: React.FC<StarRatingProps> = ({
             </div>
           );
         })}
-      {type === 'static' && (
-        <span className="text-[12px] ml-[10px]">
-          {active} ({rates})
+      {type === 'static' && rates ? (
+        <span className="text-[16px] ml-[10px]">
+          {active}
+          {rates}
         </span>
-      )}
+      ) : null}
     </section>
   );
 };
