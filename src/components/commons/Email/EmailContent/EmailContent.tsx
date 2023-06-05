@@ -41,22 +41,34 @@ export const EmailContent: React.FC<EmailContentProps> = ({
         <Section style={logoStyle}>
           <Img
             src={
-              'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/logo.webp?alt=media&token=220a53c1-fcc1-43fb-ab50-0ba1d5dbe094'
+              'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/email-images%2Fmail-logo.png?alt=media&token=200bf1f7-4d56-4ccb-b91b-e25a953e4d18&_gl=1*prsh0q*_ga*MTc4MTY3MzA1NC4xNjc2Njc2NDA0*_ga_CW55HF8NVT*MTY4NTk3MjEyNC40MC4xLjE2ODU5NzIzMDMuMC4wLjA.'
             }
             alt="Paw Paw Shop logo"
             style={logoImg}
           />
           <Row style={menu}>
-            <Link href="#" style={menuLink1}>
+            <Link
+              href="https://pet-goodies-shop.web.app/products"
+              style={menuLink1}
+            >
               Karma
             </Link>
-            <Link href="#" style={menuLink2}>
+            <Link
+              href="https://pet-goodies-shop.web.app/products"
+              style={menuLink2}
+            >
               Akcesoria
             </Link>
-            <Link href="#" style={menuLink3}>
+            <Link
+              href="https://pet-goodies-shop.web.app/products"
+              style={menuLink3}
+            >
               Zdrowie
             </Link>
-            <Link href="#" style={menuLink4}>
+            <Link
+              href="https://pet-goodies-shop.web.app/products"
+              style={menuLink4}
+            >
               Zabawki
             </Link>
           </Row>
@@ -67,7 +79,7 @@ export const EmailContent: React.FC<EmailContentProps> = ({
             alt="Banner"
             style={bannerImg}
           />
-          <Button href="https://localhost:3000/" style={bannerButton}>
+          <Button href="https://pet-goodies-shop.web.app/" style={bannerButton}>
             <Text style={buttonText}>Zgarnij rabat</Text>
           </Button>
         </Section>
@@ -113,7 +125,7 @@ export const EmailContent: React.FC<EmailContentProps> = ({
           <Link href="https://goo.gl/maps/rAM9Kc8Yjt7VCjat7" style={link}>
             <Img
               src={
-                'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/place-marker.svg?alt=media&token=ab5fd53f-6f48-4748-9361-0f5341381875'
+                'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/email-images%2Fplace-marker.png?alt=media&token=c65c5c82-0009-407b-b7e6-16f09f14069c&_gl=1*9szf8p*_ga*MTc4MTY3MzA1NC4xNjc2Njc2NDA0*_ga_CW55HF8NVT*MTY4NTk3MjEyNC40MC4xLjE2ODU5NzIyODYuMC4wLjA.'
               }
               alt="GeoCon"
               style={linkImg}
@@ -122,37 +134,39 @@ export const EmailContent: React.FC<EmailContentProps> = ({
           </Link>
         </Column>
         <Column style={contact}>
-          <Text style={h2}>Kontakt</Text>
-          <Link
-            href="https://www.facebook.com/profile.php?id=100041035039263"
-            target="_blank"
-          >
-            <Img
-              src={
-                'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/facebook-mini.svg?alt=media&token=69f1e911-7559-46d5-90f4-9071310ce978'
-              }
-              style={iconLink}
-              alt="FBICon"
-            />
-          </Link>
-          <Link href="https://twitter.com/" target="_blank">
-            <Img
-              src={
-                'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/instagram-mini.svg?alt=media&token=7559650f-6233-4e4a-8085-fb33b89fea2d'
-              }
-              style={iconLink}
-              alt="TwitterCon"
-            />
-          </Link>
-          <Link href="https://www.instagram.com/svikt02/" target="_blank">
-            <Img
-              src={
-                'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/twitter-mini.svg?alt=media&token=2a1e48b0-9e95-4ead-85b5-f4312ac46231'
-              }
-              style={iconLink}
-              alt="InstaCon"
-            />
-          </Link>
+          <Text style={contactH2}>Kontakt</Text>
+          <Container style={socialIcons}>
+            <Link
+              href="https://www.facebook.com/profile.php?id=100041035039263"
+              target="_blank"
+            >
+              <Img
+                src={
+                  'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/email-images%2Ffacebook.png?alt=media&token=305e9f79-b70b-4710-8db4-bcf3f9989336&_gl=1*j6onq8*_ga*MTc4MTY3MzA1NC4xNjc2Njc2NDA0*_ga_CW55HF8NVT*MTY4NTk3MjEyNC40MC4xLjE2ODU5NzIyMjMuMC4wLjA.'
+                }
+                style={iconLink}
+                alt="FBICon"
+              />
+            </Link>
+            <Link href="https://twitter.com/" target="_blank">
+              <Img
+                src={
+                  'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/email-images%2Ftwitter.png?alt=media&token=3971e629-0cf9-42a7-9475-6c5cfc3f3e24&_gl=1*tmhc5l*_ga*MTc4MTY3MzA1NC4xNjc2Njc2NDA0*_ga_CW55HF8NVT*MTY4NTk3MjEyNC40MC4xLjE2ODU5NzIyNjguMC4wLjA.'
+                }
+                style={iconLink}
+                alt="TwitterCon"
+              />
+            </Link>
+            <Link href="https://www.instagram.com/svikt02/" target="_blank">
+              <Img
+                src={
+                  'https://firebasestorage.googleapis.com/v0/b/pet-goodies-shop.appspot.com/o/email-images%2Finstagram.png?alt=media&token=fef59fa8-0922-4cfe-922d-d0f89ca175c7&_gl=1*mx5kxw*_ga*MTc4MTY3MzA1NC4xNjc2Njc2NDA0*_ga_CW55HF8NVT*MTY4NTk3MjEyNC40MC4xLjE2ODU5NzIyNTAuMC4wLjA.'
+                }
+                style={iconLink}
+                alt="InstaCon"
+              />
+            </Link>
+          </Container>
         </Column>
       </Container>
       <Container style={disclaimer}>
@@ -205,8 +219,7 @@ const logoImg = {
   width: '205px',
   height: '70px',
   marginLeft: 'auto',
-  marginRight: 'auto',
-  backgroundColor: '#0b926580'
+  marginRight: 'auto'
 };
 
 const menu = {
@@ -273,7 +286,9 @@ const text = {
 };
 
 const productsContainer = {
-  width: 'auto'
+  display: 'flex',
+  width: 'auto',
+  textAlign: 'center' as const
 };
 
 const footer = {
@@ -281,10 +296,6 @@ const footer = {
   height: '150px',
   backgroundColor: '#FDFFA9',
   padding: '0 15%'
-};
-
-const contact = {
-  marginLeft: '40px'
 };
 
 const street = {
@@ -298,7 +309,8 @@ const link = {
 
 const linkImg = {
   display: 'inline-block',
-  marginRight: '10px'
+  marginRight: '10px',
+  width: '7%'
 };
 
 const linkText = {
@@ -307,10 +319,24 @@ const linkText = {
   color: '#FFD365'
 };
 
+const contact = {
+  display: 'table-header-group'
+};
+
+const contactH2 = {
+  ...h2,
+  margin: '20px 0'
+};
+
+const socialIcons = {
+  display: 'block',
+  marginTop: '20px'
+};
+
 const iconLink = {
   display: 'inline-block',
   cursor: 'pointer',
-  margin: '40px 0'
+  marginRight: '10px'
 };
 
 const disclaimer = {

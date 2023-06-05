@@ -7,8 +7,6 @@ import {
   Text
 } from '@react-email/components';
 import * as React from 'react';
-import { StarRating } from '../../../StarRating';
-import BasketIcon from '../../../../../assets/icons/add-to-basket.svg';
 import { IProduct } from '../../../../../interfaces/Order';
 
 type EmailProductCardProps = {
@@ -18,33 +16,29 @@ type EmailProductCardProps = {
 export const EmailProductCard: React.FC<EmailProductCardProps> = ({
   product
 }) => {
-  const { title, brand, rate, ratesAmount, price, discountAmount, images } = {
+  const { title, brand, price, discountAmount, images } = {
     ...product
   };
 
   return (
     <Column style={card}>
       <Section style={imgContainer}>
-        <Link href="#">
-          <img src={images[0]} alt="product" style={cardImg} />
+        <Link href="https://pet-goodies-shop.web.app/products">
+          <Img src={images[0]} alt="product" style={cardImg} />
         </Link>
       </Section>
       <Text style={cardTitle}>{title}</Text>
       <Text style={cardBrand}>{brand.name}</Text>
-      {/* <StarRating
-        type="static"
-        active={rate}
-        size="h-[11px] w-[11px]"
-        alignment="text-left"
-        rates={ratesAmount}
-      /> */}
       <Section style={priceContainer}>
         <Text style={discountPrice}>
           {(price - price * (discountAmount! / 100)).toFixed(2)} zł
         </Text>
         <Text style={priceStyle}>{price} zł</Text>
-        <Button style={cardButton} href="#">
-          <Text style={buttonText}>KUP</Text>
+        <Button
+          style={cardButton}
+          href="https://pet-goodies-shop.web.app/products"
+        >
+          <Text style={buttonText}>ZŁAP</Text>
         </Button>
       </Section>
     </Column>
@@ -53,14 +47,15 @@ export const EmailProductCard: React.FC<EmailProductCardProps> = ({
 
 const card = {
   display: 'inline-block',
-  width: '165px',
-  height: '100%',
+  width: '20%',
+  height: '350px',
   background: '#FDFFA9',
   border: 'solid 2px #4B4D0B',
   borderRadius: '25px',
   padding: '10px',
   marginBottom: '20px',
-  marginRight: '40px',
+  marginRight: '20px',
+  marginLeft: '20px',
   textAlign: 'left' as const
 };
 
@@ -76,24 +71,28 @@ const cardImg = {
 };
 
 const cardTitle = {
+  width: '100%',
   fontSize: '14px',
-  marginBottom: '3px'
+  marginBottom: '3px',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap' as const,
+  textOverflow: 'ellipsis'
 };
 
 const cardBrand = {
   fontSize: '12px',
-  marginBottom: '5px'
+  fontWeight: 'bold'
 };
 
 const priceContainer = {
   display: 'inline',
-  marginTop: '20px',
+  margin: '30px 0',
   textAlign: 'center' as const
 };
 
 const discountPrice = {
   display: 'inline',
-  fontSize: '16px',
+  fontSize: '20px',
   color: '#CD1515',
   fontWeight: 'bold',
   marginRight: '15px'
@@ -101,7 +100,7 @@ const discountPrice = {
 
 const priceStyle = {
   display: 'inline',
-  fontSize: '12px',
+  fontSize: '14px',
   color: '#CD1515',
   fontWeight: 'medium',
   textDecoration: 'line-through'
@@ -115,11 +114,13 @@ const cardButton = {
   backgroundColor: '#FFD365',
   border: 'solid 2px #4B4D0B',
   borderRadius: '15px',
-  marginTop: '20px',
+  margin: '25px 0',
   padding: '0 37px',
   textAlign: 'center' as const
 };
 
 const buttonText = {
-  display: 'inline'
+  display: 'inline',
+  lineHeight: '200%',
+  fontWeight: 'bold'
 };
